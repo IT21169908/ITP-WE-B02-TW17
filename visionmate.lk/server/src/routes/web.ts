@@ -5,6 +5,7 @@
  */
 
 import express from "express";
+import createHttpError from "http-errors";
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.get("/", async (req, res) => {
 router.get('/favicon.ico', (req, res) => res.status(204));
 
 router.use((req, res, next) => {
-    next(Error("404 URL not found!"));
+    next(new createHttpError.NotFound());
 });
 
 export default router;
