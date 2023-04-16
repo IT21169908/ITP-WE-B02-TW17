@@ -4,10 +4,11 @@
  * @author M.M.N.H. Fonseka
  * */
 
-export interface User {
+export default interface User {
     _id: string,
-    username: string,
+    name: string,
     email: string,
+    phone: string,
     createdAt: string,
     updatedAt: string,
 }

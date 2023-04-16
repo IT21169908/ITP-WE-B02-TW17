@@ -1,22 +1,25 @@
-import { ConfigProvider, Spin } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { Provider, useSelector } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import {ConfigProvider, Spin} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Provider, useSelector} from 'react-redux';
+import {BrowserRouter as Router} from 'react-router-dom';
+import {ThemeProvider} from 'styled-components';
 import config from './config/config';
-import { RootState, store } from "./redux/store";
+import {RootState, store} from "./redux/store";
 import AuthRoutes from "./routes/auth/AuthRoutes";
 import GuestRoutes from "./routes/GuestRoutes";
 import 'antd/dist/reset.css';
 import './styles/index.scss';
+import {useAppDispatch} from "./hooks/reduxHooks";
+import {fetchUser, removeUser} from "./redux/users/actions";
 
-const { themeColor } = config;
+const {themeColor} = config;
 
 const ProviderConfig = () => {
+    const dispatch = useAppDispatch();
     const isLoggedIn = true;
     const isLoaded = true;
 
-    const { rtl, topMenu, mainContent } = useSelector((state: RootState) => {
+    const {rtl, topMenu, mainContent} = useSelector((state: RootState) => {
         return {
             rtl: state.ChangeLayoutMode.rtlData,
             topMenu: state.ChangeLayoutMode.topMenu,
@@ -32,12 +35,17 @@ const ProviderConfig = () => {
         if (!unmounted) {
             setPath(window.location.pathname);
         }
-        return () => {unmounted = true};
-    }, [path]);
+        dispatch(fetchUser('6437e0efe6f77939eaab1e43'))
+        // dispatch(removeUser())
+        // dispatch(getUser('6437e0efe6f77939eaab1e43'));
+        return () => {
+            unmounted = true
+        };
+    }, [dispatch, path]);
 
     return (
         <ConfigProvider direction={rtl ? 'rtl' : 'ltr'}>
-            <ThemeProvider theme={{ ...themeColor, rtl, topMenu, mainContent }}>
+            <ThemeProvider theme={{...themeColor, rtl, topMenu, mainContent}}>
                 {!isLoaded ? (
                     <div className="spin" style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
                         <Spin tip="Loading..." size="large"></Spin>
@@ -58,7 +66,7 @@ const ProviderConfig = () => {
 
 const App = () => (
     <Provider store={store}>
-        <ProviderConfig />
+        <ProviderConfig/>
     </Provider>
 );
 export default App;
