@@ -8,7 +8,7 @@ function AdminRoutes() {
     return (
         <DashboardLayout>
             <Routes>
-                <Route index path="/admin/*" element={<NotFound/>}/>
+                <Route index path="/patient/*" element={<NotFound/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
         </DashboardLayout>

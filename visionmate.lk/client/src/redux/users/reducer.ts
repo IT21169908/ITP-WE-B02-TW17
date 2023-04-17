@@ -1,3 +1,9 @@
+/**
+ * userSlice actions and reducers
+ *
+ * @author M.M.N.H. Fonseka
+ * */
+
 import {createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction} from '@reduxjs/toolkit'
 import UserModel from '../../models/user'
@@ -39,7 +45,7 @@ const userSlice = createSlice({
         builder
             .addCase(getUser.pending, (state, action) => {
                 console.log("extraReducer.getUser.pending")
-                return {...state, initialState};
+                return {...state, ...initialState};
             })
             .addCase(getUser.fulfilled, (state, action: PayloadAction<UserModel>) => {
                 console.log("extraReducer.getUser.fulfilled")
@@ -47,7 +53,7 @@ const userSlice = createSlice({
             })
             .addCase(getUser.rejected, (state, action) => {
                 console.log("extraReducer.getUser.rejected")
-                return {...state, initialState};
+                return {...state, ...initialState};
             });
     }
 })

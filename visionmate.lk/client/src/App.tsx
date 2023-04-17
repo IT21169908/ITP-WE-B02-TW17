@@ -1,16 +1,17 @@
-import {ConfigProvider, Spin} from 'antd';
+import {ConfigProvider} from 'antd';
 import React, {useEffect, useState} from 'react';
-import {Provider, useSelector} from 'react-redux';
+import {Provider} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {ThemeProvider} from 'styled-components';
 import config from './config/config';
 import {RootState, store} from "./redux/store";
-import AuthRoutes from "./routes/auth/AuthRoutes";
+import RootAuthRoutes from "./routes/auth/RootAuthRoutes";
 import GuestRoutes from "./routes/GuestRoutes";
 import 'antd/dist/reset.css';
 import './styles/index.scss';
-import {useAppDispatch} from "./hooks/reduxHooks";
-import {fetchUser, removeUser} from "./redux/users/actions";
+import {useAppDispatch, useAppSelector} from "./hooks/reduxHooks";
+import {fetchUser} from "./redux/users/actions";
+import PreLoader from "./components/PreLoader";
 
 const {themeColor} = config;
 
@@ -19,7 +20,7 @@ const ProviderConfig = () => {
     const isLoggedIn = true;
     const isLoaded = true;
 
-    const {rtl, topMenu, mainContent} = useSelector((state: RootState) => {
+    const {rtl, topMenu, mainContent} = useAppSelector((state: RootState) => {
         return {
             rtl: state.ChangeLayoutMode.rtlData,
             topMenu: state.ChangeLayoutMode.topMenu,
@@ -31,31 +32,42 @@ const ProviderConfig = () => {
     const [path, setPath] = useState(window.location.pathname);
 
     useEffect(() => {
-        let unmounted = false;
-        if (!unmounted) {
-            setPath(window.location.pathname);
-        }
-        dispatch(fetchUser('6437e0efe6f77939eaab1e43'))
-        // dispatch(removeUser())
-        // dispatch(getUser('6437e0efe6f77939eaab1e43'));
+        setPath(window.location.pathname);
+    }, []);
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const {signal} = controller;
+        dispatch(fetchUser({id: '6437e0efe6f77939eaab1e43', signal}));
         return () => {
-            unmounted = true
+            controller.abort();
         };
     }, [dispatch, path]);
+
+    // useEffect(() => {
+    //     let unmounted = false;
+    //     if (!unmounted) {
+    //         setPath(window.location.pathname);
+    //     }
+    //     dispatch(fetchUser('6437e0efe6f77939eaab1e43'))
+    //     // dispatch(removeUser())
+    //     // dispatch(getUser('6437e0efe6f77939eaab1e43'));
+    //     return () => {
+    //         unmounted = true
+    //     };
+    // }, [dispatch, path]);
 
     return (
         <ConfigProvider direction={rtl ? 'rtl' : 'ltr'}>
             <ThemeProvider theme={{...themeColor, rtl, topMenu, mainContent}}>
                 {!isLoaded ? (
-                    <div className="spin" style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
-                        <Spin tip="Loading..." size="large"></Spin>
-                    </div>
+                    <PreLoader/>
                 ) : (
                     <Router basename={process.env.PUBLIC_URL}>
                         {!isLoggedIn ? (
                             <GuestRoutes/>
                         ) : (
-                            <AuthRoutes/>
+                            <RootAuthRoutes/>
                         )}
                     </Router>
                 )}
