@@ -11,11 +11,11 @@ const GuestRoutes: React.FC = memo(() => {
         <AuthLayout>
             <Routes>
                 {/*<Route index element={<Index/>}/>*/}
-                <Route index element={<></>}/>
+                <Route index element={<NotFound/>}/>
                 <Route path="login" element={<Login/>}/>
                 {/*<Route path="register" element={<SignUp/>}/>*/}
                 {/*<Route path="forgot-password" element={<ForgotPass/>}/>*/}
-                <Route path="*" errorElement element={<NotFound/>}/>
+                <Route path="*" element={<NotFound/>}/>
             </Routes>
         </AuthLayout>
     );

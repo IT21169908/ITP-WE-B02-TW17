@@ -5,6 +5,7 @@ import DashboardLayout from "../../dashboard/layout/App";
 const NotFound = lazy(() => import('../../errors/NotFound'));
 
 function AdminRoutes() {
+    // TODO: decide whether to apply DashboardLayout. best approach
     return (
         <DashboardLayout>
             <Routes>

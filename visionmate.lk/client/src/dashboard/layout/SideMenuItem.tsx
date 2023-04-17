@@ -39,18 +39,16 @@ function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
         };
     });
 
-
+    // TODO: check this
     const path = '/admin';
-
     const pathName = window.location.pathname;
     const pathArray = pathName.split(path);
     const mainPath = pathArray[1];
-    const mainPathSplit = mainPath.split('/');
+    const mainPathSplit = mainPath ? mainPath.split('/') : [];
 
     const [openKeys, setOpenKeys] = React.useState(
         !topMenu ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`] : [],
     );
-
     const onOpenChange = (keys: any) => {
         setOpenKeys(keys[keys.length - 1] !== 'recharts' ? [keys.length && keys[keys.length - 1]] : keys);
     };
@@ -130,8 +128,5 @@ function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
     );
 }
 
-MenuItems.propTypes = {
-    toggleCollapsed: propTypes.func,
-};
 
 export default MenuItems;

@@ -1,7 +1,8 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import AdminRoutes from "./_AdminRoutes";
 import PreLoader from "../../components/PreLoader";
 import PatientRoutes from "./_PatientRoutes";
+import {useLocation} from "react-router-dom";
 
 function RootAuthRoutes(props: any) {
     let authRoute: JSX.Element;
