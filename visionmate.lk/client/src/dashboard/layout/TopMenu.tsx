@@ -1,7 +1,7 @@
 import React, {useLayoutEffect} from 'react';
 import {NavLink, Link} from 'react-router-dom';
 
-import {TopMenuStyle} from './style';
+import {TopMenuStyle} from './styled-elements';
 
 
 const activeDefault = () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Content, DropdownStyle} from './style';
-import {PropTypes} from "./type";
+import {Content, DropdownStyle} from './styled-elements';
+import {DropdownProps} from "../../types/dropdown-types";
 
-function Dropdown(props: PropTypes) {
+function Dropdown(props: DropdownProps) {
     const {
         content,
         placement,

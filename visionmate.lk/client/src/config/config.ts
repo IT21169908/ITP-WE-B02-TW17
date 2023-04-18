@@ -1,4 +1,4 @@
-import { themeColor } from './theme/themeVariables';
+import { themeColor } from './theme/theme-variables';
 
 const config = {
   topMenu: false,

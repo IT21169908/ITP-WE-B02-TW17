@@ -1,7 +1,8 @@
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Col, Layout, Row, theme} from 'antd';
 import {RootState} from "../../redux/store";
-import {FooterStyle, LayoutContainer, SmallScreenAuthInfo, TopMenuSearch} from "./style";
+import { LayoutProps } from "../../types/layout-types";
+import {FooterStyle, LayoutContainer, SmallScreenAuthInfo, TopMenuSearch} from "./styled-elements";
 import {Link, NavLink} from "react-router-dom";
 import TopMenu from "./TopMenu";
 import AuthInfo from "../../auth/layout/AuthInfo";
@@ -9,10 +10,6 @@ import Search from "./Search";
 import {ThemeProvider} from "styled-components";
 import SideMenuItem from "./SideMenuItem";
 import {useAppSelector} from "../../hooks/reduxHooks";
-
-interface LayoutProps {
-    children?: ReactNode;
-}
 
 const {Header, Sider, Content} = Layout;
 

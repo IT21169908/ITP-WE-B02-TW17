@@ -14,6 +14,7 @@ const initialState: UserModel = {
     name: "",
     email: '',
     phone: '',
+    role: 0,
     createdAt: "",
     updatedAt: "",
 };

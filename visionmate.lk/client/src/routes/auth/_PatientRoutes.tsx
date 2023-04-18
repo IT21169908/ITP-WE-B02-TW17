@@ -1,6 +1,6 @@
 import React, {lazy} from 'react';
 import {Route, Routes} from 'react-router-dom';
-import DashboardLayout from "../../dashboard/layout/App";
+import DashboardLayout from "../../dashboard/layout/DashboardLayout";
 
 const NotFound = lazy(() => import('../../errors/NotFound'));
 

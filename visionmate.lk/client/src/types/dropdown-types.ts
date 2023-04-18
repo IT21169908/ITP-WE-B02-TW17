@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 
-export interface PropTypes {
+export interface DropdownProps {
     placement: "bottomRight" | "topLeft" | "topCenter" | "topRight" | "bottomLeft" | "bottomCenter" | "top" | "bottom" | undefined,
     title?: string,
     trigger?: any,

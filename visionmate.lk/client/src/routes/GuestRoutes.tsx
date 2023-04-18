@@ -2,7 +2,7 @@ import React, {lazy, memo} from 'react';
 import {Route, Routes} from 'react-router-dom';
 
 import NotFound from "../errors/NotFound";
-import AuthLayout from "../auth/layout/App";
+import AuthLayout from "../auth/layout/AuthLayout";
 
 const Login = lazy(() => import('../auth/Login'))
 

@@ -2,7 +2,6 @@ import {Menu} from 'antd';
 import React, {ReactNode} from 'react';
 // import {useTranslation} from 'react-i18next';
 import {NavLink} from 'react-router-dom';
-import propTypes from 'prop-types';
 import {changeDirectionMode, changeLayoutMode, changeMenuMode} from '../../redux/theme-layout/actionCreator';
 import {ItemType} from "antd/es/menu/hooks/useItems";
 import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooks";

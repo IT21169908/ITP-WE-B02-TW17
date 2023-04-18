@@ -1,4 +1,4 @@
-import themes from './themeConfigure';
+import themes from './theme-configure';
 
 const { lightMode, darkMode } = themes;
 

@@ -1,10 +1,7 @@
-import React, {ReactNode, Suspense} from 'react';
-import {AuthenticationWrap} from '../style';
-import PreLoader from "../../components/PreLoader";
-
-interface LayoutProps {
-    children?: ReactNode;
-}
+import React, {Suspense} from 'react';
+import { LayoutProps } from "../../types/layout-types";
+import {AuthenticationWrap} from '../styled-elements';
+import PreLoader from "../../components/preloader/PreLoader";
 
 const AuthLayout = ({children}: LayoutProps) => {
     return (

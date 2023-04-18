@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Layout.module.scss';
+import styles from './layout.module.scss';
 
 function Footer(props: any) {
     return (

@@ -1,10 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Content, PopoverStyle, Title} from './style';
-import './style.module.css';
-import {PropTypes} from "./type";
+import {Content, PopoverStyle, Title} from './styled-elements';
+import {PopupProps} from "../../types/popup-types";
 
-function Popover(props: PropTypes) {
+function Popover(props: PopupProps) {
     const {content, placement, title, action, children} = props;
     const content1 = <Content>{content}</Content>;
 

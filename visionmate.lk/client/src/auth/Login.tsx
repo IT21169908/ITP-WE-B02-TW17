@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {Link, NavLink, useNavigate} from 'react-router-dom';
 import {Button, Col, Form, Input, Row} from "antd";
-import {AuthFormWrap} from './style';
+import {AuthFormWrap} from './styled-elements';
 import {ReactSVG} from 'react-svg';
 import {Checkbox} from "../components/checkbox/Checkbox";
 

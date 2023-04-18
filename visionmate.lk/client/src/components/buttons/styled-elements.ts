@@ -1,8 +1,6 @@
 import {Button} from 'antd';
 import Styled from 'styled-components';
-import React from "react";
-import {ButtonProps} from "./buttonTypes";
-
+import {ButtonProps} from "../../types/button-types";
 
 const ButtonGroup = Button.Group;
 

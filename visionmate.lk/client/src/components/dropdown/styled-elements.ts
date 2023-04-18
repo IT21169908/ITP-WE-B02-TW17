@@ -1,6 +1,6 @@
 import {Dropdown} from 'antd';
 import Styled from 'styled-components';
-import {PropTypes} from "./type";
+import {DropdownProps} from "../../types/dropdown-types";
 
 const Content = Styled.div`
     background: ${({theme}) => theme[theme.mainContent]['white-background']};
@@ -30,7 +30,7 @@ const Content = Styled.div`
     }
 `;
 
-const DropdownStyle = Styled(Dropdown)<PropTypes>`
+const DropdownStyle = Styled(Dropdown)<DropdownProps>`
     
 `;
 

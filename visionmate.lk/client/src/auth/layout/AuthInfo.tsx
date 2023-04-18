@@ -2,7 +2,7 @@ import {Avatar} from 'antd';
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import Header from "../../components/heading/Header";
-import {InfoWraper, NavAuth, UserDropDwon} from "./style";
+import {InfoWrapper, NavAuth, UserDropDown} from "./styled-elements";
 import {Dropdown} from "../../components/dropdown/Dropdown";
 import {Popover} from "../../components/popup/Popup";
 import Search from "../../dashboard/layout/Search";
@@ -25,27 +25,27 @@ const AuthInfo = React.memo(() => {
     };
 
     const userContent = (
-        <UserDropDwon>
-            <div className="user-dropdwon">
-                <figure className="user-dropdwon__info">
+        <UserDropDown>
+            <div className="user-dropdown">
+                <figure className="user-dropdown__info">
                     <img src={require('../../static/img/avatar/chat-auth.png')} alt=""/>
                     <figcaption>
                         <Header as="h5">Abdullah Bin Talha</Header>
                         <p>UI Expert</p>
                     </figcaption>
                 </figure>
-                <ul className="user-dropdwon__links">
+                <ul className="user-dropdown__links">
                     <li>
                         <Link to="#">
                             {/*<UilUser/>*/} Profile
                         </Link>
                     </li>
                 </ul>
-                <Link className="user-dropdwon__bottomAction" onClick={SignOut} to="#">
+                <Link className="user-dropdown__bottomAction" onClick={SignOut} to="#">
                     {/* <UilSignout/> */}Sign Out
                 </Link>
             </div>
-        </UserDropDwon>
+        </UserDropDown>
     );
 
     const onFlagChangeHandle = (value: string, e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -67,7 +67,7 @@ const AuthInfo = React.memo(() => {
     );
 
     return (
-        <InfoWraper>
+        <InfoWrapper>
             <Search/>
             {/*<Message/>
             <Notification/>
@@ -88,7 +88,7 @@ const AuthInfo = React.memo(() => {
                     </Link>
                 </Popover>
             </div>
-        </InfoWraper>
+        </InfoWrapper>
     );
 });
 

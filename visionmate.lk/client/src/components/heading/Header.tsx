@@ -1,15 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import * as headings from './style';
+import { HeaderProps } from '../../types/header-types';
+import * as headings from './styled-elements';
 
-interface Props {
-    as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-    children?: React.ReactNode;
-    className?: string;
-    id?: string;
-}
-
-function Header(props: Props) {
+function Header(props: HeaderProps) {
     const {
         as,
         children,

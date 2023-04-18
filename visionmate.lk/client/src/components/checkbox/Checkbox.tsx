@@ -1,41 +1,19 @@
-import React, {memo, ReactNode, useCallback} from 'react';
-import {CheckboxStyle} from './style';
+import React, {memo, useCallback} from 'react';
+import { CheckboxChangeEventTarget, CheckboxProps } from '../../types/checkbox-types';
+import {CheckboxStyle} from './styled-elements';
 
 // const CheckboxGroup = CheckboxStyle.Group;
 
 // TODO: Implement Checkbox multiple selection
 
-interface propTypes {
-    item?: string[];
-    defaultSelect?: any[];
-    multiple?: boolean;
-    onChange: (checked: boolean, value?: unknown) => void;
-    onChangeTrigger?: (...args: any[]) => any;
-    defaultChecked?: boolean;
-    disabled?: boolean;
-    checked?: boolean;
-    children?: ReactNode;
-}
-
-interface CheckboxChangeEventTarget extends Omit<CheckboxChangeEvent, 'target'> {
-    target: {
-        value?: unknown;
-        checked: boolean;
-    };
-}
-
-interface CheckboxChangeEvent {
-    target: CheckboxChangeEventTarget;
-}
-
-const areEqual = (prevProps: propTypes, nextProps: propTypes) => {
+const areEqual = (prevProps: CheckboxProps, nextProps: CheckboxProps) => {
     // Compare the `data` object's properties
     return (
         prevProps.checked === nextProps.checked
     );
 };
 
-export const Checkbox: React.FC<propTypes> = memo((props: propTypes) => {
+export const Checkbox: React.FC<CheckboxProps> = memo((props: CheckboxProps) => {
     console.log("Checkbox Component");
     const {
         // item,

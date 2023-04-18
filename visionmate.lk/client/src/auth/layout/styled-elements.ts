@@ -1,6 +1,6 @@
 import Styled from 'styled-components';
 
-const InfoWraper = Styled.div`
+const InfoWrapper = Styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -188,11 +188,11 @@ const InfoWraper = Styled.div`
     }
 `;
 
-const SettingDropdwon = Styled.div`
-    .setting-dropdwon{
+const SettingDropdown = Styled.div`
+    .setting-dropdown{
         max-width: 700px;
         padding: 4px 0;
-        .setting-dropdwon__single{
+        .setting-dropdown__single{
             align-items: flex-start;
             padding: 16px 20px;
             margin-bottom: 0;
@@ -227,7 +227,7 @@ const SettingDropdwon = Styled.div`
             }
             img{
                 ${({theme}) => (theme.rtl ? 'margin-left' : 'margin-right')}: 16px;
-                transform: ${({theme}) => (theme.rtl ? 'rotatey(180deg)' : 'rotatey(0deg)')};
+                transform: ${({theme}) => (theme.rtl ? 'rotateY(180deg)' : 'rotateY(0deg)')};
             }
             figcaption{
                 text-align: ${({theme}) => (!theme.rtl ? 'left' : 'right')}
@@ -236,8 +236,8 @@ const SettingDropdwon = Styled.div`
     }
 `;
 
-const NestedDropdwon = Styled.div`
-    .support-dropdwon{
+const NestedDropdown = Styled.div`
+    .support-dropdown{
         padding: 10px 15px;
         text-align: ${({theme}) => (!theme.rtl ? 'left' : 'right')};
         ul{
@@ -264,10 +264,10 @@ const NestedDropdwon = Styled.div`
     }
 `;
 
-const UserDropDwon = Styled.div`
-    .user-dropdwon{
+const UserDropDown = Styled.div`
+    .user-dropdown{
         max-width: 280px;
-        .user-dropdwon__info{
+        .user-dropdown__info{
             display: flex;
             align-items: flex-start;
             padding: 20px 25px;
@@ -290,7 +290,7 @@ const UserDropDwon = Styled.div`
                 }
             }
         }
-        .user-dropdwon__links{
+        .user-dropdown__links{
             a{
                 width: 100%;
                 left: 0;
@@ -313,7 +313,7 @@ const UserDropDwon = Styled.div`
                 }
             }
         }
-        .user-dropdwon__bottomAction{
+        .user-dropdown__bottomAction{
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -416,4 +416,4 @@ const NavAuth = Styled.span`
     }
 `;
 
-export {InfoWraper, SettingDropdwon, NestedDropdwon, UserDropDwon, UserActionDropDown, NavAuth};
+export {InfoWrapper, SettingDropdown, NestedDropdown, UserDropDown, UserActionDropDown, NavAuth};

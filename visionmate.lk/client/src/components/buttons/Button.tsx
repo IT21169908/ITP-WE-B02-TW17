@@ -1,6 +1,6 @@
 import React, {ReactNode, useState} from 'react';
-import {ButtonStyled, ButtonStyledGroup} from './style';
-import {ButtonProps} from "./buttonTypes";
+import {ButtonStyled, ButtonStyledGroup} from './styled-elements';
+import {ButtonProps} from "../../types/button-types";
 
 // @Todo props spreading
 

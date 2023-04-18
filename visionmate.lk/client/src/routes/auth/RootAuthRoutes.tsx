@@ -1,18 +1,18 @@
-import React, {Suspense, useEffect} from 'react';
+import React, {Suspense} from 'react';
+import { Role } from "../../enums/Role";
 import AdminRoutes from "./_AdminRoutes";
-import PreLoader from "../../components/PreLoader";
+import PreLoader from "../../components/preloader/PreLoader";
 import PatientRoutes from "./_PatientRoutes";
-import {useLocation} from "react-router-dom";
 
 function RootAuthRoutes(props: any) {
     let authRoute: JSX.Element;
-    let role = 1;
+    let userRole = 1;
 
-    switch (role) {
-        case 1:
+    switch (userRole) {
+        case Role.ADMIN:
             authRoute = <AdminRoutes/>;
             break;
-        case 2:
+        case Role.PATIENT:
             authRoute = <PatientRoutes/>;
             break;
         default:

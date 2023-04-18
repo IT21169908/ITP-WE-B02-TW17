@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
-import PreLoader from "../components/PreLoader";
-import {ErrorWrapper} from "./style";
+import PreLoader from "../components/preloader/PreLoader";
+import {ErrorWrapper} from "./styled-elements";
 import {Button} from "../components/buttons/Button";
 import Header from "../components/heading/Header";
-import {Main} from "../components/styled-components/container-style";
+import {Main} from "../components/styled-components/styled-containers";
 
 function NotFound() {
     const [state, setState] = useState({

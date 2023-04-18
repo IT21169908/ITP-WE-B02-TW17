@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 
-export interface PropTypes {
+export interface PopupProps {
     placement: "right" | "left" | "top" | "bottom" | "topLeft" | "topRight" | "bottomLeft" | "bottomRight" | "leftTop" | "leftBottom" | "rightTop" | "rightBottom" | undefined,
     title?: string | ReactNode,
     action?: any,

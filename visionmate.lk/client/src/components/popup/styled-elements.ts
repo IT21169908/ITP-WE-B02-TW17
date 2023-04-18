@@ -1,6 +1,5 @@
 import {Popover, PopoverProps} from 'antd';
 import Styled from 'styled-components';
-import {PropTypes} from "./type";
 
 const Content = Styled.div`  
   a, .span {

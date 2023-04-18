@@ -11,7 +11,7 @@ import 'antd/dist/reset.css';
 import './styles/index.scss';
 import {useAppDispatch, useAppSelector} from "./hooks/reduxHooks";
 import {fetchUser} from "./redux/users/actions";
-import PreLoader from "./components/PreLoader";
+import PreLoader from "./components/preloader/PreLoader";
 
 const {themeColor} = config;
 
