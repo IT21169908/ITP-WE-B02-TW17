@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
-import PreLoader from "../components/preloader/PreLoader";
+import PreLoader from "../../components/preloader/PreLoader";
 import {ErrorWrapper} from "./styled-elements";
-import {Button} from "../components/buttons/Button";
-import Header from "../components/heading/Header";
-import {Main} from "../components/styled-components/styled-containers";
+import {Button} from "../../components/buttons/Button";
+import Header from "../../components/heading/Header";
+import {Main} from "../../components/styled-components/styled-containers";
 
 function NotFound() {
     const [state, setState] = useState({
@@ -22,7 +22,7 @@ function NotFound() {
                 <PreLoader/>
             ) : (
                 <ErrorWrapper>
-                    <img src={require(`../static/img/pages/404.svg`).default} alt="404"/>
+                    <img src={require(`../../static/img/pages/404.svg`).default} alt="404"/>
                     <Header className="error-text" as="h3">
                         404
                     </Header>

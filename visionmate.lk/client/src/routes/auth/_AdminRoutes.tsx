@@ -1,8 +1,8 @@
 import React, {lazy} from 'react';
 import {Route, Routes} from 'react-router-dom';
-import DashboardLayout from "../../dashboard/layout/DashboardLayout";
+import DashboardLayout from "../../views/dashboard/layout/DashboardLayout";
 
-const NotFound = lazy(() => import('../../errors/NotFound'));
+const NotFound = lazy(() => import('../../views/errors/NotFound'));
 
 function AdminRoutes() {
     // TODO: decide whether to apply DashboardLayout. best approach

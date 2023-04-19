@@ -6,7 +6,7 @@ import { Row, Col, Form, Input, Button } from 'antd';
 // import UilTwitter from '@iconscout/react-unicons/icons/uil-twitter';
 // import UilGithub from '@iconscout/react-unicons/icons/uil-github';
 
-import { Checkbox } from "../components/checkbox/Checkbox";
+import { Checkbox } from "../../components/checkbox/Checkbox";
 import { AuthFormWrap } from "./styled-elements";
 
 function SignUp() {
@@ -66,7 +66,7 @@ function SignUp() {
               <ul className="ninjadash-social-login">
                 <li>
                   <Link className="google-social" to="#">
-                    <ReactSVG src={require(`../../../../static/img/icon/google-plus.svg`).default} />
+                    <ReactSVG src={require(`../../static/icon/google-plus.svg`).default} />
                   </Link>
                 </li>
                 <li>

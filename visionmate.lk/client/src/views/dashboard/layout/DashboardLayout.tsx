@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Layout, Row, theme} from 'antd';
-import {RootState} from "../../redux/store";
-import { LayoutProps } from "../../types/layout-types";
+import {RootState} from "../../../redux/store";
+import { LayoutProps } from "../../../types/layout-types";
 import {FooterStyle, LayoutContainer, SmallScreenAuthInfo, TopMenuSearch} from "./styled-elements";
 import {Link, NavLink} from "react-router-dom";
 import TopMenu from "./TopMenu";
-import AuthInfo from "../../auth/layout/AuthInfo";
+import AuthInfo from "../../auth-views/layout/AuthInfo";
 import Search from "./Search";
 import {ThemeProvider} from "styled-components";
 import SideMenuItem from "./SideMenuItem";
-import {useAppSelector} from "../../hooks/reduxHooks";
+import {useAppSelector} from "../../../hooks/reduxHooks";
 
 const {Header, Sider, Content} = Layout;
 
@@ -104,11 +104,11 @@ function DashboardLayout({children}: LayoutProps) {
                         <div className="ninjadash-header-content__left">
                             <div className="navbar-brand align-cener-v">
                                 <Link to="/admin" className={topMenu && window.innerWidth > 991 ? 'ninjadash-logo top-menu' : 'ninjadash-logo'}>
-                                    <img src={layoutMode === 'lightMode' ? require(`../../static/img/logo_dark.svg`).default : require(`../../static/img/logo_white.svg`).defaul} alt=""/>
+                                    <img src={layoutMode === 'lightMode' ? require(`../../../../static/img/logo_dark.svg`).default : require(`../../../static/img/logo_white.svg`).defaul} alt=""/>
                                 </Link>
                                 {!topMenu || window.innerWidth <= 991 ? (
                                     <Button type="link" onClick={toggleCollapsed}>
-                                        <img src={require(`../../static/icon/${collapsed ? 'left-bar.svg' : 'left-bar.svg'}`)} alt="menu"/>
+                                        <img src={require(`../../../static/icon/${collapsed ? 'left-bar.svg' : 'left-bar.svg'}`)} alt="menu"/>
                                     </Button>
                                 ) : null}
                             </div>

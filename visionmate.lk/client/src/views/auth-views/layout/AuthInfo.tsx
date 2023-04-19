@@ -1,10 +1,10 @@
 import {Avatar} from 'antd';
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import Header from "../../components/heading/Header";
+import Header from "../../../components/heading/Header";
 import {InfoWrapper, NavAuth, UserDropDown} from "./styled-elements";
-import {Dropdown} from "../../components/dropdown/Dropdown";
-import {Popover} from "../../components/popup/Popup";
+import {Dropdown} from "../../../components/dropdown/Dropdown";
+import {Popover} from "../../../components/popup/Popup";
 import Search from "../../dashboard/layout/Search";
 
 
@@ -28,7 +28,7 @@ const AuthInfo = React.memo(() => {
         <UserDropDown>
             <div className="user-dropdown">
                 <figure className="user-dropdown__info">
-                    <img src={require('../../static/img/avatar/chat-auth.png')} alt=""/>
+                    <img src={require('../../../static/img/avatar/chat-auth.png')} alt=""/>
                     <figcaption>
                         <Header as="h5">Abdullah Bin Talha</Header>
                         <p>UI Expert</p>
@@ -60,7 +60,7 @@ const AuthInfo = React.memo(() => {
     const country = (
         <NavAuth>
             <Link onClick={(e) => onFlagChangeHandle('en', e)} to="#">
-                <img src={require('../../static/img/flag/en.png')} alt=""/>
+                <img src={require('../../../../static/img/flag/en.png')} alt=""/>
                 <span>English</span>
             </Link>
         </NavAuth>
@@ -75,7 +75,7 @@ const AuthInfo = React.memo(() => {
             <div className="ninjadash-nav-actions__item ninjadash-nav-actions__language">
                 <Dropdown placement="bottomRight" content={country} trigger="click">
                     <Link to="#" className="ninjadash-nav-action-link">
-                        <img src={require(`../../static/img/flag/${flag}.png`)} alt=""/>
+                        <img src={require(`../../../static/img/flag/${flag}.png`)} alt=""/>
                     </Link>
                 </Dropdown>
             </div>
