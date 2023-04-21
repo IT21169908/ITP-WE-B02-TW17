@@ -1,7 +1,8 @@
 import {Avatar} from 'antd';
 import React, {useState} from 'react';
+import { ArrowDown, BoxArrowRight, PersonCircle } from "react-bootstrap-icons";
 import {Link} from 'react-router-dom';
-import Header from "../../../components/heading/Header";
+import Heading from "../../../components/heading/Heading";
 import {InfoWrapper, NavAuth, UserDropDown} from "./styled-elements";
 import {Dropdown} from "../../../components/dropdown/Dropdown";
 import {Popover} from "../../../components/popup/Popup";
@@ -30,19 +31,19 @@ const AuthInfo = React.memo(() => {
                 <figure className="user-dropdown__info">
                     <img src={require('../../../static/img/avatar/chat-auth.png')} alt=""/>
                     <figcaption>
-                        <Header as="h5">Abdullah Bin Talha</Header>
+                        <Heading as="h5">Abdullah Bin Talha</Heading>
                         <p>UI Expert</p>
                     </figcaption>
                 </figure>
                 <ul className="user-dropdown__links">
                     <li>
                         <Link to="#">
-                            {/*<UilUser/>*/} Profile
+                            <PersonCircle /> Profile
                         </Link>
                     </li>
                 </ul>
                 <Link className="user-dropdown__bottomAction" onClick={SignOut} to="#">
-                    {/* <UilSignout/> */}Sign Out
+                    <BoxArrowRight /> Sign Out
                 </Link>
             </div>
         </UserDropDown>
@@ -60,7 +61,7 @@ const AuthInfo = React.memo(() => {
     const country = (
         <NavAuth>
             <Link onClick={(e) => onFlagChangeHandle('en', e)} to="#">
-                <img src={require('../../../../static/img/flag/en.png')} alt=""/>
+                <img src={require('../../../static/img/flag/en.png')} alt=""/>
                 <span>English</span>
             </Link>
         </NavAuth>
@@ -84,7 +85,7 @@ const AuthInfo = React.memo(() => {
                     <Link to="#" className="ninjadash-nav-action-link">
                         <Avatar src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png"/>
                         <span className="ninjadash-nav-actions__author--name">Md. Rafiq</span>
-                        {/*<UilAngleDown/>*/}
+                        <ArrowDown />
                     </Link>
                 </Popover>
             </div>

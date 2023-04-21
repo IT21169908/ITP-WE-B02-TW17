@@ -1,5 +1,6 @@
 import {Form, Input} from 'antd';
 import React, {useState} from 'react';
+import { Search, X } from "react-bootstrap-icons";
 import {Link} from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 
@@ -43,10 +44,10 @@ const SearchBar = React.memo(() => {
                 </Form>
             </div>
             <Link to="/" onClick={(e) => openSearchbar(e)} className="ninjadash-search-icon">
-                {/*<UilSearch/>*/}
+                <Search />
             </Link>
             <Link to="/" onClick={(e) => closeSearchbar(e)} className="ninjadash-close-icon">
-                {/*<UilTimes/>*/}
+                <X />
             </Link>
         </div>
     );

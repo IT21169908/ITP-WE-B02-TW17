@@ -1,4 +1,5 @@
 import React, {useCallback, useState} from 'react';
+import { Facebook } from "react-bootstrap-icons";
 import {Link, NavLink, useNavigate} from 'react-router-dom';
 import {Button, Col, Form, Input, Row} from "antd";
 import {AuthFormWrap} from './styled-elements';
@@ -74,7 +75,7 @@ const Login = () => {
                                 <li>
                                     <Link className="facebook-social" to="#">
                                         Facebook
-                                        {/*<UilFacebook/>*/}
+                                        <Facebook />
                                     </Link>
                                 </li>
                             </ul>

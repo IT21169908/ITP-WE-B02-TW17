@@ -9,7 +9,7 @@ import RootAuthRoutes from "./routes/auth/RootAuthRoutes";
 import GuestRoutes from "./routes/GuestRoutes";
 import 'antd/dist/reset.css';
 import './styles/index.scss';
-import {useAppDispatch, useAppSelector} from "./hooks/reduxHooks";
+import {useAppDispatch, useAppSelector} from "./hooks/redux-hooks";
 import {fetchUser} from "./redux/users/actions";
 import PreLoader from "./components/preloader/PreLoader";
 
@@ -17,7 +17,7 @@ const {themeColor} = config;
 
 const ProviderConfig = () => {
     const dispatch = useAppDispatch();
-    const isLoggedIn = false;
+    const isLoggedIn = true;
     const isLoaded = true;
 
     const {rtl, topMenu, mainContent} = useAppSelector((state: RootState) => {

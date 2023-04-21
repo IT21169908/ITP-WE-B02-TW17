@@ -1,4 +1,5 @@
 import React, {useLayoutEffect} from 'react';
+import { Calendar3, Chat, Envelope } from "react-bootstrap-icons";
 import {NavLink, Link} from 'react-router-dom';
 
 import {TopMenuStyle} from './styled-elements';
@@ -79,7 +80,7 @@ function TopMenu() {
                         <ul className="subMenu">
                             <li className="has-subMenu-left">
                                 <Link to="#" className="parent">
-                                    {/*<UilEnvelope/>*/} icon
+                                    <Envelope/> icon
                                     Email
                                 </Link>
                                 <ul className="subMenu">
@@ -97,14 +98,14 @@ function TopMenu() {
                             </li>
                             <li>
                                 <NavLink onClick={addParentActive} to={`${path}/main/chat/private/rofiq@gmail.com`}>
-                                    {/*<UilChat/>*/} icon
+                                    <Chat /> icon
                                     Chat
                                 </NavLink>
                             </li>
 
                             <li>
                                 <NavLink onClick={addParentActive} to={`${path}/app/calendar/month`}>
-                                    {/*<UilCalendarAlt/>*/} icon
+                                    <Calendar3 /> icon
                                     Calendar
                                 </NavLink>
                             </li>

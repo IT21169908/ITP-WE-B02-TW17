@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 import { Row, Col, Form, Input, Button } from 'antd';
-// import UilFacebook from '@iconscout/react-unicons/icons/uil-facebook-f';
-// import UilTwitter from '@iconscout/react-unicons/icons/uil-twitter';
-// import UilGithub from '@iconscout/react-unicons/icons/uil-github';
+import { Facebook, Twitter, Github } from 'react-bootstrap-icons';
 
 import { Checkbox } from "../../components/checkbox/Checkbox";
 import { AuthFormWrap } from "./styled-elements";
@@ -71,17 +69,17 @@ function SignUp() {
                 </li>
                 <li>
                   <Link className="facebook-social" to="#">
-                    {/*<UilFacebook />*/}
+                    <Facebook />
                   </Link>
                 </li>
                 <li>
                   <Link className="twitter-social" to="#">
-                    {/*<UilTwitter />*/}
+                    <Twitter />
                   </Link>
                 </li>
                 <li>
                   <Link className="github-social" to="#">
-                    {/*<UilGithub />*/}
+                    <Github />
                   </Link>
                 </li>
               </ul>
