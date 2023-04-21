@@ -18,6 +18,7 @@
     "@types/styled-components": "^5.1.26",
     "antd": "^5.4.2",
     "bootstrap": "^5.2.3",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-bootstrap-icons": "^1.10.3",
