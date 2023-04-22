@@ -18,11 +18,14 @@
     "@types/styled-components": "^5.1.26",
     "antd": "^5.4.2",
     "bootstrap": "^5.2.3",
+    "date-fns": "^2.29.3",
+    "moment": "^2.29.4",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-bootstrap-icons": "^1.10.3",
     "react-custom-scrollbars-2": "^4.5.0",
+    "react-date-range": "^1.4.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^12.2.0",
     "react-redux": "^8.0.5",
@@ -59,6 +62,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-date-range": "^1.4.4",
     "sass": "^1.62.0"
   }
 }
