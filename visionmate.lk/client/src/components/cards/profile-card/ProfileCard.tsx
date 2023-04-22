@@ -3,7 +3,7 @@ import { faDribbble, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-
 import propTypes from "prop-types";
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ProfileCardProps } from "../../../types/card-types/profile-card-types";
+import { ProfileCardProps } from "../../../types/card-types";
 import { ProfileCardWrapper } from './styled-elements';
 
 function ProfileCard({ image, bgImage, title, tag }: ProfileCardProps) {

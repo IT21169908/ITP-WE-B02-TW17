@@ -2,7 +2,7 @@ import propTypes from "prop-types";
 import React from 'react';
 import { ThreeDots, Eye, Heart } from "react-bootstrap-icons";
 import { Link } from 'react-router-dom';
-import { BannerCardProps } from "../../../types/card-types/banner-card-types";
+import { BannerCardProps } from "../../../types/card-types";
 import { Dropdown } from "../../dropdown/Dropdown";
 import { CardWrapper, ImageUrl } from "./styled-elements";
 

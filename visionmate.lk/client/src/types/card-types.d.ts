@@ -14,3 +14,10 @@ export interface BannerCardProps {
     item: IBannerCard;
 }
 
+export interface ProfileCardProps {
+    image?: string;
+    bgImage?: string;
+    title?: string;
+    tag?: string;
+}
+
