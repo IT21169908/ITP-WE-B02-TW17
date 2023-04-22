@@ -1,35 +1,25 @@
-import {Menu} from 'antd';
-import React, {ReactNode} from 'react';
+import {Menu, MenuProps, Switch} from 'antd';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {NavLink} from 'react-router-dom';
 import {changeDirectionMode, changeLayoutMode, changeMenuMode} from '../../../redux/theme-layout/actionCreator';
-import {ItemType} from "antd/es/menu/hooks/useItems";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux-hooks";
 import {RootState} from "../../../redux/store";
+import {GraphUpArrow, HouseCheckFill} from "react-bootstrap-icons";
 
 function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
-    // const t = (text: string) => {
-    //     return text;
-    // }
+    type MenuItem = Required<MenuProps>['items'][number];
 
-    interface getItemInterface {
-        label: ReactNode,
-        key: string,
-        icon: ReactNode,
-        children?: ItemType[],
-        type?: string
-    }
-
-    function getItem(label: ReactNode, key: string, icon: ReactNode, children?: ItemType[], type?: string): getItemInterface {
+    function getItem(label: React.ReactNode, key?: React.Key | null, icon?: React.ReactNode, children?: MenuItem[], type?: 'group',): MenuItem {
         return {
             key,
             icon,
             children,
             label,
             type,
-        };
+        } as MenuItem;
     }
 
     const {topMenu} = useAppSelector((state: RootState) => {
@@ -90,8 +80,20 @@ function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
         document.body.classList.remove('dark-mode');
     };
 
-    const items = [
-        getItem(t('dashboard'), 'dashboard', !topMenu && <></>,
+    const changeTheme = (value: boolean) => {
+        if (value) {
+            toggleCollapsed();
+            darkmodeActivated();
+            changeLayout('darkMode');
+        } else {
+            toggleCollapsed();
+            darkmodeDiactivated();
+            changeLayout('lightMode');
+        }
+    };
+
+    const items: MenuProps['items'] = [
+        getItem(t('dashboard'), 'dashboard', !topMenu && <HouseCheckFill/>,
             [
                 getItem(
                     <NavLink onClick={toggleCollapsed} to={`${path}`}>
@@ -102,28 +104,46 @@ function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
                 ),
             ]
         ),
+        getItem(
+            <NavLink onClick={toggleCollapsed} to={`${path}/pages/changelog`}>
+                {t('changelog')}
+                <span className="badge badge-primary menuItem">1.0</span>
+            </NavLink>,
+            'changelog',
+            !topMenu && <GraphUpArrow/>,
+        ),
+        {type: 'divider'},
     ];
 
     return (
-        <Menu
-            onOpenChange={onOpenChange}
-            onClick={onClick}
-            mode={!topMenu || window.innerWidth <= 991 ? 'inline' : 'horizontal'}
-            // // eslint-disable-next-line no-nested-ternary
-            defaultSelectedKeys={
-                !topMenu
-                    ? [
-                        `${
-                            mainPathSplit.length === 1 ? 'home' : mainPathSplit.length === 2 ? mainPathSplit[1] : mainPathSplit[2]
-                        }`,
-                    ]
-                    : []
-            }
-            defaultOpenKeys={!topMenu ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`] : []}
-            overflowedIndicator={<>overflowedIndicator</>}
-            openKeys={openKeys}
-            items={items}
-        />
+        <>
+            <Menu
+                onOpenChange={onOpenChange}
+                onClick={onClick}
+                style={{width: '100%'}}
+                mode={!topMenu || window.innerWidth <= 991 ? 'inline' : 'horizontal'}
+                // // eslint-disable-next-line no-nested-ternary
+                defaultSelectedKeys={
+                    !topMenu
+                        ? [
+                            `${
+                                mainPathSplit.length === 1 ? 'home' : mainPathSplit.length === 2 ? mainPathSplit[1] : mainPathSplit[2]
+                            }`,
+                        ]
+                        : []
+                }
+                defaultOpenKeys={!topMenu ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`] : []}
+                overflowedIndicator={<>overflowedIndicator</>}
+                openKeys={openKeys}
+                items={items}
+            />
+
+            <Switch
+                onChange={changeTheme}
+                checkedChildren="Dark"
+                unCheckedChildren="Light"
+            /> Theme
+        </>
     );
 }
 

@@ -87,7 +87,7 @@ function SignUp() {
           </div>
           <div className="ninjadash-authentication-bottom">
             <p>
-              Already have an account?<Link to="/">Sign In</Link>
+              Already have an account?<Link to="/login">Sign In</Link>
             </p>
           </div>
         </AuthFormWrap>

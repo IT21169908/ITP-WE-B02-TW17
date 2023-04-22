@@ -1,16 +1,18 @@
 import {Avatar} from 'antd';
 import React, {useState} from 'react';
-import { ArrowDown, BoxArrowRight, PersonCircle } from "react-bootstrap-icons";
+import {ArrowDown, BoxArrowRight, PersonCircle} from "react-bootstrap-icons";
 import {Link} from 'react-router-dom';
 import Heading from "../../../components/heading/Heading";
 import {InfoWrapper, NavAuth, UserDropDown} from "./styled-elements";
 import {Dropdown} from "../../../components/dropdown/Dropdown";
 import {Popover} from "../../../components/popup/Popup";
 import Search from "../../dashboard/layout/Search";
+import {useTranslation} from "react-i18next";
 
 
 const AuthInfo = React.memo(() => {
     //const dispatch = useDispatch();
+    const {i18n} = useTranslation();
 
     const [state, setState] = useState({
         flag: 'en',
@@ -38,12 +40,12 @@ const AuthInfo = React.memo(() => {
                 <ul className="user-dropdown__links">
                     <li>
                         <Link to="#">
-                            <PersonCircle /> Profile
+                            <PersonCircle/> Profile
                         </Link>
                     </li>
                 </ul>
                 <Link className="user-dropdown__bottomAction" onClick={SignOut} to="#">
-                    <BoxArrowRight /> Sign Out
+                    <BoxArrowRight/> Sign Out
                 </Link>
             </div>
         </UserDropDown>
@@ -55,7 +57,7 @@ const AuthInfo = React.memo(() => {
             ...state,
             flag: value,
         });
-        //i18n.changeLanguage(value);
+        i18n.changeLanguage(value);
     };
 
     const country = (
@@ -63,6 +65,10 @@ const AuthInfo = React.memo(() => {
             <Link onClick={(e) => onFlagChangeHandle('en', e)} to="#">
                 <img src={require('../../../static/img/flag/en.png')} alt=""/>
                 <span>English</span>
+            </Link>
+            <Link onClick={(e) => onFlagChangeHandle('si', e)} to="#">
+                <img src={require('../../../static/img/flag/si.png')} alt=""/>
+                <span>Sinhala</span>
             </Link>
         </NavAuth>
     );
@@ -85,7 +91,7 @@ const AuthInfo = React.memo(() => {
                     <Link to="#" className="ninjadash-nav-action-link">
                         <Avatar src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png"/>
                         <span className="ninjadash-nav-actions__author--name">Md. Rafiq</span>
-                        <ArrowDown />
+                        <ArrowDown/>
                     </Link>
                 </Popover>
             </div>
