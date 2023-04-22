@@ -9,7 +9,7 @@ import Search from "./Search";
 import { TopMenuSearch } from "./styled-elements";
 import TopMenu from "./TopMenu";
 import logoDark from'../../../static/logo-dark.png';
-import logoWhite from'../../../static/logo-dark.png';
+import logoWhite from'../../../static/logo-white.png';
 
 const {Header: AntdHeader} = Layout;
 
