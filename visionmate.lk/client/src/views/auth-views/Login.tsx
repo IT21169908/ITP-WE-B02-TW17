@@ -74,7 +74,6 @@ const Login = () => {
                                 </li>
                                 <li>
                                     <Link className="facebook-social" to="#">
-                                        Facebook
                                         <Facebook />
                                     </Link>
                                 </li>

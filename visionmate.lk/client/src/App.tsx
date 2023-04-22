@@ -43,20 +43,7 @@ const ProviderConfig = () => {
             controller.abort();
         };
     }, [dispatch, path]);
-
-    // useEffect(() => {
-    //     let unmounted = false;
-    //     if (!unmounted) {
-    //         setPath(window.location.pathname);
-    //     }
-    //     dispatch(fetchUser('6437e0efe6f77939eaab1e43'))
-    //     // dispatch(removeUser())
-    //     // dispatch(getUser('6437e0efe6f77939eaab1e43'));
-    //     return () => {
-    //         unmounted = true
-    //     };
-    // }, [dispatch, path]);
-
+ 
     return (
         <ConfigProvider direction={rtl ? 'rtl' : 'ltr'}>
             <ThemeProvider theme={{...themeColor, rtl, topMenu, mainContent}}>

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Layout, Row, theme } from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Col, Layout, Row, theme} from 'antd';
 import Scrollbars from "react-custom-scrollbars-2";
-import { RootState } from "../../../redux/store";
-import { LayoutProps } from "../../../types/layout-types";
+import {RootState} from "../../../redux/store";
+import {LayoutProps} from "../../../types/layout-types";
 import Footer from "./Footer";
 import Header from "./Header";
-import { LayoutContainer, SmallScreenAuthInfo } from "./styled-elements";
+import {LayoutContainer, SmallScreenAuthInfo} from "./styled-elements";
 import AuthInfo from "../../auth-views/layout/AuthInfo";
-import { ThemeProvider } from "styled-components";
+import {ThemeProvider} from "styled-components";
 import SideMenuItem from "./SideMenuItem";
 import { useAppSelector } from "../../../hooks/redux-hooks";
 
@@ -20,7 +20,9 @@ function DashboardLayout({children}: LayoutProps) {
     const ChangeLayoutMode = false;
     const {layoutMode, topMenu, rtl} = useAppSelector((state: RootState) => {
         return {
-            rtl: state.ChangeLayoutMode.rtlData, topMenu: state.ChangeLayoutMode.topMenu, layoutMode: state.ChangeLayoutMode.mode,
+            rtl: state.ChangeLayoutMode.rtlData,
+            topMenu: state.ChangeLayoutMode.topMenu,
+            layoutMode: state.ChangeLayoutMode.mode,
         };
     });
 
@@ -48,7 +50,8 @@ function DashboardLayout({children}: LayoutProps) {
     const onShowHide = () => setHide(!hide);
 
     const SideBarStyle = {
-        margin: '63px 0 0 0', padding: `${!rtl ? '20px 20px 55px 0' : '20px 0 55px 20px'}`, //overflowY: 'auto',
+        margin: '63px 0 0 0',
+        padding: `${!rtl ? '20px 20px 55px 0' : '20px 0 55px 20px'}`, //overflowY: 'auto',
         height: '100vh', //position: 'fixed',
         [left]: 0, zIndex: 988,
     };
@@ -57,40 +60,42 @@ function DashboardLayout({children}: LayoutProps) {
         const customStyle = {
             marginRight: 'auto', [rtl ? 'marginLeft' : 'marginRight']: '-17px',
         };
-        return <div style={{...style, ...customStyle}} />;
+        return <div style={{...style, ...customStyle}}/>;
     };
 
     const renderThumbVertical = ({style}: { style: object }) => {
         const thumbStyle = {
             borderRadius: 6, backgroundColor: ChangeLayoutMode ? '#ffffff16' : '#f1f2f6', [left]: '2px',
         };
-        return <div style={{...style, ...thumbStyle}} />;
+        return <div style={{...style, ...thumbStyle}}/>;
     };
 
     const renderThumbHorizontal = ({style}: { style: object }) => {
         const thumbStyle = {
             borderRadius: 6, backgroundColor: ChangeLayoutMode ? '#ffffff16' : '#f1f2f6',
         };
-        return <div style={{...style, ...thumbStyle}} />;
+        return <div style={{...style, ...thumbStyle}}/>;
     };
 
-    return (<LayoutContainer>
+    return (
+        <LayoutContainer>
             <Layout className="layout">
                 <Header collapsed={collapsed} layoutMode={layoutMode}
-                        onShowHide={onShowHide} rtl={rtl} toggleCollapsed={toggleCollapsed} topMenu={topMenu} />
+                        onShowHide={onShowHide} rtl={rtl} toggleCollapsed={toggleCollapsed} topMenu={topMenu}/>
                 <div className="ninjadash-header-more">
                     <Row>
                         <Col md={0} sm={24} xs={24}>
                             <div className="ninjadash-header-more-inner">
                                 <SmallScreenAuthInfo hide={hide}>
-                                    <AuthInfo />
+                                    <AuthInfo/>
                                 </SmallScreenAuthInfo>
                             </div>
                         </Col>
                     </Row>
                 </div>
 
-                {!topMenu || window.innerWidth <= 991 ? (<ThemeProvider theme={theme}>
+                {!topMenu || window.innerWidth <= 991 ? (
+                    <ThemeProvider theme={theme}>
                         <Sider
                             width={280}
                             style={SideBarStyle}
@@ -105,19 +110,23 @@ function DashboardLayout({children}: LayoutProps) {
                                 renderThumbHorizontal={renderThumbHorizontal}
                                 renderThumbVertical={renderThumbVertical}
                                 renderView={renderView}
-                                renderTrackVertical={(props) => <div {...props} className="ninjadash-track-vertical" />}
+                                renderTrackVertical={(props) => <div {...props} className="ninjadash-track-vertical"/>}
                             >
-                                <SideMenuItem toggleCollapsed={toggleCollapsedMobile} />
+                                <SideMenuItem toggleCollapsed={toggleCollapsedMobile}/>
                             </Scrollbars>
                         </Sider>
-                    </ThemeProvider>) : null}
+                    </ThemeProvider>
+                ) : null}
+
                 <Content>
                     {children}
-                    <Footer />
+                    <Footer/>
                 </Content>
+
             </Layout>
-            {window.innerWidth <= 991 ? (<span className={collapsed ? 'ninjadash-shade' : 'ninjadash-shade show'} onClick={toggleCollapsed} />) : ('')}
-        </LayoutContainer>);
+            {window.innerWidth <= 991 ? (<span className={collapsed ? 'ninjadash-shade' : 'ninjadash-shade show'} onClick={toggleCollapsed}/>) : ('')}
+        </LayoutContainer>
+    );
 }
 
 export default DashboardLayout;
