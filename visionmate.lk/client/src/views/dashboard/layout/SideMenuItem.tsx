@@ -5,7 +5,7 @@ import {NavLink} from 'react-router-dom';
 import {changeDirectionMode, changeLayoutMode, changeMenuMode} from '../../../redux/theme-layout/actionCreator';
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux-hooks";
 import {RootState} from "../../../redux/store";
-import {GraphUpArrow, HouseCheckFill} from "react-bootstrap-icons";
+import {Eyeglasses, GraphUpArrow, HouseCheckFill} from "react-bootstrap-icons";
 
 function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
     const {t} = useTranslation();
@@ -93,24 +93,23 @@ function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
     };
 
     const items: MenuProps['items'] = [
-        getItem(t('dashboard'), 'dashboard', !topMenu && <HouseCheckFill/>,
-            [
+        getItem(
+            <NavLink onClick={toggleCollapsed} to={`${path}`}>
+                {t("dashboard")}
+                <span className="badge badge-primary menuItem">2</span>
+            </NavLink>,
+            'dashboard',
+            !topMenu && <HouseCheckFill/>,
+        ),
+        getItem(t("Manage Spectacles"), 'spectacles', <Eyeglasses/>, [
                 getItem(
-                    <NavLink onClick={toggleCollapsed} to={`${path}`}>
-                        {t('demo')} {t('1')}
+                    <NavLink onClick={toggleCollapsed} to={`${path}/spectacles/create`}>
+                        {t('Create')}
                     </NavLink>,
-                    'demo-1',
+                    'spectacles.create',
                     null,
                 ),
             ]
-        ),
-        getItem(
-            <NavLink onClick={toggleCollapsed} to={`${path}/pages/changelog`}>
-                {t('changelog')}
-                <span className="badge badge-primary menuItem">1.0</span>
-            </NavLink>,
-            'changelog',
-            !topMenu && <GraphUpArrow/>,
         ),
         {type: 'divider'},
     ];

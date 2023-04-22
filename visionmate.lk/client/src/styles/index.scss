@@ -57,3 +57,26 @@ ul {
 :where(.css-dev-only-do-not-override-htwhyh).ant-menu-vertical .ant-menu-submenu-title {
   width: 100% !important;
 }
+
+.ant-layout-sider .ant-layout-sider-children .ant-menu .ant-menu-submenu > .ant-menu-submenu-title {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.ant-form-horizontal .ninjadash-form-action button {
+  padding: 0 19px !important;
+}
+
+.ant-btn-primary {
+  color: #fff;
+  border-color: #8231D3;
+  background: #8231D3;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.user-dropdown .user-dropdown__bottomAction {
+  width: calc(100% + 24px) !important;
+  left: -12px !important;
+}
