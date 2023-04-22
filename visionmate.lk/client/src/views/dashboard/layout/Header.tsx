@@ -8,6 +8,8 @@ import AuthInfo from "../../auth-views/layout/AuthInfo";
 import Search from "./Search";
 import { TopMenuSearch } from "./styled-elements";
 import TopMenu from "./TopMenu";
+import logoDark from'../../../static/logo-dark.png';
+import logoWhite from'../../../static/logo-white.png';
 
 const {Header: AntdHeader} = Layout;
 
@@ -24,7 +26,7 @@ function Header({rtl, topMenu, layoutMode, toggleCollapsed, collapsed, onShowHid
                     <div className="ninjadash-header-content__left">
                         <div className="navbar-brand align-cener-v">
                             <Link to="/admin" className={topMenu && window.innerWidth > 991 ? 'ninjadash-logo top-menu' : 'ninjadash-logo'}>
-                                <img src={layoutMode === 'lightMode' ? require(`../../../static/img/logo_dark.svg`).default : require(`../../../static/img/logo_white.svg`).default} alt=""/>
+                                <img src={layoutMode === 'lightMode' ? logoDark : logoWhite} alt=""/>
                             </Link>
                             {!topMenu || window.innerWidth <= 991 ? (
                                 <Button type="link" onClick={toggleCollapsed}>

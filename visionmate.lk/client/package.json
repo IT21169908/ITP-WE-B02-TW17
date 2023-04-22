@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/pro-layout": "^7.10.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
@@ -20,7 +21,7 @@
     "@types/react-svg": "^5.0.0",
     "@types/redux-thunk": "^2.1.0",
     "@types/styled-components": "^5.1.26",
-    "antd": "^5.4.2",
+    "antd": "^5.4.4",
     "bootstrap": "^5.2.3",
     "date-fns": "^2.29.3",
     "moment": "^2.29.4",

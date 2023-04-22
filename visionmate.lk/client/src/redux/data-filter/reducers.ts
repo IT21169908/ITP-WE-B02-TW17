@@ -1,4 +1,5 @@
 import actions from './actions';
+import {AnyAction} from "@reduxjs/toolkit";
 
 const {
   DATA_TABLE_READ_BEGIN,
@@ -18,7 +19,7 @@ const initialState = {
   error: null,
 };
 
-const dataTableReducer = (state = initialState, action) => {
+const dataTableReducer = (state = initialState, action: AnyAction) => {
   const { type, data, err } = action;
   switch (type) {
     case DATA_TABLE_READ_BEGIN:

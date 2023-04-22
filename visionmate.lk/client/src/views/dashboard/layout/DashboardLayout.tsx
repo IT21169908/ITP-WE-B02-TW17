@@ -9,7 +9,7 @@ import {LayoutContainer, SmallScreenAuthInfo} from "./styled-elements";
 import AuthInfo from "../../auth-views/layout/AuthInfo";
 import {ThemeProvider} from "styled-components";
 import SideMenuItem from "./SideMenuItem";
-import { useAppSelector } from "../../../hooks/redux-hooks";
+import {useAppSelector} from "../../../hooks/redux-hooks";
 
 const {Sider, Content} = Layout;
 
@@ -49,13 +49,6 @@ function DashboardLayout({children}: LayoutProps) {
 
     const onShowHide = () => setHide(!hide);
 
-    const SideBarStyle = {
-        margin: '63px 0 0 0',
-        padding: `${!rtl ? '20px 20px 55px 0' : '20px 0 55px 20px'}`, //overflowY: 'auto',
-        height: '100vh', //position: 'fixed',
-        [left]: 0, zIndex: 988,
-    };
-
     const renderView = ({style}: { style: object }) => {
         const customStyle = {
             marginRight: 'auto', [rtl ? 'marginLeft' : 'marginRight']: '-17px',
@@ -94,35 +87,48 @@ function DashboardLayout({children}: LayoutProps) {
                     </Row>
                 </div>
 
-                {!topMenu || window.innerWidth <= 991 ? (
-                    <ThemeProvider theme={theme}>
-                        <Sider
-                            width={280}
-                            style={SideBarStyle}
-                            collapsed={collapsed}
-                            theme={layoutMode === 'lightMode' ? 'light' : 'dark'}
-                        >
-                            <Scrollbars
-                                className="custom-scrollbar"
-                                autoHide
-                                autoHideTimeout={500}
-                                autoHideDuration={200}
-                                renderThumbHorizontal={renderThumbHorizontal}
-                                renderThumbVertical={renderThumbVertical}
-                                renderView={renderView}
-                                renderTrackVertical={(props) => <div {...props} className="ninjadash-track-vertical"/>}
+                <Layout>
+                    {!topMenu || window.innerWidth <= 991 ? (
+                        <ThemeProvider theme={theme}>
+                            <Sider
+                                width={280}
+                                style={{
+                                    margin: '63px 0 0 0',
+                                    padding: `${!rtl ? '20px 20px 55px 0' : '20px 0 55px 20px'}`,
+                                    height: '100vh',
+                                    position: "fixed",
+                                    overflow: 'auto',
+                                    left: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    [left]: 0,
+                                    zIndex: 988,
+                                }}
+                                collapsed={collapsed}
+                                theme={layoutMode === 'lightMode' ? 'light' : 'dark'}
                             >
-                                <SideMenuItem toggleCollapsed={toggleCollapsedMobile}/>
-                            </Scrollbars>
-                        </Sider>
-                    </ThemeProvider>
-                ) : null}
-
-                <Content>
-                    {children}
-                    <Footer/>
-                </Content>
-
+                                <Scrollbars
+                                    className="custom-scrollbar"
+                                    autoHide
+                                    autoHideTimeout={500}
+                                    autoHideDuration={200}
+                                    renderThumbHorizontal={renderThumbHorizontal}
+                                    renderThumbVertical={renderThumbVertical}
+                                    renderView={renderView}
+                                    renderTrackVertical={(props) => <div {...props} className="ninjadash-track-vertical"/>}
+                                >
+                                    <SideMenuItem toggleCollapsed={toggleCollapsedMobile}/>
+                                </Scrollbars>
+                            </Sider>
+                        </ThemeProvider>
+                    ) : null}
+                    <Layout className="atbd-main-layout">
+                        <Content>
+                            {children}
+                            <Footer/>
+                        </Content>
+                    </Layout>
+                </Layout>
             </Layout>
             {window.innerWidth <= 991 ? (<span className={collapsed ? 'ninjadash-shade' : 'ninjadash-shade show'} onClick={toggleCollapsed}/>) : ('')}
         </LayoutContainer>

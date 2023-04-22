@@ -34,8 +34,8 @@ const AuthInfo = React.memo(() => {
                 <figure className="user-dropdown__info">
                     <img src={require('../../../static/img/avatar/chat-auth.png')} alt=""/>
                     <figcaption>
-                        <Heading as="h5">Abdullah Bin Talha</Heading>
-                        <p>UI Expert</p>
+                        <Heading as="h5">John doe</Heading>
+                        <p>Admin</p>
                     </figcaption>
                 </figure>
                 <ul className="user-dropdown__links">
