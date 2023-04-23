@@ -1,14 +1,14 @@
-import {Menu, MenuProps, Switch} from 'antd';
+import {Menu, MenuProps} from 'antd';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {NavLink} from 'react-router-dom';
-import {changeDirectionMode, changeLayoutMode, changeMenuMode} from '../../../redux/theme-layout/actionCreator';
+import {changeDirectionMode, changeMenuMode} from '../../../redux/theme-layout/actionCreator';
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux-hooks";
 import {RootState} from "../../../redux/store";
-import {Eyeglasses, GraphUpArrow, HouseCheckFill} from "react-bootstrap-icons";
+import {Eyeglasses, HouseCheckFill} from "react-bootstrap-icons";
 
-function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
-    const {t} = useTranslation();
+function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
+    const {t: translate} = useTranslation();
     const dispatch = useAppDispatch();
     type MenuItem = Required<MenuProps>['items'][number];
 
@@ -46,9 +46,6 @@ function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
         if (item.keyPath.length === 1) setOpenKeys([]);
     };
 
-    const changeLayout = (mode: string) => {
-        dispatch(changeLayoutMode(mode));
-    };
     const changeNavbar = (topMode: boolean) => {
         const html = document.querySelector('html');
         if (html) {
@@ -72,39 +69,19 @@ function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
         dispatch(changeDirectionMode(rtlMode));
     };
 
-    const darkmodeActivated = () => {
-        document.body.classList.add('dark-mode');
-    };
-
-    const darkmodeDiactivated = () => {
-        document.body.classList.remove('dark-mode');
-    };
-
-    const changeTheme = (value: boolean) => {
-        if (value) {
-            toggleCollapsed();
-            darkmodeActivated();
-            changeLayout('darkMode');
-        } else {
-            toggleCollapsed();
-            darkmodeDiactivated();
-            changeLayout('lightMode');
-        }
-    };
-
     const items: MenuProps['items'] = [
         getItem(
             <NavLink onClick={toggleCollapsed} to={`${path}`}>
-                {t("dashboard")}
+                {translate("dashboard")}
                 <span className="badge badge-primary menuItem">2</span>
             </NavLink>,
             'dashboard',
             !topMenu && <HouseCheckFill/>,
         ),
-        getItem(t("Manage Spectacles"), 'spectacles', <Eyeglasses/>, [
+        getItem(translate("Manage Spectacles"), 'spectacles', <Eyeglasses/>, [
                 getItem(
                     <NavLink onClick={toggleCollapsed} to={`${path}/spectacles/create`}>
-                        {t('Create')}
+                        {translate('Create')}
                     </NavLink>,
                     'spectacles.create',
                     null,
@@ -136,15 +113,9 @@ function MenuItems({toggleCollapsed}: { toggleCollapsed: () => void }) {
                 openKeys={openKeys}
                 items={items}
             />
-
-            <Switch
-                onChange={changeTheme}
-                checkedChildren="Dark"
-                unCheckedChildren="Light"
-            /> Theme
         </>
     );
 }
 
 
-export default MenuItems;
+export default SideMenuItem;

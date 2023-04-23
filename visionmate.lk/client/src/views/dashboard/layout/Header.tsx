@@ -4,7 +4,7 @@ import { ThreeDotsVertical } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import {Layout} from 'antd';
 import { DashboardHeaderProps } from "../../../types/header-types";
-import AuthInfo from "../../auth-views/layout/AuthInfo";
+import TopController from "./TopController";
 import Search from "./Search";
 import { TopMenuSearch } from "./styled-elements";
 import TopMenu from "./TopMenu";
@@ -43,11 +43,11 @@ function Header({rtl, topMenu, layoutMode, toggleCollapsed, collapsed, onShowHid
                             {topMenu && window.innerWidth > 991 ? (
                                 <TopMenuSearch>
                                     <div className="top-right-wrap d-flex">
-                                        <AuthInfo/>
+                                        <TopController toggleCollapsed={toggleCollapsed}/>
                                     </div>
                                 </TopMenuSearch>
                             ) : (
-                                <AuthInfo/>
+                                <TopController toggleCollapsed={toggleCollapsed}/>
                             )}
                         </div>
                     </div>

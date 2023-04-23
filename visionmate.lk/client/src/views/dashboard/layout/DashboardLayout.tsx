@@ -6,7 +6,7 @@ import {LayoutProps} from "../../../types/layout-types";
 import Footer from "./Footer";
 import Header from "./Header";
 import {LayoutContainer, SmallScreenAuthInfo} from "./styled-elements";
-import AuthInfo from "../../auth-views/layout/AuthInfo";
+import TopController from "./TopController";
 import {ThemeProvider} from "styled-components";
 import SideMenuItem from "./SideMenuItem";
 import {useAppSelector} from "../../../hooks/redux-hooks";
@@ -80,7 +80,7 @@ function DashboardLayout({children}: LayoutProps) {
                         <Col md={0} sm={24} xs={24}>
                             <div className="ninjadash-header-more-inner">
                                 <SmallScreenAuthInfo hide={hide}>
-                                    <AuthInfo/>
+                                    <TopController toggleCollapsed={toggleCollapsedMobile}/>
                                 </SmallScreenAuthInfo>
                             </div>
                         </Col>
