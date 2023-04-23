@@ -6,12 +6,13 @@ import { Authentication } from "./middleware/authentication";
 import { RequestLoggerHandler } from "./middleware/request-logger";
 import { ResponseHandler } from "./middleware/response-handler";
 import { verifyRole } from "./middleware/verify-role";
+import {jsonErrorHandler} from "./middleware/error-handler";
 import * as routes from "./routes";
 import apiRoutes from "./routes/api";
-import webRoutes from "./routes/web";
 import morgan from "morgan";
 import cors from 'cors';
-import {jsonErrorHandler} from "./middleware/error-handler";
+import favicon from 'serve-favicon';
+import * as favPath from 'path';
 
 const isProduction = process.env.NODE_ENV === "production";
 const app = express();
@@ -34,9 +35,11 @@ if (!isProduction) {
     app.use(cors());
 }
 
-app.use("/", webRoutes);
+app.use(favicon(favPath.join(__dirname, "../resources", "favicon.ico")));
+app.use('/api/static', express.static(favPath.join(__dirname, "../resources")));
+
 app.use('/api/auth', Authentication.verifyToken);
-app.use('/api/admin', Authentication.verifyToken, verifyRole([Role.ADMIN]), apiRoutes);
+app.use('/api/admin', Authentication.verifyToken, verifyRole([Role.ADMIN]));
 app.use('/api/patient', Authentication.verifyToken, verifyRole([Role.PATIENT]));
 routes.initRoutes(app);
 

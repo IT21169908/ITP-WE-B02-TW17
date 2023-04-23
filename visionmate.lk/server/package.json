@@ -33,6 +33,7 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
+    "serve-favicon": "^2.5.0",
     "winston": "^3.8.2"
   },
   "devDependencies": {
@@ -45,6 +46,7 @@
     "@types/passport": "^1.0.12",
     "@types/passport-jwt": "^3.0.8",
     "@types/passport-local": "^1.0.35",
+    "@types/serve-favicon": "^2.5.4",
     "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
     "@typescript-eslint/parser": "^5.58.0",
