@@ -1,4 +1,4 @@
-import {Express} from 'express';
+import { Express } from 'express';
 import { UserEp } from "../end-points/User.ep";
 // import {UserEp} from "../end-points/user-ep";
 // import {PatientEp} from "../end-points/patient-ep";

@@ -1,8 +1,7 @@
 import * as express from 'express';
-// import * as passport from 'passport';
-import {ExtractJwt} from "passport-jwt";
+import { ExtractJwt } from "passport-jwt";
 import User from "../schemas/User.schema";
-import env from "../util/validate-env";
+import env from "../utils/validate-env";
 // import {ErrorLogger} from "../common/logging";
 
 const passport = require('passport');
@@ -10,9 +9,14 @@ const passportJWT = require("passport-jwt");
 const LocalStrategy = require('passport-local').Strategy;
 const JWTStrategy = passportJWT.Strategy;
 
+const opts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: env.JWT_SECRET
+}
+
 export default async function passportStartup(app: express.Application) {
-    app.use(passport.initialize());
-    app.use(passport.session());
+    await app.use(passport.initialize());
+    await app.use(passport.session());
 
     // passport.use(new LocalStrategy({
     //     usernameField: 'email',
@@ -28,10 +32,7 @@ export default async function passportStartup(app: express.Application) {
     //     });
     // }));
 
-    passport.use(new JWTStrategy({
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: env.JWT_SECRET
-    }, (jwtPayload: any, callback: any) => {
+    await passport.use(new JWTStrategy(opts, (jwtPayload: any, callback: any) => {
         return User.findById(jwtPayload.user_id).then(user => {
             return callback(null, user);
         }).catch(ex => {

@@ -1,5 +1,5 @@
-import {isHttpError} from "http-errors";
-import {Request, Response, NextFunction} from 'express';
+import { isHttpError } from "http-errors";
+import { Request, Response, NextFunction } from 'express';
 
 export const jsonErrorHandler = (error: unknown, req: Request, res: Response, next: NextFunction) => {
     console.error(error);

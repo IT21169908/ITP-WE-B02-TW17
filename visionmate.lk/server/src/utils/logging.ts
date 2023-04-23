@@ -16,6 +16,31 @@ const sessionData = winston.format(function (info: any) {
     return info;
 });
 
+// RequestLogger ================
+const requestFormat = winston.format.printf((info: any) => {
+    return `${info.timestamp} ${info.message}`;
+});
+
+const requestLoggerTransporter: any[] = [
+    new winston.transports.Console({level: 'info',})
+];
+
+requestLoggerTransporter.push(
+    new winston.transports.File({
+        level: 'info',
+        filename: 'log/request.log',
+    })
+);
+
+export const RequestLogger = winston.createLogger({
+    format: winston.format.combine(
+        appendTimestamp({tz: timezone}),
+        requestFormat
+    ),
+    label: 'request',
+    transports: requestLoggerTransporter
+});
+
 // AppLogger ================
 const appFormat = winston.format.printf((info: any) => {
     return `${info.timestamp} [${info[SESSION].user_id}] [${info[SESSION].progress_id}] ${info.level}: ${info.message}`;
@@ -66,4 +91,29 @@ export const ErrorLogger = winston.createLogger({
         errorFormat,
     ),
     transports: errorLoggerTransporter
+});
+
+// UaLogger ================
+const uaFormat = winston.format.printf((info: any) => {
+    return `${info.timestamp} [${info[SESSION].user_id}] [${info[SESSION].progress_id}] ${info.message}`;
+});
+
+const uaLoggerTransporter: any[] = [
+    new winston.transports.Console({level: 'info', label: 'ua'})
+];
+
+uaLoggerTransporter.push(
+    new winston.transports.File({
+        filename: 'log/ua.log',
+        level: 'info',
+        label: 'ua'
+    })
+);
+export const UaLogger = winston.createLogger({
+    format: winston.format.combine(
+        appendTimestamp({tz: timezone}),
+        sessionData(),
+        uaFormat,
+    ),
+    transports: uaLoggerTransporter
 });

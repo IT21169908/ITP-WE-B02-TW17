@@ -5,13 +5,15 @@ import { Permission } from "../enums/auth";
 import { checkPermission } from "../middleware/validate-permissions";
 import { IUser } from "../models/User.model";
 import jwt from "jsonwebtoken";
-import env from "../util/validate-env";
+import env from "../utils/validate-env";
 
 export const UserSchemaOptions: mongoose.SchemaOptions = {
     _id: true,
     id: false,
     timestamps: true,
-    // skipVersioning: true,
+    skipVersioning: {
+        updatedAt: true
+    },
     strict: false,
     discriminatorKey: 'role',
     toJSON: {
@@ -45,11 +47,13 @@ export const UserSchema = new mongoose.Schema({
         type: Schema.Types.String,
         required: true,
     },
-    permissions: [{
-        type: Schema.Types.String,
-        required: true,
-        default: [],
-    }],
+    permissions: [
+        {
+            type: Schema.Types.String,
+            required: true,
+            default: [],
+        }
+    ],
     lastLogin: {
         type: Schema.Types.Date,
         required: false,
@@ -93,7 +97,8 @@ UserSchema.methods.comparePassword = function (password: string): Promise<boolea
 };
 
 UserSchema.methods.hasPermission = function (...permissions: Permission[]): boolean {
-    const [success] = checkPermission(this, permissions);
+    const user = this as IUser;
+    const [success] = checkPermission(user, permissions);
     return success;
 };
 

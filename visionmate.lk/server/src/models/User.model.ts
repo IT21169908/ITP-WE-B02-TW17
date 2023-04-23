@@ -1,26 +1,27 @@
 import * as mongoose from "mongoose";
-import { Types } from "mongoose";
+import { StringOrObjectId } from "../utils/utils";
 import { Permission, Role } from "../enums/auth";
 
 interface CommonAttributes {
     name: string;
-    email?: string;
-    password?: string;
+    email: string;
+    password: string;
     phone?: string;
     // permissions?: Permission[];
-    role: Role;
+    role?: Role;
     lastLoggedIn?: Date;
 }
 
 export interface DUser extends CommonAttributes {
-    _id?: Types.ObjectId;
-    photo?: Types.ObjectId;
+    _id?: StringOrObjectId;
+    photo?: StringOrObjectId;
 }
 
 export interface IUser extends CommonAttributes, mongoose.Document {
-    readonly role: Role;
+    // readonly role: Role;
+    role: Role;
     // permissions: Permission[];
-    lastLoggedIn: Date;
+    // lastLoggedIn: Date;
     // photo?: IUpload;
 
     createAccessToken(expiresIn?: string): string;

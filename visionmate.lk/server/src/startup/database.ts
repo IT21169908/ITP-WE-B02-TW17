@@ -1,4 +1,5 @@
-import env from "../util/validate-env";
+import env from "../utils/validate-env";
+
 const mongoose = require('mongoose');
 
 mongoose.ObjectId.get((v: any) => v ? v.toString() : v);
