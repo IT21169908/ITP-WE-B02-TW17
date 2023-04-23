@@ -44,7 +44,7 @@ export const UserSchema = new mongoose.Schema({
         required: false,
     },
     role: {
-        type: Schema.Types.String,
+        type: Schema.Types.Number,
         required: true,
     },
     permissions: [

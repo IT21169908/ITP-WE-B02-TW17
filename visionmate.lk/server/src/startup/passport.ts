@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { ExtractJwt, Strategy as JwtStrategy} from "passport-jwt";
+import {ExtractJwt, Strategy as JwtStrategy} from "passport-jwt";
 import User from "../schemas/User.schema";
 import env from "../utils/validate-env";
 import passport from "passport";
@@ -15,19 +15,16 @@ export default async function passportStartup(app: express.Application) {
     await app.use(passport.initialize());
     await app.use(passport.session());
 
-    await passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
-        User.findById(jwt_payload.user_id, function (err: any, user?: false | Express.User | undefined) {
-            if (err) {
-                return done(err, false);
-            }
-            if (user) {
-                return done(null, user);
-            } else {
-                return done(null, false);
-                // or you could create a new account
-            }
-        });
+    await passport.use(new JwtStrategy(opts, async function (jwt_payload, done) {
+        const user = await User.findById(jwt_payload.user_id).exec();
+        if (user) {
+            return done(null, user);
+        } else {
+            return done(null, false);
+            // or you could create a new account
+        }
     }));
+
     // await passport.use(new JWTStrategy(opts, (jwtPayload: any, callback: any) => {
     //     return User.findById(jwtPayload.user_id).then(user => {
     //         return callback(null, user);
