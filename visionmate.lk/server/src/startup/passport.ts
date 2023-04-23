@@ -1,24 +1,42 @@
 import * as express from 'express';
-import { ExtractJwt } from "passport-jwt";
+import { ExtractJwt, Strategy as JwtStrategy} from "passport-jwt";
 import User from "../schemas/User.schema";
 import env from "../utils/validate-env";
-// import {ErrorLogger} from "../common/logging";
-
-const passport = require('passport');
-const passportJWT = require("passport-jwt");
-const LocalStrategy = require('passport-local').Strategy;
-const JWTStrategy = passportJWT.Strategy;
+import passport from "passport";
 
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: env.JWT_SECRET
+    secretOrKey: env.JWT_SECRET,
+    //issuer: 'admin.visionmate.lk',
+    //audience: 'visionmate.lk',
 }
 
 export default async function passportStartup(app: express.Application) {
     await app.use(passport.initialize());
     await app.use(passport.session());
 
-    // passport.use(new LocalStrategy({
+    await passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
+        User.findById(jwt_payload.user_id, function (err: any, user?: false | Express.User | undefined) {
+            if (err) {
+                return done(err, false);
+            }
+            if (user) {
+                return done(null, user);
+            } else {
+                return done(null, false);
+                // or you could create a new account
+            }
+        });
+    }));
+    // await passport.use(new JWTStrategy(opts, (jwtPayload: any, callback: any) => {
+    //     return User.findById(jwtPayload.user_id).then(user => {
+    //         return callback(null, user);
+    //     }).catch(ex => {
+    //         return callback(ex);
+    //     });
+    // }));
+
+    // await passport.use(new LocalStrategy({
     //     usernameField: 'email',
     //     passwordField: 'password'
     // }, (username: string, password: string, callback: any) => {
@@ -31,12 +49,4 @@ export default async function passportStartup(app: express.Application) {
     //         return callback(ex);
     //     });
     // }));
-
-    await passport.use(new JWTStrategy(opts, (jwtPayload: any, callback: any) => {
-        return User.findById(jwtPayload.user_id).then(user => {
-            return callback(null, user);
-        }).catch(ex => {
-            return callback(ex);
-        });
-    }));
 }

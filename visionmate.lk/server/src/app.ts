@@ -3,7 +3,6 @@ import "dotenv/config";
 import express from "express";
 import { Role } from "./enums/auth";
 import { Authentication } from "./middleware/authentication";
-import { handleError } from "./middleware/error-handler";
 import { RequestLoggerHandler } from "./middleware/request-logger";
 import { ResponseHandler } from "./middleware/response-handler";
 import { verifyRole } from "./middleware/verify-role";
@@ -12,7 +11,7 @@ import apiRoutes from "./routes/api";
 import webRoutes from "./routes/web";
 import morgan from "morgan";
 import cors from 'cors';
-import { jsonErrorHandler } from "./utils/error-handler";
+import {jsonErrorHandler} from "./middleware/error-handler";
 
 const isProduction = process.env.NODE_ENV === "production";
 const app = express();
@@ -37,13 +36,11 @@ if (!isProduction) {
 
 app.use("/", webRoutes);
 app.use('/api/auth', Authentication.verifyToken);
-app.use('/api/admin', Authentication.verifyToken);
-app.use('/api/patient', Authentication.verifyToken);
-
-app.use('/api/admin', Authentication.verifyToken, verifyRole([Role.ADMIN]));
+app.use('/api/admin', Authentication.verifyToken, verifyRole([Role.ADMIN]), apiRoutes);
 app.use('/api/patient', Authentication.verifyToken, verifyRole([Role.PATIENT]));
 routes.initRoutes(app);
 
+// Error Handling
 app.use(jsonErrorHandler);
 
 export default app;
