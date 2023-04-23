@@ -7,7 +7,7 @@ export function ResponseHandler(req: Request, res: Response, next: NextFunction)
         res.send({success: true, data: data, message: message});
     };
 
-    res.sendError = (error: any, errorCode = 0) => {
+    res.sendError = (error: any, errorCode = 500) => {
         if (typeof error === 'string') {
             res.status(errorCode).json({success: false, error: error, errorCode: errorCode});
         } else {

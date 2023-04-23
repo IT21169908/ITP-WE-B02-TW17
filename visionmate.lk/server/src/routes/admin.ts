@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { AdminEp } from "../end-points/Admin.ep";
+import * as AdminEp from "../end-points/Admin.ep";
 
 export function AdminRoutesInit(app: Express) {
     /* PUBLIC ROUTES ===================================== */

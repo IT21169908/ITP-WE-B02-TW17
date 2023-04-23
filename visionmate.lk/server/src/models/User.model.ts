@@ -21,7 +21,6 @@ export interface DUser extends CommonAttributes {
 
 export interface IUser extends CommonAttributes, mongoose.Document {
     readonly role: Role;
-    // role: Role;
     permissions: Permission[];
     lastLoggedIn: Date;
     photo?: IUpload;

@@ -8,7 +8,6 @@ export class Authentication {
         return passport.authenticate('jwt', {session: false}, (err: any, user: any, info: any) => {
             if (err || !user) {
                 AppLogger.error(`Login Failed. reason: ${info}`);
-                // return (res as any).sendError(info);
                 throw createHttpError(403, info)
             }
             req.user = user;

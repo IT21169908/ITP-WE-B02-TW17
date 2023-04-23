@@ -10,8 +10,6 @@ export function verifyRole(roles: Role[]) {
         if (user && user.role && roles.includes(<Role>user.role)) {
             next();
         } else {
-            // throw new ApplicationError("Permission denied.");
-            //next();
             throw createHttpError(403, "Permission denied.");
         }
     };

@@ -1,6 +1,5 @@
-import {NextFunction, Request, Response} from "express";
-import {AppLogger} from "../utils/logging";
+import { NextFunction, Request, Response } from "express";
 
-export namespace AdminEp {
-
+export async function sample(req: Request, res: Response, next: NextFunction) {
+    return;
 }

@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { PatientEp } from "../end-points/Patient.ep";
+import * as PatientEp from "../end-points/Patient.ep";
 
 export function PatientRoutesInit(app: Express) {
     /* PUBLIC ROUTES ===================================== */

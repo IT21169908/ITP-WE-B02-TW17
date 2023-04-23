@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { UserEp } from "../end-points/User.ep";
+import * as UserEp from "../end-points/User.ep";
 // import {UserEp} from "../end-points/user-ep";
 // import {PatientEp} from "../end-points/patient-ep";
 // import {PasswordResetEp} from "../end-points/password-reset-ep";

@@ -8,7 +8,6 @@ import { ResponseHandler } from "./middleware/response-handler";
 import { verifyRole } from "./middleware/verify-role";
 import {jsonErrorHandler} from "./middleware/error-handler";
 import * as routes from "./routes";
-import apiRoutes from "./routes/api";
 import morgan from "morgan";
 import cors from 'cors';
 import favicon from 'serve-favicon';

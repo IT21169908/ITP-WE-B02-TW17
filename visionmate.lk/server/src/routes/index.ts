@@ -15,9 +15,6 @@ export function initRoutes(app: Express) {
     /* INVALID REQUESTS */
     app.get('/', (req: Request, res: Response) => res.redirect(301, "/api"));
     // app.all('*', (req: Request, res: Response) => res.send("Invalid Route").status(404));
-
-    app.use((req, res, next) => {
-        next(new createHttpError.NotFound());
-    });
+    app.use((req, res, next) => next(new createHttpError.NotFound()));
 
 }
