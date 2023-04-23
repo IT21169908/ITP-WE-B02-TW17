@@ -63,6 +63,10 @@ export const UserSchema = new mongoose.Schema({
         required: false,
         // ref: Upload.modelName
     },
+    signedUpAs: {
+        type: Schema.Types.String,
+        required: false,
+    },
 }, UserSchemaOptions);
 
 UserSchema.pre<IUser>('save', function (next) {
@@ -102,5 +106,5 @@ UserSchema.methods.hasPermission = function (...permissions: Permission[]): bool
     return success;
 };
 
-const User = mongoose.model<IUser>('User', UserSchema);
+const User = mongoose.model<IUser>('users', UserSchema);
 export default User;
