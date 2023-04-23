@@ -2,17 +2,17 @@ import * as fs from "fs";
 import * as http from "http";
 import * as https from "https";
 import app from "./app";
-import { AppLogger } from "./common/logging";
-import { handleError } from "./middleware/error-handler";
+import {AppLogger} from "./common/logging";
 import databaseSetup from "./startup/database";
 import passportStartup from "./startup/passport";
 import env from "./util/validate-env";
-import * as routes from './routes';
 
 const isProduction = process.env.NODE_ENV === "production";
 const port = env.PORT;
 
-let server: any;
+type Server = https.Server | http.Server;
+
+let server: Server;
 
 if (isProduction) {
     server = https.createServer({
@@ -23,9 +23,9 @@ if (isProduction) {
     server = new http.Server(app);
 }
 
-databaseSetup().then(r => {
+databaseSetup().then(() => {
     AppLogger.info('--> Mongoose connected!');
-    passportStartup(app).then(r => {
+    passportStartup(app).then(() => {
         AppLogger.info('--> Passport started!');
         server.listen(port, () => {
             AppLogger.info('--> HTTPS Server successfully started at port: ' + port);
@@ -33,8 +33,6 @@ databaseSetup().then(r => {
     }).catch(console.error);
 }).catch(console.error);
 
-routes.initRoutes(app);
-app.use(handleError);
 
 // mongoose
 //    .connect(env.MONGO_CONNECTION_STRING)

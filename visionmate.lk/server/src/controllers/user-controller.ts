@@ -5,7 +5,7 @@
  */
 
 import {RequestHandler} from "express";
-import UserModel from "../models/user";
+import UserModel from "../schemas/User.schema";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
 

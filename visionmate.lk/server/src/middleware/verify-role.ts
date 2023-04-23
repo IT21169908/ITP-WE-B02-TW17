@@ -1,17 +1,16 @@
 import {NextFunction, Request, Response} from "express";
-import {ApplicationError} from "../common/application-error";
-import { Role } from "../enums/auth";
+import {Role} from "../enums/auth";
+import createHttpError from "http-errors";
+import {IUser} from "../models/User.model";
 
-export function verifyRole(...roles: Role[]) {
+export function verifyRole(roles: Role[]) {
     return function (req: Request, res: Response, next: NextFunction) {
-        // TODO: check this role error
-        // if (req.user && req.user.role) {
-        //     if (roles.includes(<Role>req.user.role)) {
-        //         next();
-        //     } else {
-        //         throw new ApplicationError("Permission denied.");
-        //     }
-        // }
-        throw new ApplicationError("Permission denied.");
+        const user = req.user as IUser;
+        if (user && user.role && roles.includes(<Role>user.role)) {
+            next();
+        } else {
+            //next();
+            throw createHttpError(403, "Permission denied.");
+        }
     };
 }
