@@ -6,21 +6,13 @@ import { UserEp } from "../end-points/User.ep";
 
 export function AuthRoutesInit(app: Express) {
     /* PUBLIC ROUTES ===================================== */
-    // app.post('/api/public/login', UserEp.authenticateValidationRules(), UserEp.authenticate);
-    // app.post('/api/public/register-patient', UserEp.registerValidationRules(), UserEp.register);
-
+    app.post('/api/public/login', UserEp.authenticateValidationRules(), UserEp.loginUser);
+    app.post('/api/public/register', UserEp.registerValidationRules(), UserEp.registerUser);
     // app.post('/api/public/forgot-password', PasswordResetEp.forgotPasswordValidationRules(), PasswordResetEp.forgotPassword);
     // app.post('/api/public/reset-password', PasswordResetEp.resetPasswordValidationRules(), PasswordResetEp.resetPassword);
 
     // app.get('/api/public/token-validate/:token', PasswordResetEp.tokenValidationRules(), PasswordResetEp.tokenValidate);
     // app.get('/api/public/logout', UserEp.logout);
-
-    // app.post('/api/public/google-login', UserEp.googleLogin);
-    // app.post('/api/public/facebook-login', UserEp.facebookLogin);
-
-    // app.post('/api/public/sign-up-with-google', UserEp.signUpWithGoogle);
-    // app.post('/api/public/sign-up-with-facebook', UserEp.signUpWithFacebook);
-    // app.post('/api/public/sign-up-with-email', UserEp.registerValidationRules(), UserEp.register);
 
     /* AUTH ROUTES ===================================== */
     app.get('/api/auth/me', UserEp.getSelf);
