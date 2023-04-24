@@ -1,0 +1,82 @@
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+
+a {
+  color: #1890ff;
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  -webkit-text-decoration-skip: objects;
+}
+
+ol, ul, dl {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+ul {
+  list-style: outside none none;
+  margin: 0;
+  padding: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.ant-layout-sider .ant-layout-sider-children .ant-menu {
+  margin-left: 3px;
+}
+
+.ant-layout-sider .ant-layout-sider-children .ant-menu li:not(:last-child) {
+  margin-bottom: 5px !important;
+}
+
+.ant-layout-sider .ant-layout-sider-children ul.ant-menu ul.ant-menu-sub li {
+  margin-top: 3px !important;
+}
+
+:where(.css-dev-only-do-not-override-htwhyh).ant-menu-inline .ant-menu-item,
+:where(.css-dev-only-do-not-override-htwhyh).ant-menu-vertical .ant-menu-item,
+:where(.css-dev-only-do-not-override-htwhyh).ant-menu-inline .ant-menu-submenu-title,
+:where(.css-dev-only-do-not-override-htwhyh).ant-menu-vertical .ant-menu-submenu-title {
+  width: 100% !important;
+}
+
+.ant-layout-sider .ant-layout-sider-children .ant-menu .ant-menu-submenu > .ant-menu-submenu-title {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.ant-form-horizontal .ninjadash-form-action button {
+  padding: 0 19px !important;
+}
+
+.ant-btn-primary {
+  color: #fff;
+  border-color: #8231D3;
+  background: #8231D3;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.user-dropdown .user-dropdown__bottomAction {
+  width: calc(100% + 24px) !important;
+  left: -12px !important;
+}
