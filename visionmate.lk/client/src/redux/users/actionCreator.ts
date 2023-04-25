@@ -1,13 +1,7 @@
-/**
- * user Async Thunk function for extra reducers
- *
- * @author M.M.N.H. Fonseka
- * */
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import User from "../../models/User";
 
-import UserModel from '../../models/user'
-import {createAsyncThunk} from "@reduxjs/toolkit";
-
-export const getUser = createAsyncThunk<UserModel, { user_id: string, signal: AbortSignal }>(
+export const getUser = createAsyncThunk<User, { user_id: string, signal: AbortSignal }>(
     'fetch/user',
     async ({user_id, signal}) => {
         // TODO: Move into Service
@@ -16,7 +10,7 @@ export const getUser = createAsyncThunk<UserModel, { user_id: string, signal: Ab
             method: "GET",
             signal,
         });
-        const data: UserModel = await response.json();
+        const data: User = await response.json();
         return data;
     });
 
