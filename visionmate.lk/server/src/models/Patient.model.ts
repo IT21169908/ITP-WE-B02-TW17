@@ -12,3 +12,4 @@ export interface DPatient extends CommonAttributes, DUser {
 export interface IPatient extends CommonAttributes, IUser {
     socialLinks?: [];
 }
+
