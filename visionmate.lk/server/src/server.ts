@@ -8,6 +8,7 @@ import databaseSetup from "./startup/database";
 import passportStartup from "./startup/passport";
 import env from "./utils/validate-env";
 
+
 const isProduction = process.env.NODE_ENV === "production";
 const port = env.PORT;
 let server: Server;
