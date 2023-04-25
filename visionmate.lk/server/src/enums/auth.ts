@@ -5,9 +5,9 @@ export enum Role {
 }
 
 export enum SignedUpAs {
+    EMAIL = "EMAIL",
     GOOGLE = "GOOGLE",
     FACEBOOK = "FACEBOOK",
-    EMAIL = "EMAIL",
 }
 
 export enum Permission {

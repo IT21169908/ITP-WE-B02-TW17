@@ -1,5 +1,15 @@
-import * as mongoose from "mongoose";
+import { Role } from "../enums/auth";
 
-export type ObjectIdOr<T extends mongoose.Document> = mongoose.Types.ObjectId | T;
-
-export type StringOrObjectId = string | mongoose.Types.ObjectId;
+export function getRoleTitle(role: any): string {
+    role = role ? parseInt(role.toString()) : null;
+    switch (role) {
+        case Role.USER:
+            return "USER";
+        case Role.ADMIN:
+            return "ADMIN";
+        case Role.PATIENT:
+            return "PATIENT";
+        default:
+            return "Invalid-Role";
+    }
+}

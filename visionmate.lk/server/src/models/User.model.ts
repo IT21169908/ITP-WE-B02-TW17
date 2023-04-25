@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import { StringOrObjectId } from "../utils/utils";
+import { StringOrObjectId } from "../types/util-types";
 import { Permission, Role } from "../enums/auth";
 import { IUpload } from "./Upload.model";
 

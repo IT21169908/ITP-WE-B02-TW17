@@ -3,7 +3,7 @@ import { AdminRoutesInit } from "./admin";
 import { AuthRoutesInit } from "./auth";
 import { PatientRoutesInit } from "./patient";
 import createHttpError from "http-errors";
-import {BlogRoutesInit} from "./blog";
+import { BlogRoutesInit } from "./blog";
 
 export function initRoutes(app: Express) {
     /* TOP LEVEL REQUESTS */
@@ -16,7 +16,7 @@ export function initRoutes(app: Express) {
 
     /* INVALID REQUESTS */
     app.get('/', (req: Request, res: Response) => res.redirect(301, "/api"));
-    // app.all('*', (req: Request, res: Response) => res.send("Invalid Route").status(404));
     app.use((req, res, next) => next(new createHttpError.NotFound()));
+    // app.all('*', (req: Request, res: Response) => res.send("Invalid Route").status(404));
 
 }
