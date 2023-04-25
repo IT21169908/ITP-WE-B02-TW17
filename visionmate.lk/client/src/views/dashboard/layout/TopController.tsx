@@ -44,11 +44,9 @@ const TopController = React.memo(({toggleCollapsed}: { toggleCollapsed: () => vo
 
     const changeThemeHandler = (value: boolean) => {
         if (value) {
-            // toggleCollapsed(); // TODO: needed?
             darkModeActivated();
             changeLayout('darkMode');
         } else {
-            // toggleCollapsed(); // TODO: needed?
             darkModeDeactivated();
             changeLayout('lightMode');
         }

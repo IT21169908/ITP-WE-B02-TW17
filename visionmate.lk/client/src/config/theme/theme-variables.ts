@@ -2,7 +2,7 @@ import themes from './theme-configure';
 
 const { lightMode, darkMode } = themes;
 
-const primaryColor = '#8231D3';
+const primaryColor = '#4096ff';
 const primaryHover = '#6726A8';
 const secondaryColor = '#5840FF';
 const secondaryHover = '#3520C8';

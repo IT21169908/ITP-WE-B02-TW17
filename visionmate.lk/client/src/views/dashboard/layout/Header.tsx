@@ -56,9 +56,8 @@ function Header({rtl, topMenu, layoutMode, toggleCollapsed, collapsed, onShowHid
                             <div className="btn-search">
                                 <Search />
                             </div>
-
                             <Link className="btn-auth" onClick={onShowHide} to="#">
-                                <ThreeDotsVertical /> icon
+                                <ThreeDotsVertical />
                             </Link>
                         </div>
                     </div>
