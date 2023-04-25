@@ -80,8 +80,7 @@ function TopMenu() {
                         <ul className="subMenu">
                             <li className="has-subMenu-left">
                                 <Link to="#" className="parent">
-                                    <Envelope/> icon
-                                    Email
+                                    <Envelope/>Email
                                 </Link>
                                 <ul className="subMenu">
                                     <li>
@@ -98,15 +97,13 @@ function TopMenu() {
                             </li>
                             <li>
                                 <NavLink onClick={addParentActive} to={`${path}/main/chat/private/rofiq@gmail.com`}>
-                                    <Chat /> icon
-                                    Chat
+                                    <Chat />Chat
                                 </NavLink>
                             </li>
 
                             <li>
                                 <NavLink onClick={addParentActive} to={`${path}/app/calendar/month`}>
-                                    <Calendar3 /> icon
-                                    Calendar
+                                    <Calendar3 /> Calendar
                                 </NavLink>
                             </li>
 

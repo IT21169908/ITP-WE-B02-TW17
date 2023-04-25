@@ -103,7 +103,7 @@ const LayoutContainer = Styled.div`
         .ninjadash-header-content__left{
             min-width: 280px;
             padding: 0 20px 0 30px;
-            background-color: ${({theme}) => theme[theme.mainContent]['brand-background']};
+            background-color: ${({theme}) => theme[theme.mainContent]['white-background']};
             @media only screen and (max-width: 1499px){
                 min-width: 220px;
             }
