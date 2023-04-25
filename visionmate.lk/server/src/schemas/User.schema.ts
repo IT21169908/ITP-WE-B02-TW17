@@ -5,6 +5,7 @@ import { Permission } from "../enums/auth";
 import { checkPermission } from "../middleware/validate-permissions";
 import { IUser } from "../models/User.model";
 import jwt from "jsonwebtoken";
+import { AppLogger } from "../utils/logging";
 import env from "../utils/validate-env";
 
 export const UserSchemaOptions: mongoose.SchemaOptions = {
@@ -88,6 +89,7 @@ UserSchema.pre<IUser>('save', function (next) {
 });
 
 UserSchema.methods.createAccessToken = function (expiresIn = "365 days") {
+    AppLogger.info(`User Access Token Created (Expires In: ${expiresIn})`);
     return jwt.sign({user_id: this._id}, env.JWT_SECRET, {expiresIn: expiresIn});
 };
 

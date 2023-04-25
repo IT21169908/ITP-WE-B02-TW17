@@ -56,12 +56,12 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
                 res.sendError(e);
             }
         }
-            // else if (role === Role.EMPLOYER) {
-            //     try {
-            //         await EmployerEp.register(req, res, next);
-            //     } catch (e) {
-            //         res.sendError(e);
-            //     }
+        // else if (role === Role.ADMIN) {
+        //     try {
+        //         await AdminEp.register(req, res, next);
+        //     } catch (e) {
+        //         res.sendError(e);
+        //     }
         // }
         else {
             res.sendError('Role Required!!');

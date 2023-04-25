@@ -24,6 +24,7 @@ export async function authenticateUser(email: string, password: string, signedUp
     if (signedUpAs === SignedUpAs.EMAIL) {
         const user = await User.findOne({email: email});
         if (user) {
+            AppLogger.info(`User Logged In as ${signedUpAs} ID: ${user._id}`);
             return user.createAccessToken(remember ? "365 days" : "24 hours");
         } else {
             throw new ApplicationError('User not found in the system!');
@@ -52,6 +53,7 @@ export async function authenticateUser(email: string, password: string, signedUp
         if (!isMatch) {
             throw new ApplicationError('Incorrect email/password combination!');
         }
+        AppLogger.info(`User Logged In as ${SignedUpAs.EMAIL} ID: ${user._id}`);
         return user.createAccessToken(remember ? "365 days" : "24 hours");
     } else {
         throw new ApplicationError('User not found in the system!');
