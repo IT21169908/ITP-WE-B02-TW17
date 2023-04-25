@@ -1,21 +1,21 @@
 import {NextFunction, Request, Response} from "express";
 import * as BlogDao from "../dao/Blog.dao";
-import { IBlog } from "../models/Blog.model";
+import { DBlog } from "../models/Blog.model";
+import { IUser } from "../models/User.model";
 
 export async function create(req: Request, res: Response, next: NextFunction) {
-    const { title, tittleDescription, description, tags, reference} = req.body;
-    const data: IBlog = {
+    const user = req.user as IUser;
+    const { title, titleDescription, description, tags, reference} = req.body;
+    const data: DBlog = {
         title: title,
-        tittleDescription: tittleDescription,
+        titleDescription: titleDescription,
         description: description,
         tags: tags,
         reference: reference,
     };
-    BlogDao.createBlog().then(async token => {
-        res.sendSuccess(token);
+    await BlogDao.createBlog(data, user).then(blog => {
+        res.sendSuccess(blog, "Blog created successfully!");
     }).catch(next);
 }
-export function sample(): import("express-serve-static-core").RequestHandler<{}, any, any, import("qs").ParsedQs, Record<string, any>> {
-    throw new Error('Function not implemented.');
-}
+
 
