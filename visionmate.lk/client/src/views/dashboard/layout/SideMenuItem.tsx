@@ -6,21 +6,23 @@ import {changeDirectionMode, changeMenuMode} from '../../../redux/theme-layout/a
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux-hooks";
 import {RootState} from "../../../redux/store";
 import {Eyeglasses, HouseCheckFill} from "react-bootstrap-icons";
+import {Role} from "../../../enums/Role";
+import Items from "../admin/SideBar";
+import adminSideBarItems from "../admin/SideBar";
+import patientSideBarItems from "../patient/SideBar";
 
 function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
-    const {t: translate} = useTranslation();
+
     const dispatch = useAppDispatch();
+    const {t} = useTranslation();
+
+    const translate = (text: string) => t(text)
+
     type MenuItem = Required<MenuProps>['items'][number];
 
-    function getItem(label: React.ReactNode, key?: React.Key | null, icon?: React.ReactNode, children?: MenuItem[], type?: 'group',): MenuItem {
-        return {
-            key,
-            icon,
-            children,
-            label,
-            type,
-        } as MenuItem;
-    }
+    let userRole = 1;
+    let items: MenuProps['items'];
+
 
     const {topMenu} = useAppSelector((state: RootState) => {
         return {
@@ -69,27 +71,16 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
         dispatch(changeDirectionMode(rtlMode));
     };
 
-    const items: MenuProps['items'] = [
-        getItem(
-            <NavLink onClick={toggleCollapsed} to={`${path}`}>
-                {translate("dashboard")}
-                <span className="badge badge-primary menuItem">2</span>
-            </NavLink>,
-            'dashboard',
-            !topMenu && <HouseCheckFill/>,
-        ),
-        getItem(translate("Manage Spectacles"), 'spectacles', <Eyeglasses/>, [
-                getItem(
-                    <NavLink onClick={toggleCollapsed} to={`${path}/spectacles/create`}>
-                        {translate('Create')}
-                    </NavLink>,
-                    'spectacles.create',
-                    null,
-                ),
-            ]
-        ),
-        {type: 'divider'},
-    ];
+    switch (userRole) {
+        case Role.ADMIN:
+            items = adminSideBarItems({translate, path, toggleCollapsed});
+            break;
+        case Role.PATIENT:
+            items = patientSideBarItems({translate, path, toggleCollapsed});
+            break;
+        default:
+            break;
+    }
 
     return (
         <>
@@ -98,7 +89,6 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
                 onClick={onClick}
                 style={{width: '100%'}}
                 mode={!topMenu || window.innerWidth <= 991 ? 'inline' : 'horizontal'}
-                // // eslint-disable-next-line no-nested-ternary
                 defaultSelectedKeys={
                     !topMenu
                         ? [
