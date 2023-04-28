@@ -1,8 +1,8 @@
 import { check } from "express-validator";
-import { Types } from "mongoose";
-import { Role } from "../enums/auth";
+import { Role } from "../../enums/auth";
+import { isObjectId } from "./validations";
 
-export const Validations = {
+export const AuthValidations = {
     email: () => check('email').not().isEmpty().withMessage('Email is required!').isEmail().normalizeEmail({gmail_remove_dots: false}).withMessage('Invalid email address!'),
     phone: () => check('phone').isMobilePhone('si-LK').withMessage('Phone number is invalid or outside the LK'),
     website: () => check('website').optional(),
@@ -31,6 +31,3 @@ export const Validations = {
     uploads: (key: string = "uploads") => check(`${key}.*._id`).not().isEmpty().withMessage(`${key} objects cannot be empty`).custom((v) => isObjectId(v)).withMessage(`${key} objects are invalid`),
 };
 
-export function isObjectId(v: string): boolean {
-    return Types.ObjectId.isValid(v) && new Types.ObjectId(v).toHexString() === v;
-}
