@@ -4,10 +4,10 @@ interface CommonAttributes {
     about?: string;
 }
 
-export interface DStaffschedule extends CommonAttributes, DUser {
+export interface DStaffSchedule extends CommonAttributes, DUser {
     socialLinks?: []; // not related, just added
 }
 
-export interface IStaffschedule extends CommonAttributes, IUser {
+export interface IStaffSchedule extends CommonAttributes, IUser {
     socialLinks?: [];
 }

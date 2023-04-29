@@ -6,6 +6,14 @@ interface Education {
     year: number;
 }
 
+interface Experience {
+    hospital: string;
+    department: string;
+    position: string;
+    startYear: number;
+    endYear?: number;
+}
+
 interface CommonAttributes {
     about?: string;
     firstName?: string;
@@ -18,16 +26,20 @@ interface CommonAttributes {
     isActive?: boolean;
 }
 
-export interface DSurgeon extends CommonAttributes, DUser {
-    surgeriesPerformed?: number;
+export interface DDoctor extends CommonAttributes, DUser {
     specialties?: string[];
     education?: Education[];
-    status?: string;
+    experience?: Experience[];
+    languages?: string[];
+    awards?: string[];
 }
 
-export interface ISurgeon extends CommonAttributes, IUser {
-    surgeriesPerformed?: number;
+export interface IDoctor extends CommonAttributes, IUser {
     specialties?: string[];
     education?: Education[];
-    status?: string;
+    experience?: Experience[];
+    languages?: string[];
+    awards?: string[];
 }
+
+

@@ -1,8 +1,7 @@
 import * as mongoose from "mongoose";
 import {Schema} from "mongoose";
-import { Role } from "../enums/auth";
-import { IStaffScheduleSchema } from "../models/Staffschedule.model";
-import User, { UserSchemaOptions } from "./User.schema";
+import { IStaffSchedule } from "../models/StaffSchedule.model";
+import { UserSchemaOptions } from "./User.schema";
 
 export const StaffScheduleSchema = new mongoose.Schema({
     SID: {
@@ -23,6 +22,6 @@ export const StaffScheduleSchema = new mongoose.Schema({
     }
 }, UserSchemaOptions);
 
-export const StaffScheduleSchema = User.discriminator<IStaffScheduleSchema>('staffschrdule', StaffScheduleSchema, Role.STAFFSCHEDULE);
+const StaffSchedule = mongoose.model<IStaffSchedule>("staffSchedules", StaffScheduleSchema);
 
-export default StaffScheduleSchema;
+export default StaffSchedule;
