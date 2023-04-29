@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { Types } from "mongoose";
 import * as BlogDao from "../dao/Blog.dao";
 import { validationsChecker } from "../middleware/validations/validation-handler";
-import { Validations } from "../middleware/validations/validations";
+import { BlogValidations } from "../middleware/validations/blog-validations";
 import { DBlog } from "../models/Blog.model";
 import { IUser } from "../models/User.model";
 
@@ -10,17 +10,17 @@ import { IUser } from "../models/User.model";
 // ================ VALIDATIONS ================
 export function createBlogValidationRules() {
     return [
-        Validations.title(),
-        Validations.description(),
+        BlogValidations.title(),
+        BlogValidations.description(),
     ];
 }
 
 export function updateBlogValidationRules() {
-    return [Validations.blogId()];
+    return [BlogValidations.blogId()];
 }
 
 export function fetchBlogValidationRules() {
-    return [Validations.blogId()];
+    return [BlogValidations.blogId()];
 }
 
 // ================ CREATE - C ================

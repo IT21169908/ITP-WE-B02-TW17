@@ -1,6 +1,6 @@
 import { check } from "express-validator";
 import { Role } from "../../enums/auth";
-import { isObjectId } from "./validations";
+import { isObjectId } from "./blog-validations";
 
 export const AuthValidations = {
     email: () => check('email').not().isEmpty().withMessage('Email is required!').isEmail().normalizeEmail({gmail_remove_dots: false}).withMessage('Invalid email address!'),
