@@ -8,6 +8,7 @@ import { AppLogger } from "../utils/logging";
 const commonPopulates: PopulateOptions[] = [{path: 'photo'}];
 const adminPopulates = [...commonPopulates, {path: 'company', populate: [{path: 'logo'}]}];
 const patientPopulates = [...commonPopulates];
+const surgeonPopulates = [...commonPopulates];
 
 function getPopulatesForRole(role: Role): PopulateOptions[] {
     switch (role) {
@@ -15,6 +16,8 @@ function getPopulatesForRole(role: Role): PopulateOptions[] {
             return adminPopulates;
         case Role.PATIENT:
             return patientPopulates;
+        case Role.SURGEON:
+            return surgeonPopulates;
         default:
             return commonPopulates;
     }

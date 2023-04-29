@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import * as UserDao from "../dao/User.dao";
 import { Role } from "../enums/auth";
-import { validationsChecker } from "../middleware/validations/validation-handler";
-import { AppLogger } from "../utils/logging";
-import { IUser } from "../models/User.model";
 import { AuthValidations } from "../middleware/validations/auth-validations";
-import { validationResult } from "express-validator";
+import { validationsChecker } from "../middleware/validations/validation-handler";
+import { IUser } from "../models/User.model";
+import { AppLogger } from "../utils/logging";
 import * as PatientEp from "./Patient.ep";
+import * as SurgeonEp from "./Surgeon.ep";
 
 export function authenticateValidationRules() {
     return [
@@ -17,13 +17,14 @@ export function authenticateValidationRules() {
 
 export function registerValidationRules() {
     return [
-        AuthValidations.role(Role.PATIENT),
+        AuthValidations.role([Role.PATIENT, Role.SURGEON]),
         AuthValidations.email(),
         AuthValidations.name().optional({checkFalsy: true}),
         AuthValidations.password(),
         AuthValidations.confirmPassword(),
         AuthValidations.noPermissions(),
-        AuthValidations.phone().if(AuthValidations.role(Role.PATIENT)).optional(),
+        AuthValidations.phone(),
+        // AuthValidations.phone().if(AuthValidations.role(Role.PATIENT)).optional(),
     ];
 }
 
@@ -49,15 +50,13 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
                 } catch (e) {
                     res.sendError(e);
                 }
-            }
-                // else if (role === Role.ADMIN) {
-                //     try {
-                //         await AdminEp.register(req, res, next);
-                //     } catch (e) {
-                //         res.sendError(e);
-                //     }
-            // }
-            else {
+            } else if (role === Role.SURGEON) {
+                try {
+                    await SurgeonEp.register(req, res, next);
+                } catch (e) {
+                    res.sendError(e);
+                }
+            } else {
                 res.sendError('Role Required!!');
             }
         }

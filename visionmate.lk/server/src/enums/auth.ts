@@ -2,6 +2,7 @@ export enum Role {
     USER = 0,
     ADMIN = 1,
     PATIENT = 2,
+    SURGEON = 3,
 }
 
 export enum SignedUpAs {

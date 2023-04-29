@@ -1,6 +1,6 @@
 import { check } from "express-validator";
+import mongoose from "mongoose";
 import { Role } from "../../enums/auth";
-import { isObjectId } from "./blog-validations";
 
 export const AuthValidations = {
     email: () => check('email').not().isEmpty().withMessage('Email is required!').isEmail().normalizeEmail({gmail_remove_dots: false}).withMessage('Invalid email address!'),
@@ -19,15 +19,15 @@ export const AuthValidations = {
         .custom(async (confirmPassword, {req}) => {
             if (req.body.password !== confirmPassword) throw new Error('Passwords must be same!');
         }),
-    role: (role: Role) => check('role').equals(role.toString()).withMessage('Unauthorized user role!'),
+    role: (roles: Role[]) => check('role').isIn(roles).withMessage('Unauthorized user role!'),
     name: () => check('name').isString().isLength({max: 1000}).withMessage('Name field should not be more than 1000 chars long!'),
     text: (key: string) => check(key).isString().isLength({max: 1000}),
     largeText: (key: string) => check(key).isString().isLength({max: 10000}),
     noPermissions: () => check('permissions').not().exists(),
     zip: () => check('zip').isPostalCode('US').withMessage('Invalid zip code!'),
     currency: (key: string = 'price') => check(key).not().isEmpty().isNumeric(),
-    objectId: (key: string = "_id") => check(key).not().isEmpty().withMessage(`${key} cannot be empty`).custom((v) => isObjectId(v)).withMessage(`${key} is not a valid mongoDb objectID`),
-    upload: (key: string = "upload") => check().not().isEmpty().withMessage(`${key} cannot be empty`).custom((v) => isObjectId(v)).withMessage(`${key} is invalid`),
-    uploads: (key: string = "uploads") => check(`${key}.*._id`).not().isEmpty().withMessage(`${key} objects cannot be empty`).custom((v) => isObjectId(v)).withMessage(`${key} objects are invalid`),
+    objectId: (key: string = "_id") => check(key).not().isEmpty().withMessage(`${key} cannot be empty`).custom((v) => mongoose.isValidObjectId(v)).withMessage(`${key} is not a valid mongoDb objectID`),
+    upload: (key: string = "upload") => check().not().isEmpty().withMessage(`${key} cannot be empty`).custom((v) => mongoose.isValidObjectId(v)).withMessage(`${key} is invalid`),
+    uploads: (key: string = "uploads") => check(`${key}.*._id`).not().isEmpty().withMessage(`${key} objects cannot be empty`).custom((v) => mongoose.isValidObjectId(v)).withMessage(`${key} objects are invalid`),
 };
 
