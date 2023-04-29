@@ -22,6 +22,6 @@ export const StaffScheduleSchema = new mongoose.Schema({
     }
 }, UserSchemaOptions);
 
-const StaffSchedule = mongoose.model<IStaffSchedule>("staffSchedules", StaffScheduleSchema);
+const StaffSchedule = mongoose.model<IStaffSchedule>("staff_schedules", StaffScheduleSchema);
 
 export default StaffSchedule;

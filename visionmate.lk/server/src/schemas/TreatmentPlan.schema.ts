@@ -115,6 +115,6 @@ export const TreatmentPlanSchema = new mongoose.Schema({
     },
 }, schemaOptions);
 
-const TreatmentPlan = mongoose.model<ITreatmentPlan>("treatmentPlans", TreatmentPlanSchema);
+const TreatmentPlan = mongoose.model<ITreatmentPlan>("treatment_plans", TreatmentPlanSchema);
 
 export default TreatmentPlan;
