@@ -1,8 +1,7 @@
 import {MenuProps} from "antd";
 import {NavLink} from "react-router-dom";
 import React from "react";
-import {Eyeglasses, HouseCheckFill} from "react-bootstrap-icons";
-import topMenu from "../layout/TopMenu";
+import {HouseCheckFill} from "react-bootstrap-icons";
 
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -18,7 +17,7 @@ function getItem(label: React.ReactNode, key?: React.Key | null, icon?: React.Re
 }
 
 
-const sideBarItems = ({translate, path, toggleCollapsed}: { translate: (text: string) => string, path: string, toggleCollapsed: () => void }): MenuProps['items'] => {
+const sideBarItems = ({translate, path, toggleCollapsed, topMenu}: { translate: (text: string) => string, path: string, toggleCollapsed: () => void, topMenu: boolean }): MenuProps['items'] => {
 
 
     return [
@@ -29,16 +28,6 @@ const sideBarItems = ({translate, path, toggleCollapsed}: { translate: (text: st
             </NavLink>,
             'dashboard',
             !topMenu && <HouseCheckFill/>,
-        ),
-        getItem(translate("Manage Spectacles"), 'spectacles', <Eyeglasses/>, [
-                getItem(
-                    <NavLink onClick={toggleCollapsed} to={`${path}/spectacles/create`}>
-                        {translate('Create')}
-                    </NavLink>,
-                    'spectacles.create',
-                    null,
-                ),
-            ]
         ),
         {type: 'divider'},
     ]

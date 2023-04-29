@@ -8,18 +8,21 @@ import {BasicFormWrapper} from '../styled-components/styled-containers';
 interface FormType {
     children: React.ReactNode,
     id?: string,
+    initialValues?: any,
+    onSubmit?: any,
+    onFinishFailed?: any,
     title: string,
     className?: string,
     layout?: 'horizontal' | 'vertical'
 }
 
-function FormLayout({children, id, title, className, layout, ...rest}: FormType) {
+function FormLayout({children, id, title, className, layout, onSubmit, onFinishFailed, initialValues, ...rest}: FormType) {
     return (
         <BasicFormWrapper>
             {layout === 'vertical' ? (
                 <VerticalFormStyleWrap>
                     <Cards title={title}>
-                        <Form id={id} name="horizontal-form" className={className} layout={layout}>
+                        <Form id={id} name="horizontal-form" onFinish={onSubmit} onFinishFailed={onFinishFailed} className={className} layout={layout}>
                             {children}
                         </Form>
                     </Cards>
@@ -27,7 +30,7 @@ function FormLayout({children, id, title, className, layout, ...rest}: FormType)
             ) : (
                 <HorizontalFormStyleWrap>
                     <Cards title="Horizontal Form">
-                        <Form id={id} name="horizontal-form" className={className} layout={layout}>
+                        <Form id={id} name="horizontal-form" className={className} layout={layout} initialValues={initialValues}>
                             {children}
                         </Form>
                     </Cards>
