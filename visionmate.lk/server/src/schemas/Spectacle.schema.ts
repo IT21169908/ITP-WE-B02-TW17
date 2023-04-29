@@ -21,23 +21,23 @@ export const SpectacleSchema = new mongoose.Schema({
         type: Schema.Types.String,
         required: true,
     },
-    frame_style: {
+    frameStyle: {
         type: Schema.Types.String,
         required: true,
     },
-    frame_material: {
+    frameMaterial: {
         type: Schema.Types.String,
         required: true,
     },
-    lens_type: {
+    lensType: {
         type: Schema.Types.String,
         required: true,
     },
-    lens_material: {
+    lensMaterial: {
         type: Schema.Types.String,
         required: true,
     },
-    lens_coating: {
+    lensCoating: {
         type: Schema.Types.String,
         required: false,
     },

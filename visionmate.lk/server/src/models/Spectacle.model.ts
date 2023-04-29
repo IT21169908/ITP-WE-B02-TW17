@@ -3,11 +3,11 @@ import {StringOrObjectId} from "../types/util-types";
 
 interface CommonAttributes {
     name: string;
-    frame_style: string;
-    frame_material: string;
-    lens_type: string;
-    lens_material: string;
-    lens_coating: string;
+    frameStyle: string;
+    frameMaterial: string;
+    lensType: string;
+    lensMaterial: string;
+    lensCoating: string;
     color: string;
     size: string;
     price: number;
