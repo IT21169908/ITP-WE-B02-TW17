@@ -1,13 +1,10 @@
 import {Menu, MenuProps} from 'antd';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {NavLink} from 'react-router-dom';
 import {changeDirectionMode, changeMenuMode} from '../../../redux/theme-layout/actionCreator';
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux-hooks";
 import {RootState} from "../../../redux/store";
-import {Eyeglasses, HouseCheckFill} from "react-bootstrap-icons";
 import {Role} from "../../../enums/Role";
-import Items from "../admin/SideBar";
 import adminSideBarItems from "../admin/SideBar";
 import patientSideBarItems from "../patient/SideBar";
 
@@ -17,9 +14,6 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
     const {t} = useTranslation();
 
     const translate = (text: string) => t(text)
-
-    type MenuItem = Required<MenuProps>['items'][number];
-
     let userRole = 1;
     let items: MenuProps['items'];
 
@@ -73,10 +67,10 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
 
     switch (userRole) {
         case Role.ADMIN:
-            items = adminSideBarItems({translate, path, toggleCollapsed});
+            items = adminSideBarItems({translate, path, toggleCollapsed, topMenu});
             break;
         case Role.PATIENT:
-            items = patientSideBarItems({translate, path, toggleCollapsed});
+            items = patientSideBarItems({translate, path, toggleCollapsed, topMenu});
             break;
         default:
             break;
