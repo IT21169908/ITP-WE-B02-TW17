@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { Role } from "../enums/auth";
 
 export function getRoleTitle(role: any): string {
@@ -12,4 +13,8 @@ export function getRoleTitle(role: any): string {
         default:
             return "Invalid-Role";
     }
+}
+
+export function isObjectId(v: string): boolean {
+    return Types.ObjectId.isValid(v) && new Types.ObjectId(v).toHexString() === v;
 }

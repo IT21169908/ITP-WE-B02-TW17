@@ -8,6 +8,6 @@ export function BlogRoutesInit(app: Express) {
 
     /* AUTH ROUTES (Admin) ===================================== */
     app.post('/api/admin/blog/add', BlogEp.createBlogValidationRules(), BlogEp.create);
-    app.post('/api/admin/blog/update', BlogEp.updateBlogValidationRules(), BlogEp.update);
+    app.put('/api/admin/blog/update', BlogEp.updateBlogValidationRules(), BlogEp.update);
     app.delete('/api/admin/blog/delete/:_id', BlogEp.fetchBlogValidationRules(), BlogEp.deleteBlog);
 }
