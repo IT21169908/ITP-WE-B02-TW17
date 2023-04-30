@@ -43,50 +43,6 @@ const dataTableColumn: ColumnsType<DataType> = [
     },
 ];
 
-const formatDataSource = (spectacles: Spectacle[]): DataType[] => {
-    return spectacles.map((spectacle) => {
-        const {
-            _id,
-            name,
-            frameStyle,
-            frameMaterial,
-            lensType,
-            lensMaterial,
-            lensCoating,
-            color,
-            size,
-            price,
-        } = spectacle;
-
-        return {
-            key: _id,
-            //_id: `#${_id}`,
-            name: <span className="ninjadash-username">{name}</span>,
-            frameStyle,
-            frameMaterial,
-            lensType,
-            lensMaterial,
-            lensCoating,
-            color,
-            size,
-            price,
-            action: (
-                <div className="table-actions">
-                    <Link
-                        className="btn btn-sm btn-warning text-white me-1"
-                        to={`/admin/spectacles/${_id}/edit`}
-                    >
-                        <Pencil/>
-                    </Link>
-                    <Link className="btn btn-sm btn-danger text-white" to="#">
-                        <Trash2/>
-                    </Link>
-                </div>
-            ),
-        };
-    });
-};
-
 
 const BreadcrumbItem = [
     {
@@ -102,6 +58,50 @@ const ManageSpectacles: React.FC = () => {
 
     const [spectacles, setSpectacles] = useState<Spectacle[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
+
+    const formatDataSource = (spectacles: Spectacle[]): DataType[] => {
+        return spectacles.map((spectacle) => {
+            const {
+                _id,
+                name,
+                frameStyle,
+                frameMaterial,
+                lensType,
+                lensMaterial,
+                lensCoating,
+                color,
+                size,
+                price,
+            } = spectacle;
+
+            return {
+                key: _id,
+                //_id: `#${_id}`,
+                name: <span className="ninjadash-username">{name}</span>,
+                frameStyle,
+                frameMaterial,
+                lensType,
+                lensMaterial,
+                lensCoating,
+                color,
+                size,
+                price,
+                action: (
+                    <div className="table-actions">
+                        <Link
+                            className="btn btn-sm btn-warning text-white me-1"
+                            to={`/admin/spectacles/${_id}/edit`}
+                        >
+                            <Pencil/>
+                        </Link>
+                        <Link className="btn btn-sm btn-danger text-white" onClick={() => deleteSpectacle(_id)} to="#">
+                            <Trash2/>
+                        </Link>
+                    </div>
+                ),
+            };
+        });
+    };
 
     useEffect(() => {
         let isMounted = true;
@@ -127,6 +127,23 @@ const ManageSpectacles: React.FC = () => {
     useEffect(() => {
         setTableDataSource(formatDataSource(spectacles));
     }, [spectacles])
+
+
+    const deleteSpectacle = async (_id: string) => {
+        const confirmation = window.confirm("Are You sure you want to delete this spectacle")
+        if (confirmation) {
+            try {
+                const res = await SpectacleService.deleteSpectacle(_id);
+                if (res.success) {
+                    alert(res.message)
+                    window.location.reload()
+                }
+            } catch (error: any) {
+                alert(error.response.data.error || error.response.data.message)
+                console.log(error.response.data.error)
+            }
+        }
+    }
 
 
     if (tableDataSource.length === 0) {
