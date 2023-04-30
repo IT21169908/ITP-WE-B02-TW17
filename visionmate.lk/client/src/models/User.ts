@@ -1,8 +1,8 @@
 import { Permission } from "../enums/Permission";
 import { Role } from "../enums/Role";
-import { Upload } from "./Upload";
+import { IUpload } from "./Upload";
 
-interface User {
+interface IUser {
     name: string;
     email: string;
     phone?: string;
@@ -10,7 +10,7 @@ interface User {
     permissions?: Permission[];
     signedUpAs?: string;
     lastLoggedIn?: Date;
-    photo?: Upload;
+    photo?: IUpload;
 }
 
-export default User;
+export default IUser;

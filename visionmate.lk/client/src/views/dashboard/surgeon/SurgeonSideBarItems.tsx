@@ -1,9 +1,7 @@
 import {MenuProps} from "antd";
 import {NavLink} from "react-router-dom";
 import React from "react";
-import {Eyeglasses, HouseCheckFill} from "react-bootstrap-icons";
-import topMenu from "../layout/TopMenu";
-
+import { Eyeglasses, HouseCheckFill } from "react-bootstrap-icons";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -18,9 +16,7 @@ function getItem(label: React.ReactNode, key?: React.Key | null, icon?: React.Re
 }
 
 
-const sideBarItems = ({translate, path, toggleCollapsed, topMenu}: { translate: (text: string) => string, path: string, toggleCollapsed: () => void, topMenu: boolean }): MenuProps['items'] => {
-
-
+const SurgeonSideBarItems = ({translate, path, toggleCollapsed, topMenu}: { translate: (text: string) => string, path: string, toggleCollapsed: () => void, topMenu: boolean }): MenuProps['items'] => {
     return [
         getItem(
             <NavLink onClick={toggleCollapsed} to={`${path}`}>
@@ -30,19 +26,19 @@ const sideBarItems = ({translate, path, toggleCollapsed, topMenu}: { translate: 
             'dashboard',
             !topMenu && <HouseCheckFill/>,
         ),
-        getItem(translate("Spectacles"), 'spectacles', !topMenu && <Eyeglasses/>, [
+        getItem(translate("Appointments"), 'appointments', !topMenu && <Eyeglasses/>, [
                 getItem(
-                    <NavLink onClick={toggleCollapsed} to={`${path}/spectacles`}>
+                    <NavLink onClick={toggleCollapsed} to={`${path}/appointments`}>
                         {translate('Manage')}
                     </NavLink>,
-                    'spectacles.manage',
+                    'appointments.manage',
                     null,
                 ),
                 getItem(
-                    <NavLink onClick={toggleCollapsed} to={`${path}/spectacles/create`}>
+                    <NavLink onClick={toggleCollapsed} to={`${path}/appointments/create`}>
                         {translate('Create')}
                     </NavLink>,
-                    'spectacles.create',
+                    'appointments.create',
                     null,
                 ),
             ]
@@ -51,4 +47,4 @@ const sideBarItems = ({translate, path, toggleCollapsed, topMenu}: { translate: 
     ]
 };
 
-export default sideBarItems;
+export default SurgeonSideBarItems;

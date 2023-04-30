@@ -17,7 +17,7 @@ function getItem(label: React.ReactNode, key?: React.Key | null, icon?: React.Re
 }
 
 
-const sideBarItems = ({translate, path, toggleCollapsed, topMenu}: { translate: (text: string) => string, path: string, toggleCollapsed: () => void, topMenu: boolean }): MenuProps['items'] => {
+const PatientSideBarItems = ({translate, path, toggleCollapsed, topMenu}: { translate: (text: string) => string, path: string, toggleCollapsed: () => void, topMenu: boolean }): MenuProps['items'] => {
 
 
     return [
@@ -33,4 +33,4 @@ const sideBarItems = ({translate, path, toggleCollapsed, topMenu}: { translate: 
     ]
 };
 
-export default sideBarItems;
+export default PatientSideBarItems;

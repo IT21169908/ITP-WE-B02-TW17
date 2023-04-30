@@ -5,8 +5,9 @@ import {changeDirectionMode, changeMenuMode} from '../../../redux/theme-layout/a
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux-hooks";
 import {RootState} from "../../../redux/store";
 import {Role} from "../../../enums/Role";
-import adminSideBarItems from "../admin/SideBar";
-import patientSideBarItems from "../patient/SideBar";
+import AdminSideBarItems from "../admin/AdminSideBarItems";
+import PatientSideBarItems from "../patient/PatientSideBarItems";
+import SurgeonSideBarItems from "../surgeon/SurgeonSideBarItems";
 
 function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
 
@@ -14,7 +15,7 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
     const {t} = useTranslation();
 
     const translate = (text: string) => t(text)
-    let userRole = 1;
+    let userRole = parseInt(Role.SURGEON.toString()); //TODO
     let items: MenuProps['items'];
 
 
@@ -25,7 +26,7 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
     });
 
     // TODO: check this
-    const path = '/admin';
+    let path = '/admin';
     const pathName = window.location.pathname;
     const pathArray = pathName.split(path);
     const mainPath = pathArray[1];
@@ -67,10 +68,16 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
 
     switch (userRole) {
         case Role.ADMIN:
-            items = adminSideBarItems({translate, path, toggleCollapsed, topMenu});
+            path = "/admin";
+            items = AdminSideBarItems({translate, path, toggleCollapsed, topMenu});
             break;
         case Role.PATIENT:
-            items = patientSideBarItems({translate, path, toggleCollapsed, topMenu});
+            path = "/patient";
+            items = PatientSideBarItems({translate, path, toggleCollapsed, topMenu});
+            break;
+        case Role.SURGEON:
+            path = "/surgeon";
+            items = SurgeonSideBarItems({translate, path, toggleCollapsed, topMenu});
             break;
         default:
             break;

@@ -4,7 +4,7 @@ import DashboardLayout from "../../views/dashboard/layout/DashboardLayout";
 
 const NotFound = lazy(() => import('../../views/errors/NotFound'));
 
-function AdminRoutes() {
+function PatientRoutes() {
     return (
         <DashboardLayout>
             <Routes>
@@ -14,4 +14,4 @@ function AdminRoutes() {
     );
 }
 
-export default AdminRoutes;
+export default PatientRoutes;

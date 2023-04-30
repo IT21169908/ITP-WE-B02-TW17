@@ -1,5 +1,5 @@
 
-export interface Upload {
+export interface IUpload {
     user?: string;
     type: string;
     path?: string;

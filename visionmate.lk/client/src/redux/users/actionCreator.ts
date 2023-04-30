@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import User from "../../models/User";
+import IUser from "../../models/User";
 
-export const getUser = createAsyncThunk<User, { user_id: string, signal: AbortSignal }>(
+export const getUser = createAsyncThunk<IUser, { user_id: string, signal: AbortSignal }>(
     'fetch/user',
     async ({user_id, signal}) => {
         // TODO: Move into Service
@@ -10,7 +10,7 @@ export const getUser = createAsyncThunk<User, { user_id: string, signal: AbortSi
             method: "GET",
             signal,
         });
-        const data: User = await response.json();
+        const data: IUser = await response.json();
         return data;
     });
 

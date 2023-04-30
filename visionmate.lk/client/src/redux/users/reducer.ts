@@ -1,9 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import User from "../../models/User";
+import IUser from "../../models/User";
 import {getUser} from "./actionCreator";
 
-const initialState: User = {
+const initialState: IUser = {
     name: '',
     email: '',
     phone: '',
@@ -15,7 +15,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setUser: (state, action: PayloadAction<User>) => {
+        setUser: (state, action: PayloadAction<IUser>) => {
             console.log("reducers.setUser")
             state.name = action.payload.name;
             state.email = action.payload.email;
@@ -38,7 +38,7 @@ const userSlice = createSlice({
                 console.log("extraReducer.getUser.pending")
                 return {...state, ...initialState};
             })
-            .addCase(getUser.fulfilled, (state, action: PayloadAction<User>) => {
+            .addCase(getUser.fulfilled, (state, action: PayloadAction<IUser>) => {
                 console.log("extraReducer.getUser.fulfilled")
                 return {...state, ...action.payload};
             })
