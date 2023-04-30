@@ -21,6 +21,10 @@ export const OrderSchema = new mongoose.Schema({
         type: Schema.Types.String,
         required: true,
     },
+    spectacleId: {
+        type: Schema.Types.String,
+        required: true,
+    },
     status: {
         type: Schema.Types.String,
         enum: ["pending", "processing", "shipped", "delivered"],

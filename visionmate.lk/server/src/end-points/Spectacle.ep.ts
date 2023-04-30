@@ -64,7 +64,7 @@ export function show(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
         const user = req.user as IUser;
         const spectacleId = req.params._id as unknown as Types.ObjectId;
-        Spectacle.find(spectacleId, user).then(spectacle => {
+        Spectacle.findSpectacle(spectacleId, user).then(spectacle => {
             res.sendSuccess(spectacle, "Get spectacle by ID successfully!");
         }).catch(next);
     }

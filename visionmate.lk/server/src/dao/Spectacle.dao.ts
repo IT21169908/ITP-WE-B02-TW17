@@ -18,7 +18,7 @@ export async function getAll(user?: IUser): Promise<ISpectacle[]> {
     }
 }
 
-export async function find(spectacleId: Types.ObjectId, user?: IUser): Promise<ISpectacle> {
+export async function findSpectacle(spectacleId: Types.ObjectId, user?: IUser): Promise<ISpectacle> {
     const spectacle = await Spectacle.findById(spectacleId);
     if (spectacle) {
         AppLogger.info(`Got Spectacle(ID: ${spectacle._id}) by ${getRoleTitle(user?.role)} (ID: ${user?._id})`);

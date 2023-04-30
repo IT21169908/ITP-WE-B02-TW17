@@ -1,29 +1,32 @@
 import {NextFunction, Request, Response} from "express";
 import {Types} from "mongoose";
 import * as Order from "../dao/Order.dao";
+import * as Spectacle from "../dao/Spectacle.dao";
 import {validationsChecker} from "../middleware/validations/validation-handler";
 import {OrderValidations} from "../middleware/validations/order-validations";
 import {DOrder} from "../models/Order.model";
 import {IUser} from "../models/User.model";
+import {AppLogger} from "../utils/logging";
+import {ApplicationError} from "../utils/application-error";
 
 
 // ================ VALIDATIONS ================
 export function createOrderValidationRules() {
     return [
-        OrderValidations.userId(),
-        OrderValidations.status(),
+        OrderValidations.spectacleId(),
         OrderValidations.address(),
         OrderValidations.phone(),
         OrderValidations.email(),
         OrderValidations.paymentMethod(),
-        OrderValidations.totalAmount(),
-        OrderValidations.shippingFee(),
         OrderValidations.note(),
     ];
 }
 
 export function updateOrderValidationRules() {
-    return [OrderValidations.orderId()];
+    return [
+        OrderValidations.orderId(),
+        OrderValidations.status(),
+    ];
 }
 
 export function fetchOrderValidationRules() {
@@ -35,20 +38,28 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
         const user = req.user as IUser;
 
-        const data: DOrder = {
-            userId: user._id,
-            status: "pending",
-            address: req.body.address,
-            phone: req.body.phone,
-            email: req.body.email,
-            paymentMethod: "cod",
-            totalAmount: req.body.totalAmount,
-            shippingFee: req.body.shippingFee,
-            note: req.body.note,
-        };
-        await Order.placeOrder(data, user).then(order => {
-            res.sendSuccess(order, "Order created successfully!");
-        }).catch(next);
+        const spectacle = await Spectacle.findSpectacle(req.body.spectacleId).catch(next);
+
+        if (spectacle) {
+            const data: DOrder = {
+                userId: user._id,
+                spectacleId: spectacle._id,
+                status: "pending",
+                address: req.body.address,
+                phone: req.body.phone,
+                email: req.body.email,
+                paymentMethod: "cod",
+                totalAmount: spectacle.price,
+                shippingFee: 300,
+                note: req.body.note,
+            };
+            await Order.placeOrder(data, user).then(order => {
+                res.sendSuccess(order, "Order created successfully!");
+            }).catch(next);
+        } else {
+            AppLogger.info(`spectacle(ID: ${req.body.spectacleId}) Not Found`);
+            next(new ApplicationError(`Create order: Spectacle not found for ID: ${req.body.spectacleId} !`));
+        }
     }
 }
 

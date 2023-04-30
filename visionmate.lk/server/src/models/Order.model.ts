@@ -3,6 +3,7 @@ import {StringOrObjectId} from "../types/util-types";
 
 interface CommonAttributes {
     userId: StringOrObjectId;
+    spectacleId: StringOrObjectId;
     status: "pending" | "processing" | "shipped" | "delivered";
     address: string;
     phone: string;

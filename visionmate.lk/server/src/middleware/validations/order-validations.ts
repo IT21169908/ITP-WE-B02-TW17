@@ -2,19 +2,21 @@ import {check} from "express-validator";
 import mongoose from "mongoose";
 
 export const OrderValidations = {
-    userId: () =>
-        check("userId")
+    spectacleId: () =>
+        check("spectacleId")
             .not()
             .isEmpty()
-            .withMessage("User ID is required!")
+            .withMessage("Spectacle ID is required!")
             .custom((v) => mongoose.isValidObjectId(v))
-            .withMessage(`userId is not a valid mongoDb objectID`),
+            .withMessage(`spectacleId is not a valid mongoDb objectID`),
     status: () =>
         check("status")
+            .not()
+            .isEmpty()
+            .withMessage("status is required!")
             .trim()
             .isString()
-            .not()
-            .isIn(["pending"])
+            .isIn(["pending", "processing", "shipped", "delivered"])
             .withMessage("Invalid status!"),
     address: () =>
         check("address")
@@ -48,22 +50,6 @@ export const OrderValidations = {
             .withMessage("Payment method is required!")
             .isIn(["cod", "online"])
             .withMessage("Invalid payment method!"),
-    totalAmount: () =>
-        check("totalAmount")
-            .trim()
-            .isNumeric()
-            .not()
-            .isEmpty()
-            .withMessage("Total amount is required!")
-            .toFloat(),
-    shippingFee: () =>
-        check("shippingFee")
-            .trim()
-            .isNumeric()
-            .not()
-            .isEmpty()
-            .withMessage("Shipping fee is required!")
-            .toFloat(),
     note: () =>
         check("note")
             .optional({nullable: true})
