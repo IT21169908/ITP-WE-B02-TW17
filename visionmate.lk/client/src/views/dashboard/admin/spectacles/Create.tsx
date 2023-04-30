@@ -24,7 +24,7 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
             setSpectacle(null);
         }
     }, [enableEdit]);
-    
+
     useEffect(() => {
         async function loadSpectacle() {
             try {
@@ -34,7 +34,6 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
                 console.error(error.response.data);
             }
         }
-
         if (enableEdit) {
             loadSpectacle();
         }

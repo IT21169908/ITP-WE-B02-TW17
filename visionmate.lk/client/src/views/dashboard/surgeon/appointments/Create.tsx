@@ -6,14 +6,16 @@ import {Main} from '../../../../components/styled-components/styled-containers';
 import {PageHeader} from '../../../../components/breadcrumbs/DashboardBreadcrumb';
 import {HouseDoor} from "react-bootstrap-icons";
 import IAppointment from "../../../../models/Appointment";
-import Spectacle from "../../../../models/Spectacle";
 import {useParams} from "react-router-dom";
+import { AppointmentService } from "../../../../services/AppointmentService";
 
 
 function AppointmentCreate({enableEdit}: { enableEdit: boolean }) {
-    const {spectacle: spectacle_id} = useParams();
+    const {appointment: appointment_id} = useParams();
     const [appointment, setAppointment] = useState<IAppointment | null>(null);
-    const onFinish = (values: Spectacle) => {
+
+    const onFinish = (values: IAppointment) => {
+        alert('Successfully saved: ' +  JSON.stringify(values));
         console.log('Success:', values);
     };
 
@@ -22,9 +24,24 @@ function AppointmentCreate({enableEdit}: { enableEdit: boolean }) {
     };
 
     useEffect(() => {
-        console.log(appointment)
-        // get spectacle
-    }, [appointment, spectacle_id])
+        if (!enableEdit) {
+            setAppointment(null);
+        }
+    }, [enableEdit]);
+
+    useEffect(() => {
+        async function loadAppointment() {
+            try {
+                const res = await AppointmentService.getAppointmentById(appointment_id);
+                setAppointment(res.data);
+            } catch (error: any) {
+                console.error(error.response.data);
+            }
+        }
+        if (enableEdit) {
+            loadAppointment();
+        }
+    }, [enableEdit, appointment_id]);
 
     const items = [
         {
@@ -35,6 +52,10 @@ function AppointmentCreate({enableEdit}: { enableEdit: boolean }) {
             title: 'Appointments Create',
         },
     ];
+
+    if (appointment_id && !appointment) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>

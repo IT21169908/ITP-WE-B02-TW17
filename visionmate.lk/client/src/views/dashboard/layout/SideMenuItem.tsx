@@ -15,7 +15,7 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
     const {t} = useTranslation();
 
     const translate = (text: string) => t(text)
-    let userRole = parseInt(Role.ADMIN.toString()); //TODO
+    let userRole = parseInt(Role.SURGEON.toString()); //TODO
     let items: MenuProps['items'];
 
 
