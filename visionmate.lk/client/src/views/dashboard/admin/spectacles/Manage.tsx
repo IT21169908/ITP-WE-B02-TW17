@@ -1,44 +1,40 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {Button, Col, Row, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
 import {HouseDoor, Pencil, Plus, Trash2} from "react-bootstrap-icons";
 import {BorderLessHeading, Main} from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
-import DataTable from "../../../../components/tables/DataTable";
 import {Link} from "react-router-dom";
-import ISpectacle from "../../../../models/Spectacle";
+import Spectacle from "../../../../models/Spectacle";
+import {SpectacleService} from "../../../../services/SpectacleService";
 
 interface DataType {
     key: React.Key;
-    name: string;
-    age: number;
-    address: string;
+    _id?: string;
+    name: ReactNode;
+    frameStyle: string;
+    frameMaterial: string;
+    lensType: string;
+    lensMaterial: string;
+    lensCoating: string;
+    color: string;
+    size: string;
+    price: number;
     action: ReactNode;
 }
 
 const dataTableColumn: ColumnsType<DataType> = [
-    {
-        title: 'Full Name',
-        width: 100,
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: 'Age',
-        width: 100,
-        dataIndex: 'age',
-        key: 'age',
-        sorter: (a, b) => a.age - b.age,
-    },
-    {title: 'Column 1', dataIndex: 'address', key: '1'},
-    {title: 'Column 2', dataIndex: 'address', key: '2'},
-    {title: 'Column 3', dataIndex: 'address', key: '3'},
-    {title: 'Column 4', dataIndex: 'address', key: '4'},
-    {title: 'Column 5', dataIndex: 'address', key: '5'},
-    {title: 'Column 6', dataIndex: 'address', key: '6'},
-    {title: 'Column 7', dataIndex: 'address', key: '7'},
-    {title: 'Column 8', dataIndex: 'address', key: '8'},
+    //{title: 'Id', dataIndex: '_id', key: '_id'},
+    {title: 'Name', dataIndex: 'name', key: 'name'},
+    {title: 'Frame Style', dataIndex: 'frameStyle', key: 'frameStyle'},
+    {title: 'Frame Material', dataIndex: 'frameMaterial', key: 'frameMaterial'},
+    {title: 'Lens Type', dataIndex: 'lensType', key: 'lensType'},
+    {title: 'Lens Material', dataIndex: 'lensMaterial', key: 'lensMaterial'},
+    {title: 'Lens Coating', dataIndex: 'lensCoating', key: 'lensCoating'},
+    {title: 'Color', dataIndex: 'color', key: 'color'},
+    {title: 'Size', dataIndex: 'size', key: 'size'},
+    {title: 'Price', dataIndex: 'price', key: 'price'},
     {
         title: 'Action',
         dataIndex: 'action',
@@ -47,40 +43,50 @@ const dataTableColumn: ColumnsType<DataType> = [
     },
 ];
 
-const tableDataSource: DataType[] = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York Park',
-        action: (
-            <div className="table-actions">
-                <Link className="btn btn-sm btn-warning text-white me-1" to="/admin/spectacles/644d1e61ed372e583e3e4735/edit">
-                    <Pencil/>
-                </Link>
-                <Link className="btn btn-sm btn-danger text-white" to="#">
-                    <Trash2/>
-                </Link>
-            </div>
-        ),
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 40,
-        address: 'London Park',
-        action: (
-            <div className="table-actions">
-                <Link className="btn btn-sm btn-warning text-white me-1" to="/admin/spectacles/644d1e70ed372e583e3e4738/edit">
-                    <Pencil/>
-                </Link>
-                <Link className="btn btn-sm btn-danger text-white" to="#">
-                    <Trash2/>
-                </Link>
-            </div>
-        ),
-    },
-];
+const formatDataSource = (spectacles: Spectacle[]): DataType[] => {
+    return spectacles.map((spectacle) => {
+        const {
+            _id,
+            name,
+            frameStyle,
+            frameMaterial,
+            lensType,
+            lensMaterial,
+            lensCoating,
+            color,
+            size,
+            price,
+        } = spectacle;
+
+        return {
+            key: _id,
+            //_id: `#${_id}`,
+            name: <span className="ninjadash-username">{name}</span>,
+            frameStyle,
+            frameMaterial,
+            lensType,
+            lensMaterial,
+            lensCoating,
+            color,
+            size,
+            price,
+            action: (
+                <div className="table-actions">
+                    <Link
+                        className="btn btn-sm btn-warning text-white me-1"
+                        to={`/admin/spectacles/${_id}/edit`}
+                    >
+                        <Pencil/>
+                    </Link>
+                    <Link className="btn btn-sm btn-danger text-white" to="#">
+                        <Trash2/>
+                    </Link>
+                </div>
+            ),
+        };
+    });
+};
+
 
 const BreadcrumbItem = [
     {
@@ -93,6 +99,42 @@ const BreadcrumbItem = [
 ];
 
 const ManageSpectacles: React.FC = () => {
+
+    const [spectacles, setSpectacles] = useState<Spectacle[]>([]);
+    const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
+
+    useEffect(() => {
+        let isMounted = true;
+
+        async function loadSpectacles() {
+            try {
+                const res = await SpectacleService.getAllSpectacles();
+                if (isMounted) {
+                    setSpectacles(res.data);
+                }
+            } catch (error: any) {
+                console.error(error.response.data);
+            }
+        }
+
+        loadSpectacles();
+        return () => {
+            // TODO unset tableDataSource[]
+            isMounted = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        setTableDataSource(formatDataSource(spectacles));
+    }, [spectacles])
+
+
+    if (tableDataSource.length === 0) {
+        return <div>Loading...</div>;
+    }
+
+    console.log("spectacle --> ", spectacles);
+
     return (<>
             <PageHeader className="ninjadash-page-header-main" title="Manage Spectacles" routes={BreadcrumbItem}/>
             <Main>
@@ -101,7 +143,7 @@ const ManageSpectacles: React.FC = () => {
                         <BorderLessHeading>
                             <Cards isbutton={
                                 <Link className="btn btn-primary h-auto" type="link" to="/admin/spectacles/create">
-                                   <Plus/> Add New
+                                    <Plus/> Add New
                                 </Link>
                             }>
                                 <Table columns={dataTableColumn} dataSource={tableDataSource}/>

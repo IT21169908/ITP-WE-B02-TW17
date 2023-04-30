@@ -6,6 +6,7 @@ import {ApplicationError} from "../utils/application-error";
 import {AppLogger} from "../utils/logging";
 import {getRoleTitle} from "../utils/utils";
 
+
 export async function getAllOrders(user?: IUser): Promise<IOrder[]> {
     const orders = await Order.find();
     if (orders) {
@@ -16,6 +17,7 @@ export async function getAllOrders(user?: IUser): Promise<IOrder[]> {
         throw new ApplicationError(`Get all orders: Orders not found!`);
     }
 }
+
 
 export async function findByUser(user?: IUser): Promise<IOrder[]> {
     const orders = await Order.find({'userId': user?._id})
@@ -28,6 +30,7 @@ export async function findByUser(user?: IUser): Promise<IOrder[]> {
     }
 }
 
+
 export async function findOrder(orderId: Types.ObjectId, user?: IUser): Promise<IOrder> {
     const order = await Order.findById(orderId);
     if (order) {
@@ -38,6 +41,7 @@ export async function findOrder(orderId: Types.ObjectId, user?: IUser): Promise<
         throw new ApplicationError(`Get Order: Order not found for ID: ${orderId} !`);
     }
 }
+
 
 export async function placeOrder(data: DOrder, user?: IUser): Promise<IOrder> {
     try {
@@ -54,6 +58,7 @@ export async function placeOrder(data: DOrder, user?: IUser): Promise<IOrder> {
     }
 }
 
+
 export async function updateOrder(orderId: Types.ObjectId, orderDetails: Partial<DOrder>, user?: IUser): Promise<IOrder> {
     const updatedOrder = await Order.findByIdAndUpdate(orderId, orderDetails as any, {new: true});
     if (updatedOrder) {
@@ -64,6 +69,7 @@ export async function updateOrder(orderId: Types.ObjectId, orderDetails: Partial
         throw new ApplicationError(`Update order: Order not found for ID: ${orderId} !`);
     }
 }
+
 
 export async function cancelOrder(orderId: Types.ObjectId, user?: IUser): Promise<IOrder> {
     const cancelledOrder = await Order.findOneAndDelete({_id: orderId});

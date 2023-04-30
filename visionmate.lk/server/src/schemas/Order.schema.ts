@@ -58,7 +58,8 @@ export const OrderSchema = new mongoose.Schema({
     note: {
         type: Schema.Types.String,
         required: false,
-    }
+    },
+
 }, schemaOptions);
 
 const Order = mongoose.model<IOrder>("orders", OrderSchema);
