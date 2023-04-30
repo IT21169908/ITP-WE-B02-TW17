@@ -6,11 +6,11 @@ import {PageHeader} from '../../../../components/breadcrumbs/DashboardBreadcrumb
 import {HouseDoor} from "react-bootstrap-icons";
 import Spectacle from "../../../../models/Spectacle";
 import {useParams} from "react-router-dom";
-import ISpectacle from "../../../../models/Spectacle";
+import {SpectacleService} from "../../../../services/SpectacleService";
 
 function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
     const {spectacle: spectacle_id} = useParams();
-    const [spectacle, setSpectacle] = useState<ISpectacle | null>(null);
+    const [spectacle, setSpectacle] = useState<Spectacle | null>(null);
     const onFinish = (values: Spectacle) => {
         console.log('Success:', values);
     };
@@ -20,9 +20,26 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
     };
 
     useEffect(() => {
-        console.log(spectacle)
-        // get spectacle
-    }, [spectacle, spectacle_id])
+        if (!spectacle_id) {
+            setSpectacle(null)
+        }
+    }, [spectacle, spectacle_id]);
+
+
+    useEffect(() => {
+        async function loadSpectacle() {
+            try {
+                const res = await SpectacleService.getSpectacleById(spectacle_id);
+                setSpectacle(res.data);
+            } catch (error: any) {
+                console.error(error.response.data);
+            }
+        }
+
+        if (spectacle_id) {
+            loadSpectacle();
+        }
+    }, [spectacle_id])
 
     const items = [
         {
@@ -33,6 +50,12 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
             title: 'Spectacle Create',
         },
     ];
+    console.log("spectacle --> ", spectacle)
+
+
+    if (spectacle_id && !spectacle) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
@@ -40,32 +63,42 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
             <Main>
                 <Row gutter={25}>
                     <Col lg={12} xs={24}>
-                        <FormLayout title="Enter Spectacle Information" initialValues={spectacle} onSubmit={onFinish} onFinishFailed={onFinishFailed}>
-                            <Form.Item className="mb-2" name="name" label="Name" rules={[{required: true, message: 'Please input name!'}]}>
+                        <FormLayout title="Enter Spectacle Information" initialValues={spectacle} onSubmit={onFinish}
+                                    onFinishFailed={onFinishFailed}>
+                            <Form.Item className="mb-2" name="name" label="Name"
+                                       rules={[{required: true, message: 'Please input name!'}]}>
                                 <Input/>
                             </Form.Item>
-                            <Form.Item className="mb-2" name="frame_style" label="Frame Style" rules={[{required: true, message: 'Please input Frame Style!'}]}>
+                            <Form.Item className="mb-2" name="frameStyle" label="Frame Style"
+                                       rules={[{required: true, message: 'Please input Frame Style!'}]}>
                                 <Input/>
                             </Form.Item>
-                            <Form.Item className="mb-2" name="frame_material" label="Frame Material" rules={[{required: true, message: 'Please input Frame Material!'}]}>
+                            <Form.Item className="mb-2" name="frameMaterial" label="Frame Material"
+                                       rules={[{required: true, message: 'Please input Frame Material!'}]}>
                                 <Input/>
                             </Form.Item>
-                            <Form.Item className="mb-2" name="lens_type" label="Lens Type" rules={[{required: true, message: 'Please input Lens Type!'}]}>
+                            <Form.Item className="mb-2" name="lensType" label="Lens Type"
+                                       rules={[{required: true, message: 'Please input Lens Type!'}]}>
                                 <Input/>
                             </Form.Item>
-                            <Form.Item className="mb-2" name="lens_material" label="Lens Material" rules={[{required: true, message: 'Please input Lens Material!'}]}>
+                            <Form.Item className="mb-2" name="lensMaterial" label="Lens Material"
+                                       rules={[{required: true, message: 'Please input Lens Material!'}]}>
                                 <Input/>
                             </Form.Item>
-                            <Form.Item className="mb-2" name="lens_coating" label="Lens Coating" rules={[{required: true, message: 'Please input Lens Coating!'}]}>
+                            <Form.Item className="mb-2" name="lensCoating" label="Lens Coating"
+                                       rules={[{required: true, message: 'Please input Lens Coating!'}]}>
                                 <Input/>
                             </Form.Item>
-                            <Form.Item className="mb-2" name="color" label="Color" rules={[{required: true, message: 'Please input Color!'}]}>
+                            <Form.Item className="mb-2" name="color" label="Color"
+                                       rules={[{required: true, message: 'Please input Color!'}]}>
                                 <Input/>
                             </Form.Item>
-                            <Form.Item className="mb-2" name="size" label="Size" rules={[{required: true, message: 'Please input Size!'}]}>
+                            <Form.Item className="mb-2" name="size" label="Size"
+                                       rules={[{required: true, message: 'Please input Size!'}]}>
                                 <Input/>
                             </Form.Item>
-                            <Form.Item className="mb-2" name="price" label="Price" rules={[{required: true, message: 'Please input Price!'}]}>
+                            <Form.Item className="mb-2" name="price" label="Price"
+                                       rules={[{required: true, message: 'Please input Price!'}]}>
                                 <Input/>
                             </Form.Item>
                             <Form.Item className="ninjadash-form-action">

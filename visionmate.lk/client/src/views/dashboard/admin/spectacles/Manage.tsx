@@ -55,7 +55,7 @@ const tableDataSource: DataType[] = [
         address: 'New York Park',
         action: (
             <div className="table-actions">
-                <Link className="btn btn-sm btn-warning text-white me-1" to="/admin/spectacles/1/edit">
+                <Link className="btn btn-sm btn-warning text-white me-1" to="/admin/spectacles/644d1e61ed372e583e3e4735/edit">
                     <Pencil/>
                 </Link>
                 <Link className="btn btn-sm btn-danger text-white" to="#">
@@ -71,7 +71,7 @@ const tableDataSource: DataType[] = [
         address: 'London Park',
         action: (
             <div className="table-actions">
-                <Link className="btn btn-sm btn-warning text-white me-1" to="/admin/spectacles/2/edit">
+                <Link className="btn btn-sm btn-warning text-white me-1" to="/admin/spectacles/644d1e70ed372e583e3e4738/edit">
                     <Pencil/>
                 </Link>
                 <Link className="btn btn-sm btn-danger text-white" to="#">

@@ -22,7 +22,7 @@ function FormLayout({children, id, title, className, layout, onSubmit, onFinishF
             {layout === 'vertical' ? (
                 <VerticalFormStyleWrap>
                     <Cards title={title}>
-                        <Form id={id} name="horizontal-form" onFinish={onSubmit} onFinishFailed={onFinishFailed} className={className} layout={layout}>
+                        <Form id={id} name="horizontal-form" onFinish={onSubmit} onFinishFailed={onFinishFailed} initialValues={initialValues} className={className} layout={layout}>
                             {children}
                         </Form>
                     </Cards>

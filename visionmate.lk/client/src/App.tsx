@@ -17,7 +17,7 @@ const {themeColor} = config;
 
 const ProviderConfig = () => {
     const dispatch = useAppDispatch();
-    const isLoggedIn = false;
+    const isLoggedIn = true;
     const isLoaded = true;
 
     const {rtl, topMenu, mainContent} = useAppSelector((state: RootState) => {
