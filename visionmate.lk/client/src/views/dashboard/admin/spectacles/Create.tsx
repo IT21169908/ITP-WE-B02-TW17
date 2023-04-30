@@ -20,12 +20,11 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
     };
 
     useEffect(() => {
-        if (!spectacle_id) {
-            setSpectacle(null)
+        if (!enableEdit) {
+            setSpectacle(null);
         }
-    }, [spectacle, spectacle_id]);
-
-
+    }, [enableEdit]);
+    
     useEffect(() => {
         async function loadSpectacle() {
             try {
@@ -36,10 +35,10 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
             }
         }
 
-        if (spectacle_id) {
+        if (enableEdit) {
             loadSpectacle();
         }
-    }, [spectacle_id])
+    }, [enableEdit, spectacle_id])
 
     const items = [
         {

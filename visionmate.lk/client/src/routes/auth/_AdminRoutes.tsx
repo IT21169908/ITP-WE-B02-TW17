@@ -3,7 +3,8 @@ import {Route, Routes} from 'react-router-dom';
 import DashboardLayout from "../../views/dashboard/layout/DashboardLayout";
 
 const NotFound = lazy(() => import('../../views/errors/NotFound'));
-const Create = lazy(() => import("../../views/dashboard/admin/spectacles/Create"));
+const CreateSpectacle = lazy(() => import("../../views/dashboard/admin/spectacles/Create"));
+const EditSpectacle = lazy(() => import("../../views/dashboard/admin/spectacles/Create"));
 const ManageSpectacles = lazy(() => import("../../views/dashboard/admin/spectacles/Manage"));
 
 function AdminRoutes() {
@@ -13,8 +14,8 @@ function AdminRoutes() {
             <Routes>
                 <Route index path="/*" element={<NotFound/>}/>
                 <Route index path="/spectacles" element={<ManageSpectacles/>}/>
-                <Route index path="/spectacles/create" element={<Create enableEdit={false}/>}/>
-                <Route index path="/spectacles/:spectacle/edit" element={<Create enableEdit/>}/>
+                <Route index path="/spectacles/create" element={<CreateSpectacle enableEdit={false}/>}/>
+                <Route index path="/spectacles/:spectacle/edit" element={<EditSpectacle enableEdit/>}/>
             </Routes>
         </DashboardLayout>
     );
