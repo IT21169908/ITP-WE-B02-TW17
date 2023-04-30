@@ -18,7 +18,7 @@ export function authenticateValidationRules() {
 
 export function registerValidationRules() {
     return [
-        AuthValidations.role([Role.PATIENT, Role.SURGEON, Role.DOCTOR]),
+        AuthValidations.role([Role.ADMIN, Role.PATIENT, Role.SURGEON, Role.DOCTOR]),
         AuthValidations.email(),
         AuthValidations.name().optional({checkFalsy: true}),
         AuthValidations.password(),
@@ -43,7 +43,7 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
         const {role, email} = req.body;
         const user = await UserDao.getUserByEmail(email);
         if (user) {
-            res.sendError('User Already Exits!', 403);
+            res.sendError('User Already Exits!', 409);
         } else {
             if (role === Role.PATIENT) {
                 try {
@@ -63,8 +63,10 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
                 } catch (e) {
                     res.sendError(e);
                 }
+            } else if (role === Role.ADMIN) {
+                res.sendError('Admin: Unauthorized Role!');
             } else {
-                res.sendError('Role Required!!');
+                res.sendError('Role Required!');
             }
         }
     }

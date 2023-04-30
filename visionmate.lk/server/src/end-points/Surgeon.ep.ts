@@ -29,6 +29,6 @@ export async function register(req: Request, res: Response, next: NextFunction) 
     };
     SurgeonDao.createProfile(data, !!req.body.remember).then(async token => {
         AppLogger.info(`User Registered as ${getRoleTitle(role)} ID: ${id}`);
-        res.sendSuccess(token);
+        res.sendSuccess(token, `User Registered as ${getRoleTitle(role)}!`);
     }).catch(next);
 }
