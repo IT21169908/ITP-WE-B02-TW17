@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 import {Schema} from "mongoose";
-import {ISpectacle} from "../models/Spectacle.model";
+import {IOrder} from "../models/Order.model";
 
 const schemaOptions: mongoose.SchemaOptions = {
     _id: true,
@@ -16,45 +16,51 @@ const schemaOptions: mongoose.SchemaOptions = {
     },
 };
 
-export const SpectacleSchema = new mongoose.Schema({
-    name: {
+export const OrderSchema = new mongoose.Schema({
+    userId: {
         type: Schema.Types.String,
         required: true,
     },
-    frameStyle: {
+    spectacleId: {
         type: Schema.Types.String,
         required: true,
     },
-    frameMaterial: {
+    status: {
+        type: Schema.Types.String,
+        enum: ["pending", "processing", "shipped", "delivered"],
+        required: true,
+    },
+    address: {
         type: Schema.Types.String,
         required: true,
     },
-    lensType: {
+    phone: {
         type: Schema.Types.String,
         required: true,
     },
-    lensMaterial: {
+    email: {
         type: Schema.Types.String,
         required: true,
     },
-    lensCoating: {
+    paymentMethod: {
         type: Schema.Types.String,
+        enum: ["cod", "online"],
         required: false,
     },
-    color: {
-        type: Schema.Types.String,
-        required: true,
-    },
-    size: {
-        type: Schema.Types.String,
-        required: true,
-    },
-    price: {
+    shippingFee: {
         type: Schema.Types.Number,
         required: true,
     },
+    totalAmount: {
+        type: Schema.Types.Number,
+        required: true,
+    },
+    note: {
+        type: Schema.Types.String,
+        required: false,
+    }
 }, schemaOptions);
 
-const Spectacle = mongoose.model<ISpectacle>("spectacles", SpectacleSchema);
+const Order = mongoose.model<IOrder>("orders", OrderSchema);
 
-export default Spectacle;
+export default Order;

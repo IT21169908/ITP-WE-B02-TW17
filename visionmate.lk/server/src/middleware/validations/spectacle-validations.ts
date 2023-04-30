@@ -10,36 +10,36 @@ export const SpectacleValidations = {
             .not()
             .isEmpty()
             .withMessage("Name is required!"),
-    frame_style: () =>
-        check("frame_style")
+    frameStyle: () =>
+        check("frameStyle")
             .trim()
             .isString()
             .not()
             .isEmpty()
             .withMessage("Frame style is required!"),
-    frame_material: () =>
-        check("frame_material")
+    frameMaterial: () =>
+        check("frameMaterial")
             .trim()
             .isString()
             .not()
             .isEmpty()
             .withMessage("Frame material is required!"),
-    lens_type: () =>
-        check("lens_type")
+    lensType: () =>
+        check("lensType")
             .trim()
             .isString()
             .not()
             .isEmpty()
             .withMessage("Lens type is required!"),
-    lens_material: () =>
-        check("lens_material")
+    lensMaterial: () =>
+        check("lensMaterial")
             .trim()
             .isString()
             .not()
             .isEmpty()
             .withMessage("Lens material is required!"),
-    lens_coating: () =>
-        check("lens_coating")
+    lensCoating: () =>
+        check("lensCoating")
             .trim()
             .isString()
             .not()

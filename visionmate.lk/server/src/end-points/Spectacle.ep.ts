@@ -11,11 +11,11 @@ import {IUser} from "../models/User.model";
 export function createSpectacleValidationRules() {
     return [
         SpectacleValidations.name(),
-        SpectacleValidations.frame_style(),
-        SpectacleValidations.frame_material(),
-        SpectacleValidations.lens_type(),
-        SpectacleValidations.lens_material(),
-        SpectacleValidations.lens_coating(),
+        SpectacleValidations.frameStyle(),
+        SpectacleValidations.frameMaterial(),
+        SpectacleValidations.lensType(),
+        SpectacleValidations.lensMaterial(),
+        SpectacleValidations.lensCoating(),
         SpectacleValidations.color(),
         SpectacleValidations.size(),
         SpectacleValidations.price(),
@@ -37,11 +37,11 @@ export async function create(req: Request, res: Response, next: NextFunction) {
 
         const data: DSpectacle = {
             name: req.body.name,
-            frame_style: req.body.frame_style,
-            frame_material: req.body.frame_material,
-            lens_type: req.body.lens_type,
-            lens_material: req.body.lens_material,
-            lens_coating: req.body.lens_coating,
+            frameStyle: req.body.frameStyle,
+            frameMaterial: req.body.frameMaterial,
+            lensType: req.body.lensType,
+            lensMaterial: req.body.lensMaterial,
+            lensCoating: req.body.lensCoating,
             color: req.body.color,
             size: req.body.size,
             price: req.body.price,
@@ -64,7 +64,7 @@ export function show(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
         const user = req.user as IUser;
         const spectacleId = req.params._id as unknown as Types.ObjectId;
-        Spectacle.find(spectacleId, user).then(spectacle => {
+        Spectacle.findSpectacle(spectacleId, user).then(spectacle => {
             res.sendSuccess(spectacle, "Get spectacle by ID successfully!");
         }).catch(next);
     }
@@ -77,11 +77,11 @@ export async function update(req: Request, res: Response, next: NextFunction) {
         const spectacle_id = req.params._id as unknown as Types.ObjectId;
         const data: Partial<DSpectacle> = {
             name: req.body.name,
-            frame_style: req.body.frame_style,
-            frame_material: req.body.frame_material,
-            lens_type: req.body.lens_type,
-            lens_material: req.body.lens_material,
-            lens_coating: req.body.lens_coating,
+            frameStyle: req.body.frameStyle,
+            frameMaterial: req.body.frameMaterial,
+            lensType: req.body.lensType,
+            lensMaterial: req.body.lensMaterial,
+            lensCoating: req.body.lensCoating,
             color: req.body.color,
             size: req.body.size,
             price: req.body.price,
