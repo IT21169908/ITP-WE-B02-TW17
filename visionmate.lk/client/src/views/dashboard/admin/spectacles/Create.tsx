@@ -20,16 +20,20 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
     };
 
     useEffect(() => {
-        if (!enableEdit) {
+        //if (!enableEdit) {
             setSpectacle(null);
-        }
+        //}
     }, [enableEdit]);
-    
+
     useEffect(() => {
+        let isMounted = true;
+
         async function loadSpectacle() {
             try {
                 const res = await SpectacleService.getSpectacleById(spectacle_id);
-                setSpectacle(res.data);
+                if (isMounted) {
+                    setSpectacle(res.data);
+                }
             } catch (error: any) {
                 console.error(error.response.data);
             }
@@ -38,7 +42,11 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
         if (enableEdit) {
             loadSpectacle();
         }
-    }, [enableEdit, spectacle_id])
+
+        return () => {
+            isMounted = false;
+        };
+    }, [enableEdit, spectacle_id]);
 
     const items = [
         {
