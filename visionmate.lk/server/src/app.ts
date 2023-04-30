@@ -41,6 +41,7 @@ app.use('/api/auth', Authentication.verifyToken);
 app.use('/api/admin', Authentication.verifyToken, verifyRole([Role.ADMIN]));
 app.use('/api/patient', Authentication.verifyToken, verifyRole([Role.PATIENT]));
 app.use('/api/surgeon', Authentication.verifyToken, verifyRole([Role.SURGEON]));
+app.use('/api/doctor', Authentication.verifyToken, verifyRole([Role.DOCTOR]));
 routes.initRoutes(app);
 
 // Error Handling

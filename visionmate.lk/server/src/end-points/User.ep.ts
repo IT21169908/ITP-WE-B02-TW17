@@ -7,6 +7,7 @@ import { IUser } from "../models/User.model";
 import { AppLogger } from "../utils/logging";
 import * as PatientEp from "./Patient.ep";
 import * as SurgeonEp from "./Surgeon.ep";
+import * as DoctorEp from "./Doctor.ep";
 
 export function authenticateValidationRules() {
     return [
@@ -17,7 +18,7 @@ export function authenticateValidationRules() {
 
 export function registerValidationRules() {
     return [
-        AuthValidations.role([Role.PATIENT, Role.SURGEON]),
+        AuthValidations.role([Role.PATIENT, Role.SURGEON, Role.DOCTOR]),
         AuthValidations.email(),
         AuthValidations.name().optional({checkFalsy: true}),
         AuthValidations.password(),
@@ -53,6 +54,12 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
             } else if (role === Role.SURGEON) {
                 try {
                     await SurgeonEp.register(req, res, next);
+                } catch (e) {
+                    res.sendError(e);
+                }
+            } else if (role === Role.DOCTOR) {
+                try {
+                    await DoctorEp.register(req, res, next);
                 } catch (e) {
                     res.sendError(e);
                 }

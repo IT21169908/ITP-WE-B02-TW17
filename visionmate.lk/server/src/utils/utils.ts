@@ -10,6 +10,10 @@ export function getRoleTitle(role: any): string {
             return "ADMIN";
         case Role.PATIENT:
             return "PATIENT";
+        case Role.SURGEON:
+            return "SURGEON";
+        case Role.DOCTOR:
+            return "DOCTOR";
         default:
             return "Invalid-Role";
     }

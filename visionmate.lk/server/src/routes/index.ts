@@ -7,6 +7,7 @@ import createHttpError from "http-errors";
 import { BlogRoutesInit } from "./blog";
 import {SpectacleRoutesInit} from "./spectcle";
 import {OrderRoutesInit} from "./order";
+import { TreatmentPlanRoutesInit } from "./treatment-plan";
 
 export function initRoutes(app: Express) {
     /* TOP LEVEL REQUESTS */
@@ -19,6 +20,7 @@ export function initRoutes(app: Express) {
     SpectacleRoutesInit(app);
     AppointmentRoutesInit(app);
     OrderRoutesInit(app);
+    TreatmentPlanRoutesInit(app);
 
     /* INVALID REQUESTS */
     app.get('/', (req: Request, res: Response) => res.redirect(301, "/api"));
