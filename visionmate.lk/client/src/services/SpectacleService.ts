@@ -33,10 +33,15 @@ export class SpectacleService {
         }
     }
 
-    static async createSpectacle(sample: any): Promise<AppResponse<any>> {
-        const ep = ApiUtils.adminUrl('sample/add');
-        const res = await axios.post<Partial<Spectacle>, AxiosAppResponse<any>>(ep, sample);
-        return res.data;
+    static async createSpectacle(data: Spectacle): Promise<AppResponse<any>> {
+        const ep = ApiUtils.adminUrl('spectacles');
+        
+        const response = await axios.post<Partial<Spectacle>, AxiosAppResponse<any>>(ep, data, this.config);
+        if (response.data.success) {
+            return response.data;
+        } else {
+            throw Error("Request failed with status: " + response.status + " message: " + response.data.error);
+        }
     }
 
     static async updateSpectacle(sample: any) {

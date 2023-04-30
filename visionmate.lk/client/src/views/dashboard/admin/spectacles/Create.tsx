@@ -11,8 +11,21 @@ import {SpectacleService} from "../../../../services/SpectacleService";
 function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
     const {spectacle: spectacle_id} = useParams();
     const [spectacle, setSpectacle] = useState<Spectacle | null>(null);
-    const onFinish = (values: Spectacle) => {
+    const onFinish = async (values: Spectacle) => {
         console.log('Success:', values);
+        if (!enableEdit) {
+            try {
+                const res = await SpectacleService.createSpectacle(values);
+                if (res.success) {
+                    alert(res.message)
+                    setSpectacle(null);
+                }
+            } catch (error: any) {
+                console.error(error.response.data);
+            }
+        } else {
+            // TODO: UPDATE
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -21,7 +34,7 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
 
     useEffect(() => {
         //if (!enableEdit) {
-            setSpectacle(null);
+        setSpectacle(null);
         //}
     }, [enableEdit]);
 
