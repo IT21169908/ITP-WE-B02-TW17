@@ -24,7 +24,20 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
                 console.error(error.response.data);
             }
         } else {
-            // TODO: UPDATE
+            if (spectacle_id) {
+                try {
+                    const res = await SpectacleService.updateSpectacle(spectacle_id, values);
+                    if (res.success) {
+                        alert(res.message)
+                        setSpectacle(res.data);
+                    }
+                } catch (error: any) {
+                    alert(error.response.data.error || error.response.data.message)
+                    console.log(error.response.data.error)
+                }
+            } else {
+                alert("Something went wrong!")
+            }
         }
     };
 
