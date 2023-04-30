@@ -8,7 +8,7 @@ export const OrderValidations = {
             .isEmpty()
             .withMessage("Spectacle ID is required!")
             .custom((v) => mongoose.isValidObjectId(v))
-            .withMessage(`spectacleId is not a valid mongoDb objectID`),
+            .withMessage(`spectacleId is not a valid mongodbDb objectID`),
     status: () =>
         check("status")
             .not()
@@ -61,5 +61,5 @@ export const OrderValidations = {
             .isEmpty()
             .withMessage(`${key} cannot be empty`)
             .custom((v) => mongoose.isValidObjectId(v))
-            .withMessage(`${key} is not a valid mongoDb objectID`),
+            .withMessage(`${key} is not a valid mongodbDb objectID`),
 };

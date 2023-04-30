@@ -33,6 +33,7 @@ export function fetchOrderValidationRules() {
     return [OrderValidations.orderId()];
 }
 
+
 // ================ CREATE - C ================
 export async function create(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
@@ -63,6 +64,7 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     }
 }
 
+
 // ================ READ - R ================
 export async function getAll(req: Request, res: Response, next: NextFunction) {
     const user = req.user as IUser;
@@ -71,12 +73,14 @@ export async function getAll(req: Request, res: Response, next: NextFunction) {
     }).catch(next);
 }
 
+
 export async function getByUser(req: Request, res: Response, next: NextFunction) {
     const user = req.user as IUser;
     await Order.findByUser(user).then(order => {
         res.sendSuccess(order, "Get all order successfully!");
     }).catch(next);
 }
+
 
 export function show(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
@@ -87,6 +91,7 @@ export function show(req: Request, res: Response, next: NextFunction) {
         }).catch(next);
     }
 }
+
 
 // ================ UPDATE - U ================
 export async function update(req: Request, res: Response, next: NextFunction) {
@@ -101,6 +106,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
         }).catch(next);
     }
 }
+
 
 // ================ DELETE - D ================
 export function destroy(req: Request, res: Response, next: NextFunction) {

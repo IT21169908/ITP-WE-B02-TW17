@@ -4,7 +4,6 @@ import {StringOrObjectId} from "../types/util-types";
 interface CommonAttributes {
     userId: StringOrObjectId;
     spectacleId: StringOrObjectId;
-    status: "pending" | "processing" | "shipped" | "delivered";
     address: string;
     phone: string;
     email?: string;
@@ -16,8 +15,9 @@ interface CommonAttributes {
 
 export interface DOrder extends CommonAttributes {
     _id?: StringOrObjectId;
+    status: "pending" | "processing" | "shipped" | "delivered";
 }
 
 export interface IOrder extends CommonAttributes, mongoose.Document {
-
+    status: "pending" | "processing" | "shipped" | "delivered";
 }
