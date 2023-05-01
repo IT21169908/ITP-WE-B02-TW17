@@ -6,17 +6,44 @@ import {Main} from '../../../../components/styled-components/styled-containers';
 import {PageHeader} from '../../../../components/breadcrumbs/DashboardBreadcrumb';
 import {HouseDoor} from "react-bootstrap-icons";
 import IAppointment from "../../../../models/Appointment";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AppointmentService } from "../../../../services/AppointmentService";
 
-
 function AppointmentCreate({enableEdit}: { enableEdit: boolean }) {
+
     const {appointment: appointment_id} = useParams();
     const [appointment, setAppointment] = useState<IAppointment | null>(null);
 
-    const onFinish = (values: IAppointment) => {
-        alert('Successfully saved: ' +  JSON.stringify(values));
+    const onFinish = async (values: IAppointment) => {
         console.log('Success:', values);
+        if (!enableEdit) {
+            try {
+                const res = await AppointmentService.createAppointment(values);
+                if (res.success) {
+                    alert(res.message)
+                    setAppointment(null);
+                    window.location.href = 'http://localhost:3000/surgeon/appointments/'
+                }
+            } catch (error: any) {
+                console.error(error.response.data);
+            }
+        }  else {
+            if (appointment_id) {
+                values = {...values, _id: appointment_id};
+                try {
+                    const res = await AppointmentService.updateAppointment(values);
+                    if (res.success) {
+                        alert(res.message)
+                        setAppointment(res.data);
+                    }
+                } catch (error: any) {
+                    alert(error.response.data.error || error.response.data.message)
+                    console.log(error.response.data.error)
+                }
+            } else {
+                alert("Something went wrong!")
+            }
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {

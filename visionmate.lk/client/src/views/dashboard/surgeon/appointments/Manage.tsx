@@ -1,17 +1,16 @@
-import React, { ReactNode, useEffect, useState } from 'react';
-import {Button, Col, Row, Table} from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Col, Row, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
 import {HouseDoor, Pencil, Plus, Trash2} from "react-bootstrap-icons";
 import {BorderLessHeading, Main} from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
-import DataTable from "../../../../components/tables/DataTable";
 import {Link} from "react-router-dom";
 import IAppointment from "../../../../models/Appointment";
 import { AppointmentService } from "../../../../services/AppointmentService";
 
 interface DataType {
-    key: React.Key;
+    key: string;
     title: string;
     description: string;
     tags: string;
@@ -23,7 +22,7 @@ interface DataType {
     appointmentDate: string;
     duration: string;
     invoiceId: string;
-    action: ReactNode;
+    action: JSX.Element;
 }
 
 const dataTableColumn: ColumnsType<DataType> = [
@@ -40,15 +39,15 @@ const dataTableColumn: ColumnsType<DataType> = [
         dataIndex: 'description',
         key: 'description',
     },
-    {title: 'tags', dataIndex: 'address', key: '1'},
-    {title: 'reference', dataIndex: 'address', key: '2'},
-    {title: 'notes', dataIndex: 'address', key: '3'},
-    {title: 'status', dataIndex: 'address', key: '4'},
-    {title: 'patientId', dataIndex: 'address', key: '5'},
-    {title: 'doctorId', dataIndex: 'address', key: '6'},
-    {title: 'appointmentDate', dataIndex: 'address', key: '7'},
-    {title: 'duration', dataIndex: 'address', key: '8'},
-    {title: 'invoiceId', dataIndex: 'address', key: '9'},
+    {title: 'tags', dataIndex: 'tags', key: '1'},
+    {title: 'reference', dataIndex: 'reference', key: '2'},
+    {title: 'notes', dataIndex: 'status', key: '3'},
+    {title: 'status', dataIndex: 'notes', key: '4'},
+    {title: 'patientId', dataIndex: 'patientId', key: '5'},
+    {title: 'doctorId', dataIndex: 'doctorId', key: '6'},
+    {title: 'appointmentDate', dataIndex: 'appointmentDate', key: '7'},
+    {title: 'duration', dataIndex: 'duration', key: '8'},
+    {title: 'invoiceId', dataIndex: 'invoiceId', key: '9'},
     {
         title: 'Action',
         dataIndex: 'action',
@@ -121,48 +120,102 @@ const BreadcrumbItem = [
 
 const ManageAppointments: React.FC = () => {
 
-    const [appointments, setAppointments] = useState<IAppointment[] | null>(null);
-
-    // useEffect(() => {
-    //     if (!enableEdit) {
-    //         setAppointment(null);
-    //     }
-    // }, [enableEdit]);
+    const [appointments, setAppointments] = useState<IAppointment[]>([]);
+    const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
 
     useEffect(() => {
+        let isMounted = true;
+
         async function loadAppointments() {
             try {
                 const res = await AppointmentService.getAllAppointments();
-                setAppointments(res.data);
+                if (isMounted) {
+                    setAppointments(res.data);
+                }
             } catch (error: any) {
                 console.error(error.response.data);
             }
         }
+
+        loadAppointments();
+        return () => {
+            // TODO unset tableDataSource[]
+            isMounted = false;
+        };
     }, []);
 
-    // const tableDataSource = appointments.map((item) => ({
-    //     title: item.title,
-    //     description: item.description,
-    //     tags: item.tags, // split the tags string into an array of tags
-    //     reference: item.reference,
-    //     notes: item.notes,
-    //     status: item.status,
-    //     patientId: item.patientId,
-    //     doctorId: item.doctorId,
-    //     appointmentDate: item.appointmentDate, // convert the appointmentDate string to a Date object
-    //     duration: item.duration,
-    //     invoiceId: item.invoiceId,
-    //     action: (
-    //         <div className="table-actions">
-    //             <Link className="btn btn-sm btn-warning text-white me-1" to={`/surgeon/appointments/${item._id}/edit`}>
-    //                 <Pencil/>
-    //             </Link>
-    //             <Link className="btn btn-sm btn-danger text-white" to="#">
-    //                 <Trash2/>
-    //             </Link>
-    //         </div>
-    //     ),
-    // }));
+
+    useEffect(() => {
+        setTableDataSource(formatDataSource(appointments));
+    }, [appointments])
+
+
+    const formatDataSource = (appointments: IAppointment[]): DataType[] => {
+        return appointments.map((appointment) => {
+            const {
+                _id,
+                title,
+                description,
+                tags,
+                reference,
+                notes,
+                status,
+                patientId,
+                doctorId,
+                appointmentDate,
+                duration,
+                invoiceId
+            } = appointment;
+
+            return {
+                key: _id,
+                title,
+                description,
+                tags,
+                reference,
+                notes,
+                status,
+                patientId,
+                doctorId,
+                appointmentDate,
+                duration,
+                invoiceId,
+                action: (
+                    <div className="table-actions">
+                        <Link
+                            className="btn btn-sm btn-warning text-white me-1"
+                            to={`/surgeon/appointments/${_id}/edit`}
+                        >
+                            <Pencil/>
+                        </Link>
+                        <Link className="btn btn-sm btn-danger text-white" onClick={() => deleteAppointment(_id)} to="#">
+                            <Trash2/>
+                        </Link>
+                    </div>
+                ),
+            };
+        });
+    };
+
+    const deleteAppointment = async (_id: string) => {
+        const confirmation = window.confirm("Are You sure you want to delete this appointment")
+        if (confirmation) {
+            try {
+                const res = await AppointmentService.deleteAppointment(_id);
+                if (res.success) {
+                    alert(res.message)
+                    window.location.reload()
+                }
+            } catch (error: any) {
+                alert(error.response.data.error || error.response.data.message)
+                console.log(error.response.data.error)
+            }
+        }
+    }
+
+    if (tableDataSource.length === 0) {
+        return <div>Loading...</div>;
+    }
 
     return (<>
             <PageHeader className="ninjadash-page-header-main" title="Manage Appointments" routes={BreadcrumbItem}/>
