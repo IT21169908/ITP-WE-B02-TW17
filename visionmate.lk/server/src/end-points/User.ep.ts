@@ -9,6 +9,8 @@ import * as PatientEp from "./Patient.ep";
 import * as SurgeonEp from "./Surgeon.ep";
 import * as DoctorEp from "./Doctor.ep";
 import User from "../schemas/User.schema";
+import {getRoleTitle} from "../utils/utils";
+import {AuthUserData} from "../types/util-types";
 
 export function authenticateValidationRules() {
     return [
@@ -34,9 +36,9 @@ export async function loginUser(req: Request, res: Response, next: NextFunction)
     if (validationsChecker(req, res)) {
         UserDao.authenticateUser(req.body.email, req.body.password, req.body.signedUpAs, !!req.body.remember)
             .then(async (data: AuthUserData) => {
-                res.cookie('token', token, {httpOnly: true, secure: false, maxAge: 3600000 * 24 * 30}); // TODO set same expiration set to jwt token
-                const user = await User.findOne({email: req.body.email}); // TODO: REFACTOR
-                res.sendSuccess({token: data.token, user}, `User Logged as ${getRoleTitle(data.user.role)}!`);
+                res.cookie('token', data.token, {httpOnly: true, secure: false, maxAge: 3600000 * 24 * 30}); // TODO set same expiration set to jwt token
+                //const user = await User.findOne({email: req.body.email}); // TODO: REFACTOR
+                res.sendSuccess(data, `User Logged as ${getRoleTitle(data.user.role)}!`);
             })
             .catch(next);
     }
