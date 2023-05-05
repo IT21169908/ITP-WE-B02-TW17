@@ -28,19 +28,19 @@ interface DataType {
 }
 
 const dataTableColumn: ColumnsType<DataType> = [
-    {title: 'title', width: 100, dataIndex: 'title', key: 'title'},
-    {title: 'description', width: 100, dataIndex: 'description', key: 'description'},
-    {title: 'treatmentPlan', dataIndex: 'treatmentPlan', key: 'treatmentPlan'},
-    {title: 'startDate', dataIndex: 'startDate', key: 'startDate'},
-    {title: 'endDate', dataIndex: 'endDate', key: 'endDate'},
-    {title: 'patientId', dataIndex: 'patientId', key: 'patientId'},
-    {title: 'doctorId', dataIndex: 'doctorId', key: 'doctorId'},
-    {title: 'diagnosis', dataIndex: 'diagnosis', key: 'diagnosis'},
-    {title: 'medications', dataIndex: 'medications', key: 'medications'},
-    {title: 'procedures', dataIndex: 'procedures', key: 'procedures'},
-    {title: 'instructions', dataIndex: 'instructions', key: 'instructions'},
-    {title: 'referral', dataIndex: 'referral', key: 'referral'},
-    {title: 'progressNotes', dataIndex: 'progressNotes', key: 'progressNotes'},
+    {title: 'Title', width: 100, dataIndex: 'title', key: 'title'},
+    {title: 'Description', width: 100, dataIndex: 'description', key: 'description'},
+    {title: 'Treatment Plan', dataIndex: 'treatmentPlan', key: 'treatmentPlan'},
+    {title: 'Start Date', dataIndex: 'startDate', key: 'startDate'},
+    {title: 'End Date', dataIndex: 'endDate', key: 'endDate'},
+    {title: 'Patient Id', dataIndex: 'patientId', key: 'patientId'},
+    {title: 'Doctor Id', dataIndex: 'doctorId', key: 'doctorId'},
+    {title: 'Diagnosis', dataIndex: 'diagnosis', key: 'diagnosis'},
+    {title: 'Medications', dataIndex: 'medications', key: 'medications'},
+    {title: 'Procedures', dataIndex: 'procedures', key: 'procedures'},
+    {title: 'Instructions', dataIndex: 'instructions', key: 'instructions'},
+    {title: 'Referral', dataIndex: 'referral', key: 'referral'},
+    {title: 'Progress Notes', dataIndex: 'progressNotes', key: 'progressNotes'},
     {title: 'Action', dataIndex: 'action', key: 'operation', width: 100},
 ];
 

@@ -27,22 +27,22 @@ interface DataType {
 
 const dataTableColumn: ColumnsType<DataType> = [
     {
-        title: 'title',
+        title: 'Title',
         width: 100,
         dataIndex: 'title',
         key: 'title',
         // sorter: (a, b) => a.title - b.title,
     },
-    {title: 'description', width: 100, dataIndex: 'description', key: 'description'},
-    {title: 'tags', dataIndex: 'tags', key: 'tags'},
-    {title: 'reference', dataIndex: 'reference', key: 'reference'},
-    {title: 'notes', dataIndex: 'status', key: 'status'},
-    {title: 'status', dataIndex: 'notes', key: 'notes'},
-    {title: 'patientId', dataIndex: 'patientId', key: 'patientId'},
-    {title: 'doctorId', dataIndex: 'doctorId', key: 'doctorId'},
-    {title: 'appointmentDate', dataIndex: 'appointmentDate', key: 'appointmentDate'},
-    {title: 'duration', dataIndex: 'duration', key: 'duration'},
-    {title: 'invoiceId', dataIndex: 'invoiceId', key: 'invoiceId'},
+    {title: 'Description', width: 100, dataIndex: 'description', key: 'description'},
+    {title: 'Tags', dataIndex: 'tags', key: 'tags'},
+    {title: 'Reference', dataIndex: 'reference', key: 'reference'},
+    {title: 'Notes', dataIndex: 'status', key: 'status'},
+    {title: 'Status', dataIndex: 'notes', key: 'notes'},
+    {title: 'Patient Id', dataIndex: 'patientId', key: 'patientId'},
+    {title: 'Doctor Id', dataIndex: 'doctorId', key: 'doctorId'},
+    {title: 'Appointment Date', dataIndex: 'appointmentDate', key: 'appointmentDate'},
+    {title: 'Duration', dataIndex: 'duration', key: 'duration'},
+    {title: 'Invoice Id', dataIndex: 'invoiceId', key: 'invoiceId'},
     {title: 'Action', dataIndex: 'action', key: 'operation', width: 100},
 ];
 
