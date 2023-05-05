@@ -1,10 +1,14 @@
-import React, {useCallback, useState} from 'react';
-import { Facebook } from "react-bootstrap-icons";
-import {Link, NavLink, useNavigate} from 'react-router-dom';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Facebook} from "react-bootstrap-icons";
+import {Link, Navigate, NavLink, useNavigate} from 'react-router-dom';
 import {Button, Col, Form, Input, Row} from "antd";
 import {AuthFormWrap} from './styled-elements';
 import {ReactSVG} from 'react-svg';
 import {Checkbox} from "../../components/checkbox/Checkbox";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux-hooks";
+import {signIn} from "../../redux/auth/actionCreator";
+import {RootState} from "../../redux/store";
+
 
 const Login = () => {
     // TODO: check double render
@@ -12,6 +16,13 @@ const Login = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const isLoading = false;
+
+    const dispatch = useAppDispatch();
+    const {isLoggedIn} = useAppSelector((state: RootState) => {
+        return {
+            isLoggedIn: state.auth.isLoggedIn,
+        };
+    });
 
     const [state, setState] = useState({
         checked: false,
@@ -25,11 +36,30 @@ const Login = () => {
     );
 
     const handleSubmit = useCallback(
-        () => {
-            navigate('/admin');
+        (value: { email: string, password: string }) => {
+            const controller = new AbortController();
+            const {signal} = controller;
+            dispatch(signIn({...value, signal}));
+            return () => {
+                controller.abort();
+            };
         },
-        [navigate],
+        [dispatch],
     );
+
+    // TODO: Redirect handle
+
+    // useEffect(() => {
+    //     console.log("Login useEffect", isLoggedIn)
+    //     if (isLoggedIn) {
+    //         window.location.href = '/admin'
+    //     }
+    // }, [isLoggedIn])
+    //
+    // if (isLoggedIn) {
+    //     return <Navigate to="/admin"/>;
+    // }
+
     return (
         <Row justify="center">
             <Col xxl={6} xl={8} md={12} sm={18} xs={24}>
@@ -42,7 +72,7 @@ const Login = () => {
                             <Form.Item
                                 name="email"
                                 rules={[{message: 'Please input your username or Email!', required: true}]}
-                                initialValue="ninjadash@dm.com"
+                                initialValue="hansajith18@gmail.com"
                                 label="Username or Email Address"
                             >
                                 <Input placeholder="name@example.com"/>
@@ -74,7 +104,7 @@ const Login = () => {
                                 </li>
                                 <li>
                                     <Link className="facebook-social" to="#">
-                                        <Facebook />
+                                        <Facebook/>
                                     </Link>
                                 </li>
                             </ul>

@@ -5,7 +5,7 @@ import { ApiUtils } from "../utils/api-utils";
 
 export class AppointmentService {
 
-    private static authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ0ZTAwOGE3YTZhNDQwM2EyYzU2ZDAzIiwiaWF0IjoxNjgzMTg5ODgxLCJleHAiOjE2ODMyNzYyODF9.2b6JMnPFJ4xmXYRe3iZcE-Bt1zq5a9oTgWMcuokY5ek';
+    private static authToken = JSON.parse(localStorage.getItem('authToken') || '');
 
     private static config = {
         headers: {

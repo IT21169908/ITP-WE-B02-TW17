@@ -20,8 +20,9 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
     let items: MenuProps['items'];
 
 
-    const {topMenu} = useAppSelector((state: RootState) => {
+    const {topMenu, authUser} = useAppSelector((state: RootState) => {
         return {
+            authUser: state.auth.user,
             topMenu: state.ChangeLayoutMode.topMenu,
         };
     });
@@ -67,7 +68,8 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
         dispatch(changeDirectionMode(rtlMode));
     };
 
-    switch (userRole) {
+
+    switch (authUser?.role) {
         case Role.ADMIN:
             path = "/admin";
             items = AdminSideBarItems({translate, path, toggleCollapsed, topMenu});
