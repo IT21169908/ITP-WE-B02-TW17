@@ -136,7 +136,7 @@ function CreateBlog({enableEdit}: { enableEdit: boolean }) {
             <Main>
                 <Row gutter={25} className="justify-content-center">
                     <Col md={6} lg={12} xs={24}>
-                        <FormLayout title="Enter Treatment Plan Information" initialValues={blog} onSubmit={onSubmitHandler} onFinishFailed={onFinishFailed}>
+                        <FormLayout title="Enter Blogs Information" initialValues={blog} onSubmit={onSubmitHandler} onFinishFailed={onFinishFailed}>
                             <Form.Item className="mb-2" name="_id" label="Id" hidden={true}>
                                 <Input type="hidden" />
                             </Form.Item>
