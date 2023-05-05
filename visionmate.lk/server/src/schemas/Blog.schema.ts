@@ -40,6 +40,14 @@ export const BlogSchema = new mongoose.Schema({
     reference: {
         type: Schema.Types.String,
         required: false,
+    },
+    status: {
+        type: Schema.Types.String,
+        required: false,
+    },
+    publishedDate: {
+        type: Schema.Types.Date,
+        required: false,
     }
 }, schemaOptions);
 

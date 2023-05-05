@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import * as DoctorDao from "../dao/Doctor.dao";
 import { SignedUpAs } from "../enums/auth";
 import { DDoctor } from "../models/Doctor.model";
+import { AuthUserData } from "../types/util-types";
 import { AppLogger } from "../utils/logging";
 import { getRoleTitle } from "../utils/utils";
 
@@ -28,8 +29,8 @@ export async function register(req: Request, res: Response, next: NextFunction) 
         awards: [],
         signedUpAs: SignedUpAs.EMAIL,
     };
-    DoctorDao.createProfile(data, !!req.body.remember).then(async token => {
+    DoctorDao.createProfile(data, !!req.body.remember).then(async (data: AuthUserData) => {
         AppLogger.info(`User Registered as ${getRoleTitle(role)} ID: ${id}`);
-        res.sendSuccess(token, `User Registered as ${getRoleTitle(role)}!`);
+        res.sendSuccess(data.token, `User Registered as ${getRoleTitle(role)}!`);
     }).catch(next);
 }

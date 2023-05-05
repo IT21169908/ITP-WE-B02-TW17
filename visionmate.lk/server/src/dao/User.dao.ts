@@ -2,6 +2,7 @@ import { PopulateOptions, Types } from "mongoose";
 import { Role, SignedUpAs } from "../enums/auth";
 import { IUser } from "../models/User.model";
 import User from "../schemas/User.schema";
+import { AuthUserData } from "../types/util-types";
 import { ApplicationError } from "../utils/application-error";
 import { AppLogger } from "../utils/logging";
 
@@ -23,12 +24,13 @@ function getPopulatesForRole(role: Role): PopulateOptions[] {
     }
 }
 
-export async function authenticateUser(email: string, password: string, signedUpAs: string | undefined, remember: boolean): Promise<string> {
+export async function authenticateUser(email: string, password: string, signedUpAs: string | undefined, remember: boolean): Promise<AuthUserData> {
     if (signedUpAs === SignedUpAs.EMAIL) {
         const user = await User.findOne({email: email});
         if (user) {
             AppLogger.info(`User Logged In as ${signedUpAs} ID: ${user._id}`);
-            return user.createAccessToken(remember ? "365 days" : "24 hours");
+            const token = user.createAccessToken(remember ? "365 days" : "24 hours");
+            return { token: token, user: user};
         } else {
             throw new ApplicationError('User not found in the system!');
         }
@@ -57,7 +59,8 @@ export async function authenticateUser(email: string, password: string, signedUp
             throw new ApplicationError('Incorrect email/password combination!');
         }
         AppLogger.info(`User Logged In as ${SignedUpAs.EMAIL} ID: ${user._id}`);
-        return user.createAccessToken(remember ? "365 days" : "24 hours");
+        const token = user.createAccessToken(remember ? "365 days" : "24 hours");
+        return { token: token, user: user};
     } else {
         throw new ApplicationError('User not found in the system!');
     }

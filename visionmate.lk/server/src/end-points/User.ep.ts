@@ -33,10 +33,10 @@ export function registerValidationRules() {
 export async function loginUser(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
         UserDao.authenticateUser(req.body.email, req.body.password, req.body.signedUpAs, !!req.body.remember)
-            .then(async (token: string) => {
+            .then(async (data: AuthUserData) => {
                 res.cookie('token', token, {httpOnly: true, secure: false, maxAge: 3600000 * 24 * 30}); // TODO set same expiration set to jwt token
                 const user = await User.findOne({email: req.body.email}); // TODO: REFACTOR
-                res.sendSuccess({token, user});
+                res.sendSuccess({token: data.token, user}, `User Logged as ${getRoleTitle(data.user.role)}!`);
             })
             .catch(next);
     }

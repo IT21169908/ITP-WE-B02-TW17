@@ -2,79 +2,67 @@ import React, { useEffect, useState } from 'react';
 import { Col, message, Popconfirm, Row, Skeleton, Table } from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
-import { HouseDoor, Pencil, PencilFill, Plus, Trash } from "react-bootstrap-icons";
+import { HouseDoor, PencilFill, Plus, Trash } from "react-bootstrap-icons";
 import {BorderLessHeading, Main} from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
 import { Link, useNavigate } from "react-router-dom";
-import ITreatmentPlan from "../../../../models/TreatmentPlan";
-import { TreatmentPlanService } from "../../../../services/TreatmentPlanService";
+import IBlog from "../../../../models/Blog";
+import { BlogService } from '../../../../services/BlogService';
 
 interface DataType {
     key:  string;
     title: string;
+    titleDescription: string;
     description: string;
-    treatmentPlan: string;
-    startDate: string;
-    endDate: string;
-    patientId?:  string | undefined;
-    doctorId?:  string | undefined;
-    diagnosis?:  string | undefined;
-    medications?:  string | undefined;
-    procedures?:  string | undefined;
-    instructions?:  string | undefined;
-    referral: string;
-    progressNotes?:  string | undefined;
+    tags: string;
+    reference:string;
+    status?: string | undefined;
+    publishedDate?: string | undefined;
     action: JSX.Element;
 }
 
 const dataTableColumn: ColumnsType<DataType> = [
     {title: 'Title', width: 100, dataIndex: 'title', key: 'title'},
-    {title: 'Description', width: 100, dataIndex: 'description', key: 'description'},
-    {title: 'Treatment Plan', dataIndex: 'treatmentPlan', key: 'treatmentPlan'},
-    {title: 'Start Date', dataIndex: 'startDate', key: 'startDate'},
-    {title: 'End Date', dataIndex: 'endDate', key: 'endDate'},
-    {title: 'Patient Id', dataIndex: 'patientId', key: 'patientId'},
-    {title: 'Doctor Id', dataIndex: 'doctorId', key: 'doctorId'},
-    {title: 'Diagnosis', dataIndex: 'diagnosis', key: 'diagnosis'},
-    {title: 'Medications', dataIndex: 'medications', key: 'medications'},
-    {title: 'Procedures', dataIndex: 'procedures', key: 'procedures'},
-    {title: 'Instructions', dataIndex: 'instructions', key: 'instructions'},
-    {title: 'Referral', dataIndex: 'referral', key: 'referral'},
-    {title: 'Progress Notes', dataIndex: 'progressNotes', key: 'progressNotes'},
+    {title: 'Title Description', width: 150, dataIndex: 'titleDescription', key: 'titleDescription'},
+    {title: 'Description', dataIndex: 'description', key: 'description'},
+    {title: 'Tags', dataIndex: 'tags', key: 'tags'},
+    {title: 'Reference', dataIndex: 'reference', key: 'reference'},
+    {title: 'Status', dataIndex: 'status', key: 'status'},
+    {title: 'Published Date', dataIndex: 'publishedDate', key: 'publishedDate'},
     {title: 'Action', dataIndex: 'action', key: 'operation', width: 100},
 ];
 
 const BreadcrumbItem = [
     {
         title: <div className="d-flex align-items-center"><HouseDoor/> &nbsp; Home</div>,
-        href: '/doctor',
+        href: '/admin',
     },
     {
-        title: 'Manage Treatment Plans',
+        title: 'Manage Blogs',
     },
 ];
 
-const ManageTreatmentPlans: React.FC = () => {
+const ManageBlogs: React.FC = () => {
 
     const navigate = useNavigate();
-    const [treatmentPlans, setTreatmentPlans] = useState<ITreatmentPlan[]>([]);
+    const [blogs, setBlogs] = useState<IBlog[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
 
     useEffect(() => {
         let isMounted = true;
 
-        async function loadTreatmentPlans() {
+        async function loadBlogs() {
             try {
-                const res = await TreatmentPlanService.getAllTreatmentPlans();
+                const res = await BlogService.getAllBlogs();
                 if (isMounted) {
-                    setTreatmentPlans(res.data);
+                    setBlogs(res.data);
                 }
             } catch (error: any) {
                 console.error(error.response.data);
             }
         }
 
-        loadTreatmentPlans();
+        loadBlogs();
         return () => {
             // TODO unset tableDataSource[]
             isMounted = false;
@@ -82,12 +70,12 @@ const ManageTreatmentPlans: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        setTableDataSource(formatDataSource(treatmentPlans));
-    }, [treatmentPlans]);
+        setTableDataSource(formatDataSource(blogs));
+    }, [blogs]);
 
     const confirmDelete = async (id: string): Promise<void> => {
         try {
-            const res = await TreatmentPlanService.deleteTreatmentPlan(id);
+            const res = await BlogService.deleteBlog(id);
             if (res.success) {
                 message.success(`${res.message}`);
                 window.location.reload(); // TODO - remove page reload
@@ -102,50 +90,38 @@ const ManageTreatmentPlans: React.FC = () => {
         message.error('Delete canceled!');
     };
 
-    const formatDataSource = (treatmentPlans: ITreatmentPlan[]): DataType[] => {
-        return treatmentPlans.map((treatmentPlanx) => {
+    const formatDataSource = (blogs: IBlog[]): DataType[] => {
+        return blogs.map((blog) => {
             const {
                 _id,
                 title,
+                titleDescription,
                 description,
-                treatmentPlan,
-                startDate,
-                endDate,
-                patientId,
-                doctorId,
-                diagnosis,
-                medications,
-                procedures,
-                instructions,
-                referral,
-                progressNotes
-            } = treatmentPlanx;
+                tags,
+                reference,
+                status,
+                publishedDate
+            } = blog;
 
             return {
                 key: _id,
                 title,
+                titleDescription,
                 description,
-                treatmentPlan,
-                startDate,
-                endDate,
-                patientId,
-                doctorId,
-                diagnosis,
-                medications,
-                procedures,
-                instructions,
-                referral,
-                progressNotes,
+                tags,
+                reference,
+                status,
+                publishedDate,
                 action: (
                     <div className="table-actions">
                         <Link
                             className="btn btn-sm btn-outline-warning fw-bolder me-1 mt-1"
-                            to={`/doctor/treatment-plans/${_id}/edit`}
+                            to={`/admin/blogs/${_id}/edit`}
                         >
                             <PencilFill/>
                         </Link>
                         <Popconfirm
-                            title="Are you sure delete this plan?"
+                            title="Are you sure delete this blog?"
                             onConfirm={() => confirmDelete(_id)}
                             onCancel={cancelDelete}
                             okText="Yes"
@@ -175,13 +151,13 @@ const ManageTreatmentPlans: React.FC = () => {
 
     return (
         <>
-            <PageHeader className="ninjadash-page-header-main" title="Manage Treatment Plans" routes={BreadcrumbItem}/>
+            <PageHeader className="ninjadash-page-header-main" title="Manage Blogs" routes={BreadcrumbItem}/>
             <Main>
                 <Row gutter={15}>
                     <Col xs={24}>
                         <BorderLessHeading>
                             <Cards isbutton={
-                                <Link className="btn btn-primary h-auto" type="link" to="/doctor/treatment-plans/create">
+                                <Link className="btn btn-primary h-auto" type="link" to="/admin/blogs/create">
                                    <Plus/> Add New
                                 </Link>
                             }>
@@ -195,5 +171,5 @@ const ManageTreatmentPlans: React.FC = () => {
     );
 };
 
-export default ManageTreatmentPlans;
+export default ManageBlogs;
 

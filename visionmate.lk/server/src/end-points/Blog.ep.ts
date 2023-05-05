@@ -27,13 +27,15 @@ export function fetchBlogValidationRules() {
 export async function create(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
         const user = req.user as IUser;
-        const {title, titleDescription, description, tags, reference} = req.body;
+        const {title, titleDescription, description, tags, reference, status, publishedDate} = req.body;
         const data: DBlog = {
             title: title,
             titleDescription: titleDescription,
             description: description,
             tags: tags,
             reference: reference,
+            status: status ? status : undefined,
+            publishedDate: publishedDate ? publishedDate : undefined,
         };
         await BlogDao.createBlog(data, user).then(blog => {
             res.sendSuccess(blog, "Blog created successfully!");
