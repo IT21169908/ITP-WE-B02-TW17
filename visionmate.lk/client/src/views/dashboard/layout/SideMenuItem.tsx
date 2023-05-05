@@ -6,6 +6,7 @@ import {useAppDispatch, useAppSelector} from "../../../hooks/redux-hooks";
 import {RootState} from "../../../redux/store";
 import {Role} from "../../../enums/Role";
 import AdminSideBarItems from "../admin/AdminSideBarItems";
+import DoctorSideBarItems from "../doctor/DoctorSideBarItems";
 import PatientSideBarItems from "../patient/PatientSideBarItems";
 import SurgeonSideBarItems from "../surgeon/SurgeonSideBarItems";
 
@@ -15,7 +16,7 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
     const {t} = useTranslation();
 
     const translate = (text: string) => t(text)
-    let userRole = parseInt(Role.SURGEON.toString()); //TODO
+    let userRole = parseInt(Role.DOCTOR.toString()); //TODO
     let items: MenuProps['items'];
 
 
@@ -78,6 +79,10 @@ function SideMenuItem({toggleCollapsed}: { toggleCollapsed: () => void }) {
         case Role.SURGEON:
             path = "/surgeon";
             items = SurgeonSideBarItems({translate, path, toggleCollapsed, topMenu});
+            break;
+        case Role.DOCTOR:
+            path = "/doctor";
+            items = DoctorSideBarItems({translate, path, toggleCollapsed, topMenu});
             break;
         default:
             break;

@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { Role } from "../../enums/Role";
 import AdminRoutes from "./_AdminRoutes";
 import PreLoader from "../../components/preloader/PreLoader";
+import DoctorRoutes from "./_DoctorRoutes";
 import PatientRoutes from "./_PatientRoutes";
 import SurgeonRoutes from "./_SurgeonRoutes";
 
@@ -10,7 +11,7 @@ const NotFound = lazy(() => import('../../views/errors/NotFound'));
 
 function RootAuthRoutes() {
     let authRoute: JSX.Element;
-    let userRole = parseInt(Role.SURGEON.toString()); //TODO
+    let userRole = parseInt(Role.DOCTOR.toString()); //TODO
 
     switch (userRole) {
         case Role.ADMIN:
@@ -21,6 +22,9 @@ function RootAuthRoutes() {
             break;
         case Role.SURGEON:
             authRoute = <Route index path="/surgeon/*" element={<SurgeonRoutes/>}/>;
+            break;
+        case Role.DOCTOR:
+            authRoute = <Route index path="/doctor/*" element={<DoctorRoutes/>}/>;
             break;
         default:
             authRoute = <Route path="/" element={<Navigate to="/404" />} />;
