@@ -18,7 +18,7 @@ const schemaOptions: mongoose.SchemaOptions = {
 
 const AppointmentTransactionSchema = new mongoose.Schema({
     appointmentId: {
-        type: Schema.Types.ObjectId,
+        type: Schema.Types.String,
         required: true,
     },
     type: {
@@ -54,7 +54,7 @@ const AppointmentTransactionSchema = new mongoose.Schema({
         required: true,
     },
     accountId: {
-        type: Schema.Types.ObjectId,
+        type: Schema.Types.String,
         required: false,
     }
 }, schemaOptions);

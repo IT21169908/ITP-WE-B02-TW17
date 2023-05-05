@@ -9,7 +9,7 @@ import { IUser } from "../models/User.model";
 // ================ VALIDATIONS ================
 export function createAppointmentTransactionValidationRules() {
     return [
-        AppointmentValidations.appointmentIdOnTransaction(),
+        // AppointmentValidations.appointmentIdOnTransaction(),
         AppointmentValidations.type(),
         AppointmentValidations.amount(),
         AppointmentValidations.transactionStatus(),
@@ -28,11 +28,16 @@ export function fetchAppointmentTransactionValidationRules() {
 export async function create(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
         const user = req.user as IUser;
-        const {appointmentId, type, amount, transactionDate, transactionStatus} = req.body;
+        const {appointmentId, type, amount, transactionDate, transactionStatus, currency, paymentMethod, notes, accountId, transactionType} = req.body;
         const data: DAppointmentTransaction = {
             appointmentId: appointmentId,
             type: type,
             amount: amount,
+            currency: currency,
+            paymentMethod: paymentMethod,
+            notes: notes,
+            accountId: accountId,
+            transactionType: transactionType,
             transactionDate: new Date(transactionDate),
             transactionStatus: transactionStatus
         };
