@@ -11,7 +11,7 @@ const NotFound = lazy(() => import('../../views/errors/NotFound'));
 
 function RootAuthRoutes() {
     let authRoute: JSX.Element;
-    let userRole = parseInt(Role.DOCTOR.toString()); //TODO
+    let userRole = parseInt(Role.ADMIN.toString()); //TODO
 
     switch (userRole) {
         case Role.ADMIN:
