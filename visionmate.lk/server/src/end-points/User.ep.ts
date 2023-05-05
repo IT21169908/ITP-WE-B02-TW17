@@ -4,7 +4,9 @@ import { Role } from "../enums/auth";
 import { AuthValidations } from "../middleware/validations/auth-validations";
 import { validationsChecker } from "../middleware/validations/validation-handler";
 import { IUser } from "../models/User.model";
+import { AuthUserData } from "../types/util-types";
 import { AppLogger } from "../utils/logging";
+import { getRoleTitle } from "../utils/utils";
 import * as PatientEp from "./Patient.ep";
 import * as SurgeonEp from "./Surgeon.ep";
 import * as DoctorEp from "./Doctor.ep";
@@ -31,9 +33,9 @@ export function registerValidationRules() {
 
 export async function loginUser(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
-        UserDao.authenticateUser(req.body.email, req.body.password, req.body.signedUpAs, !!req.body.remember).then((token: string) => {
-            res.cookie('token', token, {httpOnly: true, secure: false, maxAge: 3600000 * 24 * 30}); // TODO set same expiration set to jwt token
-            res.sendSuccess(token);
+        UserDao.authenticateUser(req.body.email, req.body.password, req.body.signedUpAs, !!req.body.remember).then((data: AuthUserData) => {
+            res.cookie('token', data.token, {httpOnly: true, secure: false, maxAge: 3600000 * 24 * 30}); // TODO set same expiration set to jwt token
+            res.sendSuccess(data.token, `User Logged as ${getRoleTitle(data.user.role)}!`);
         }).catch(next);
     }
 }
