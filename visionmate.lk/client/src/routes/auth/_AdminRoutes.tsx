@@ -9,6 +9,9 @@ const ManageSpectacles = lazy(() => import("../../views/dashboard/admin/spectacl
 const ManageBlogs = lazy(() => import("../../views/dashboard/admin/blogs/Manage"));
 const CreateBlog = lazy(() => import("../../views/dashboard/admin/blogs/Create"));
 const EditBlog = lazy(() => import("../../views/dashboard/admin/blogs/Create"));
+const ManageTransactions = lazy(() => import("../../views/dashboard/admin/transactions/Manage"));
+const CreateTransaction = lazy(() => import("../../views/dashboard/admin/transactions/Create"));
+const EditTransaction = lazy(() => import("../../views/dashboard/admin/transactions/Create"));
 
 function AdminRoutes() {
     // TODO: decide whether to apply DashboardLayout. best approach
@@ -23,6 +26,10 @@ function AdminRoutes() {
                 <Route index path="/blogs" element={<ManageBlogs/>}/>
                 <Route index path="/blogs/create" element={<CreateBlog enableEdit={false}/>}/>
                 <Route index path="/blogs/:blog/edit" element={<EditBlog enableEdit/>}/>
+
+                <Route index path="/transactions" element={<ManageTransactions/>}/>
+                <Route index path="/transactions/create" element={<CreateTransaction enableEdit={false}/>}/>
+                <Route index path="/transactions/:transaction/edit" element={<EditTransaction enableEdit/>}/>
             </Routes>
         </DashboardLayout>
     );
