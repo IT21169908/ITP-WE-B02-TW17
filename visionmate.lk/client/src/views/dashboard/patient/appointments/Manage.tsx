@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Table} from 'antd';
+import { Col, message, Popconfirm, Row, Skeleton, Table } from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
-import {HouseDoor, Pencil, Plus, Trash2} from "react-bootstrap-icons";
+import { HouseDoor, PencilFill, Plus, Trash } from "react-bootstrap-icons";
 import {BorderLessHeading, Main} from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IAppointment from "../../../../models/Appointment";
 import { AppointmentService } from "../../../../services/AppointmentService";
 
@@ -33,85 +33,23 @@ const dataTableColumn: ColumnsType<DataType> = [
         key: 'title',
         // sorter: (a, b) => a.title - b.title,
     },
-    {
-        title: 'description',
-        width: 100,
-        dataIndex: 'description',
-        key: 'description',
-    },
-    {title: 'tags', dataIndex: 'tags', key: '1'},
-    {title: 'reference', dataIndex: 'reference', key: '2'},
-    {title: 'notes', dataIndex: 'status', key: '3'},
-    {title: 'status', dataIndex: 'notes', key: '4'},
-    {title: 'patientId', dataIndex: 'patientId', key: '5'},
-    {title: 'doctorId', dataIndex: 'doctorId', key: '6'},
-    {title: 'appointmentDate', dataIndex: 'appointmentDate', key: '7'},
-    {title: 'duration', dataIndex: 'duration', key: '8'},
-    {title: 'invoiceId', dataIndex: 'invoiceId', key: '9'},
-    {
-        title: 'Action',
-        dataIndex: 'action',
-        key: 'operation',
-        width: 100,
-    },
+    {title: 'description', width: 100, dataIndex: 'description', key: 'description'},
+    {title: 'tags', dataIndex: 'tags', key: 'tags'},
+    {title: 'reference', dataIndex: 'reference', key: 'reference'},
+    {title: 'notes', dataIndex: 'status', key: 'status'},
+    {title: 'status', dataIndex: 'notes', key: 'notes'},
+    {title: 'patientId', dataIndex: 'patientId', key: 'patientId'},
+    {title: 'doctorId', dataIndex: 'doctorId', key: 'doctorId'},
+    {title: 'appointmentDate', dataIndex: 'appointmentDate', key: 'appointmentDate'},
+    {title: 'duration', dataIndex: 'duration', key: 'duration'},
+    {title: 'invoiceId', dataIndex: 'invoiceId', key: 'invoiceId'},
+    {title: 'Action', dataIndex: 'action', key: 'operation', width: 100},
 ];
-
-const tableDataSource: DataType[] = [
-    {
-        key: '1',
-        title: 'title',
-        description: 'description',
-        tags: 'tags',
-        reference: 'reference',
-        notes: 'notes',
-        status: 'status',
-        patientId: 'patientId',
-        doctorId: 'doctorId',
-        appointmentDate: 'appointmentDate',
-        duration: 'duration',
-        invoiceId: 'invoiceId',
-        action: (
-            <div className="table-actions">
-                <Link className="btn btn-sm btn-warning text-white me-1" to="/surgeon/appointments/644cc13e5bfb877d576f7b2e/edit">
-                    <Pencil/>
-                </Link>
-                <Link className="btn btn-sm btn-danger text-white" to="#">
-                    <Trash2/>
-                </Link>
-            </div>
-        ),
-    },
-    {
-        key: '2',
-        title: 'title',
-        description: 'description',
-        tags: 'tags',
-        reference: 'reference',
-        notes: 'notes',
-        status: 'status',
-        patientId: 'patientId',
-        doctorId: 'doctorId',
-        appointmentDate: 'appointmentDate',
-        duration: 'duration',
-        invoiceId: 'invoiceId',
-        action: (
-            <div className="table-actions">
-                <Link className="btn btn-sm btn-warning text-white me-1" to="/surgeon/appointments/644cc1905bfb877d576f7b31/edit">
-                    <Pencil/>
-                </Link>
-                <Link className="btn btn-sm btn-danger text-white" to="#">
-                    <Trash2/>
-                </Link>
-            </div>
-        ),
-    }
-];
-
 
 const BreadcrumbItem = [
     {
         title: <div className="d-flex align-items-center"><HouseDoor/> &nbsp; Home</div>,
-        href: '/surgeon',
+        href: '/patient',
     },
     {
         title: 'Manage Appointments',
@@ -120,6 +58,7 @@ const BreadcrumbItem = [
 
 const ManageAppointments: React.FC = () => {
 
+    const navigate = useNavigate();
     const [appointments, setAppointments] = useState<IAppointment[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
 
@@ -144,11 +83,26 @@ const ManageAppointments: React.FC = () => {
         };
     }, []);
 
-
     useEffect(() => {
         setTableDataSource(formatDataSource(appointments));
-    }, [appointments])
+    }, [appointments]);
 
+    const confirmDelete = async (id: string): Promise<void> => {
+        try {
+            const res = await AppointmentService.deleteAppointment(id);
+            if (res.success) {
+                message.success(`${res.message}`);
+                navigate('/patient/appointments');
+            }
+        } catch (error: any) {
+            message.error(`${ error.response.data.error || error.response.data.message }`);
+            console.log(error.response.data.error);
+        }
+    };
+
+    const cancelDelete = () => {
+        message.error('Delete canceled!');
+    };
 
     const formatDataSource = (appointments: IAppointment[]): DataType[] => {
         return appointments.map((appointment) => {
@@ -183,48 +137,49 @@ const ManageAppointments: React.FC = () => {
                 action: (
                     <div className="table-actions">
                         <Link
-                            className="btn btn-sm btn-warning text-white me-1"
-                            to={`/surgeon/appointments/${_id}/edit`}
+                            className="btn btn-sm btn-outline-warning fw-bolder me-1 mt-1"
+                            to={`/doctor/treatment-plans/${_id}/edit`}
                         >
-                            <Pencil/>
+                            <PencilFill/>
                         </Link>
-                        <Link className="btn btn-sm btn-danger text-white" onClick={() => deleteAppointment(_id)} to="#">
-                            <Trash2/>
-                        </Link>
+                        <Popconfirm
+                            title="Are you sure delete this plan?"
+                            onConfirm={() => confirmDelete(_id)}
+                            onCancel={cancelDelete}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Link className="btn btn-sm btn-outline-danger fw-bolder mt-1" to="#">
+                                <Trash/>
+                            </Link>
+                        </Popconfirm>
                     </div>
                 ),
             };
         });
     };
 
-    const deleteAppointment = async (_id: string) => {
-        const confirmation = window.confirm("Are You sure you want to delete this appointment")
-        if (confirmation) {
-            try {
-                const res = await AppointmentService.deleteAppointment(_id);
-                if (res.success) {
-                    alert(res.message)
-                    window.location.reload()
-                }
-            } catch (error: any) {
-                alert(error.response.data.error || error.response.data.message)
-                console.log(error.response.data.error)
-            }
-        }
-    }
-
     if (tableDataSource.length === 0) {
-        return <div>Loading...</div>;
+        return (
+            <Row gutter={25} className="justify-content-center">
+                <Col md={6} lg={12} xs={24}>
+                    <Cards title="Loading..." caption="Loading Skeleton">
+                        <Skeleton active paragraph={{rows: 16}} />
+                    </Cards>
+                </Col>
+            </Row>
+        );
     }
 
-    return (<>
+    return (
+        <>
             <PageHeader className="ninjadash-page-header-main" title="Manage Appointments" routes={BreadcrumbItem}/>
             <Main>
                 <Row gutter={15}>
                     <Col xs={24}>
                         <BorderLessHeading>
                             <Cards isbutton={
-                                <Link className="btn btn-primary h-auto" type="link" to="/surgeon/appointments/create">
+                                <Link className="btn btn-primary h-auto" type="link" to="/patient/appointments/create">
                                    <Plus/> Add New
                                 </Link>
                             }>
@@ -235,7 +190,7 @@ const ManageAppointments: React.FC = () => {
                 </Row>
             </Main>
         </>
-    )
+    );
 };
 
 export default ManageAppointments;

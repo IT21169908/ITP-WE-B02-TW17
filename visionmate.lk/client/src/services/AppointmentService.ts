@@ -5,7 +5,7 @@ import { ApiUtils } from "../utils/api-utils";
 
 export class AppointmentService {
 
-    private static authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ0ZTE1NzEyNjcwMDkwYjlhOTVjZTZjIiwiaWF0IjoxNjgyODM4ODk3LCJleHAiOjE2ODI5MjUyOTd9.2_PcljOOpXnNGgDKsinDqRAKBMMJDkIRNWPWSvxH6qY';
+    private static authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ0ZTAwOGE3YTZhNDQwM2EyYzU2ZDAzIiwiaWF0IjoxNjgzMTg5ODgxLCJleHAiOjE2ODMyNzYyODF9.2b6JMnPFJ4xmXYRe3iZcE-Bt1zq5a9oTgWMcuokY5ek';
 
     private static config = {
         headers: {
@@ -14,7 +14,7 @@ export class AppointmentService {
     }
 
     static async getAllAppointments(): Promise<AppResponse<IAppointment[]>> {
-        const ep = ApiUtils.surgeonUrl('appointment/get-all');
+        const ep = ApiUtils.authUrl('appointment/get-all');
         const res = await axios.get<Partial<IAppointment>, AxiosAppResponse<IAppointment[]>>(ep, this.config);
         if (res.data.success) {
             return res.data;
@@ -24,7 +24,7 @@ export class AppointmentService {
     }
 
     static async getAppointmentById(id: string | undefined): Promise<AppResponse<any>> {
-        const ep = ApiUtils.surgeonUrl(`appointment/getById/${id}`);
+        const ep = ApiUtils.authUrl(`appointment/getById/${id}`);
         const res = await axios.get<Partial<any>, AxiosAppResponse<any>>(ep, this.config);
         if (res.data.success) {
             return res.data;
@@ -34,7 +34,7 @@ export class AppointmentService {
     }
 
     static async createAppointment(appointment: any): Promise<AppResponse<any>> {
-        const ep = ApiUtils.surgeonUrl('appointment/add');
+        const ep = ApiUtils.patientUrl('appointment/add');
         const res = await axios.post<Partial<IAppointment>, AxiosAppResponse<any>>(ep, appointment, this.config);
         if (res.data.success) {
             return res.data;
@@ -44,7 +44,7 @@ export class AppointmentService {
     }
 
     static async updateAppointment(appointment: any) {
-        const ep = ApiUtils.surgeonUrl('appointment/update');
+        const ep = ApiUtils.patientUrl('appointment/update');
         const res = await axios.put<Partial<IAppointment>, AxiosAppResponse<any>>(ep, appointment, this.config);
         if (res.data.success) {
             return res.data;
@@ -54,7 +54,7 @@ export class AppointmentService {
     }
 
     static async deleteAppointment(appointmentId: string) {
-        const ep = ApiUtils.surgeonUrl(`appointment/delete/${appointmentId}`);
+        const ep = ApiUtils.patientUrl(`appointment/delete/${appointmentId}`);
         const response = await axios.delete(ep, this.config);
         if (response.data.success) {
             return response.data;

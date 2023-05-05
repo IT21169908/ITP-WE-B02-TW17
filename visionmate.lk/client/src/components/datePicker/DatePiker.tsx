@@ -64,7 +64,7 @@ function DateRangePickerOne(): JSX.Element {
     );
 }
 
-class CustomDateRange extends React.Component<{}, CustomDateRangeState> {
+export class CustomDateRange extends React.Component<{}, CustomDateRangeState> {
     constructor(props: {}) {
         super(props);
         this.state = {
