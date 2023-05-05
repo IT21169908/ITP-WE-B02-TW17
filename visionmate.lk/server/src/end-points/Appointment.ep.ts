@@ -91,7 +91,7 @@ export function deleteAppointment(req: Request, res: Response, next: NextFunctio
         const appointmentId = req.params._id as unknown as Types.ObjectId;
         const user = req.user as IUser;
         AppointmentDao.deleteAppointmentById(appointmentId, user).then(appointment => {
-            res.sendSuccess(appointment, "Appointment updated successfully!");
+            res.sendSuccess(appointment, "Appointment deleted successfully!");
         }).catch(next);
     }
 }
