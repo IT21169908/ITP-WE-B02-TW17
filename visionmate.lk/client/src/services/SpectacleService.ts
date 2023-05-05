@@ -5,7 +5,7 @@ import {ApiUtils} from "../utils/api-utils";
 
 export class SpectacleService {
 
-    private static authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ0Y2MyNDEzZjg3ZmRkYzVkMjIwOWJmIiwiaWF0IjoxNjgyODM1NjE4LCJleHAiOjE2ODI5MjIwMTh9.4APh0u7ZTpgJkGZaSnzDbZMoSfMRYRWdPjrHIubRAr0';
+    private static authToken = JSON.parse(localStorage.getItem('authToken') || '');
 
     private static config = {
         headers: {

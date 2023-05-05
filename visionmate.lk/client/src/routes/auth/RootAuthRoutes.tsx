@@ -1,19 +1,30 @@
-import React, { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes } from "react-router-dom";
-import { Role } from "../../enums/Role";
+import React, {lazy, Suspense} from 'react';
+import {Navigate, Route, Routes} from "react-router-dom";
+import {Role} from "../../enums/Role";
 import AdminRoutes from "./_AdminRoutes";
 import PreLoader from "../../components/preloader/PreLoader";
 import DoctorRoutes from "./_DoctorRoutes";
 import PatientRoutes from "./_PatientRoutes";
 import SurgeonRoutes from "./_SurgeonRoutes";
+import IUser from "../../models/User";
 
 const NotFound = lazy(() => import('../../views/errors/NotFound'));
 
-function RootAuthRoutes() {
-    let authRoute: JSX.Element;
-    let userRole = parseInt(Role.ADMIN.toString()); //TODO
+interface GuestRoutesProps {
+    authUser: IUser | null;
+    isLoggedIn: boolean;
+}
 
-    switch (userRole) {
+function RootAuthRoutes({isLoggedIn, authUser}: GuestRoutesProps) {
+
+    let authRoute: JSX.Element;
+    //let userRole = parseInt(Role.DOCTOR.toString()); //TODO
+
+    if (!isLoggedIn || !authUser) {
+        return <Navigate to="/login"/>;
+    }
+
+    switch (authUser.role) {
         case Role.ADMIN:
             authRoute = <Route index path="/admin/*" element={<AdminRoutes/>}/>;
             break;
@@ -27,7 +38,7 @@ function RootAuthRoutes() {
             authRoute = <Route index path="/doctor/*" element={<DoctorRoutes/>}/>;
             break;
         default:
-            authRoute = <Route path="/" element={<Navigate to="/404" />} />;
+            authRoute = <Route path="/" element={<Navigate to="/404"/>}/>;
             break;
     }
 
