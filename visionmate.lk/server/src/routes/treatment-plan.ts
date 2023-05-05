@@ -3,7 +3,7 @@ import * as TreatmentPlanEp from "../end-points/TreatmentPlan.ep";
 
 export function TreatmentPlanRoutesInit(app: Express) {
     /* PUBLIC ROUTES ===================================== */
-    app.get('/api/public/treatment-plan/getById/:_id', TreatmentPlanEp.fetchTreatmentPlanValidationRules(), TreatmentPlanEp.getById);
+    app.get('/api/auth/treatment-plan/getById/:_id', TreatmentPlanEp.fetchTreatmentPlanValidationRules(), TreatmentPlanEp.getById);
 
     /* AUTH ROUTES (Doctor) ===================================== */
     app.get('/api/doctor/treatment-plan/get-all', TreatmentPlanEp.getAll);

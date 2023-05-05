@@ -25,22 +25,10 @@ export const TreatmentPlanSchema = new mongoose.Schema({
         type: Schema.Types.String,
         required: true,
     },
-    treatmentPlan: [
-        {
-            plan: {
-                type: Schema.Types.String,
-                required: true,
-            },
-            date: {
-                type: Schema.Types.Date,
-                required: true,
-            },
-            notes: {
-                type: Schema.Types.String,
-                required: false,
-            },
-        },
-    ],
+    treatmentPlan: {
+        type: Schema.Types.String,
+        required: false,
+    },
     startDate: {
         type: Schema.Types.Date,
         required: true,
@@ -61,46 +49,14 @@ export const TreatmentPlanSchema = new mongoose.Schema({
         type: Schema.Types.String,
         required: false,
     },
-    medications: [
-        {
-            name: {
-                type: Schema.Types.String,
-                required: true,
-            },
-            dosage: {
-                type: Schema.Types.String,
-                required: true,
-            },
-            frequency: {
-                type: Schema.Types.String,
-                required: true,
-            },
-            duration: {
-                type: Schema.Types.String,
-                required: true,
-            },
-            notes: {
-                type: Schema.Types.String,
-                required: false,
-            },
-        },
-    ],
-    procedures: [
-        {
-            name: {
-                type: Schema.Types.String,
-                required: true,
-            },
-            date: {
-                type: Schema.Types.Date,
-                required: true,
-            },
-            notes: {
-                type: Schema.Types.String,
-                required: false,
-            },
-        },
-    ],
+    medications: {
+        type: Schema.Types.String,
+        required: false,
+    },
+    procedures: {
+        type: Schema.Types.String,
+        required: false,
+    },
     instructions: {
         type: Schema.Types.String,
         required: false,

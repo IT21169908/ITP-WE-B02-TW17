@@ -26,15 +26,24 @@ export function fetchTreatmentPlanValidationRules() {
 export async function create(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
         const user = req.user as IUser;
-        const {title, description, startDate, endDate, diagnosis, referral, treatmentPlan} = req.body;
+        const {
+            title, description, startDate, endDate, diagnosis, referral, treatmentPlan, patientId,
+            doctorId, medications, procedures, instructions, progressNotes
+        } = req.body;
         const data: DTreatmentPlan = {
             title: title,
             description: description,
             startDate: new Date(startDate),
             endDate: new Date(endDate),
-            diagnosis: "",
-            referral: "",
-            treatmentPlan: [],
+            diagnosis: diagnosis,
+            referral: referral,
+            treatmentPlan: treatmentPlan,
+            patientId: patientId ? patientId : null,
+            doctorId: doctorId ? doctorId : null,
+            medications: medications,
+            procedures: procedures,
+            instructions: instructions,
+            progressNotes: progressNotes,
         };
         await TreatmentPlanDao.createTreatmentPlan(data, user).then(treatmentPlan => {
             res.sendSuccess(treatmentPlan, "Treatment plan created successfully!");
