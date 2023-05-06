@@ -1,7 +1,15 @@
 import {MenuProps} from "antd";
 import {NavLink} from "react-router-dom";
 import React from "react";
-import { Eyeglasses, HouseCheckFill, Bell, Kanban, FileEarmarkPlus, BellFill } from "react-bootstrap-icons";
+import {
+    Eyeglasses,
+    HouseCheckFill,
+    Bell,
+    Kanban,
+    FileEarmarkPlus,
+    BellFill,
+    CartCheckFill
+} from "react-bootstrap-icons";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -16,7 +24,12 @@ function getItem(label: React.ReactNode, key?: React.Key | null, icon?: React.Re
 }
 
 
-const PatientSideBarItems = ({translate, path, toggleCollapsed, topMenu}: { translate: (text: string) => string, path: string, toggleCollapsed: () => void, topMenu: boolean }): MenuProps['items'] => {
+const PatientSideBarItems = ({translate, path, toggleCollapsed, topMenu}: {
+    translate: (text: string) => string,
+    path: string,
+    toggleCollapsed: () => void,
+    topMenu: boolean
+}): MenuProps['items'] => {
 
 
     return [
@@ -34,14 +47,14 @@ const PatientSideBarItems = ({translate, path, toggleCollapsed, topMenu}: { tran
                         {translate('Manage')}
                     </NavLink>,
                     'appointments.manage',
-                    !topMenu && <Kanban />,
+                    !topMenu && <Kanban/>,
                 ),
                 getItem(
                     <NavLink onClick={toggleCollapsed} to={`${path}/appointments/create`}>
                         {translate('Create')}
                     </NavLink>,
                     'appointments.create',
-                    !topMenu && <FileEarmarkPlus />,
+                    !topMenu && <FileEarmarkPlus/>,
                 ),
             ]
         ),
@@ -51,10 +64,15 @@ const PatientSideBarItems = ({translate, path, toggleCollapsed, topMenu}: { tran
                         {translate('Manage')}
                     </NavLink>,
                     'notifications.manage',
-                    !topMenu && <BellFill />,
+                    !topMenu && <BellFill/>,
                 ),
             ]
         ),
+        getItem(
+            <NavLink onClick={toggleCollapsed} to={`${path}/shop`}>
+                {translate("Shop")}
+            </NavLink>
+            , 'shop', !topMenu && <CartCheckFill/>,),
         {type: 'divider'},
     ]
 };

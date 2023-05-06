@@ -6,6 +6,7 @@ const NotFound = lazy(() => import('../../views/errors/NotFound'));
 const CreateAppointment = lazy(() => import("../../views/dashboard/patient/appointments/Create"));
 const ManageAppointments = lazy(() => import("../../views/dashboard/patient/appointments/Manage"));
 const Notifications = lazy(() => import("../../views/dashboard/patient/notifications/Notifications"));
+const Shop = lazy(() => import("../../views/dashboard/patient/shop/Shop"));
 
 function PatientRoutes() {
     return (
@@ -16,6 +17,7 @@ function PatientRoutes() {
                 <Route index path="/appointments/create" element={<CreateAppointment enableEdit={false}/>}/>
                 <Route index path="/appointments/:appointment/edit" element={<CreateAppointment enableEdit={true}/>}/>
                 <Route index path="/notifications" element={<Notifications/>}/>
+                <Route index path="/shop" element={<Shop/>}/>
             </Routes>
         </DashboardLayout>
     );
