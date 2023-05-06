@@ -2,11 +2,12 @@ import { Avatar, Switch } from 'antd';
 import type { MenuProps } from 'antd';
 import React, { useState } from 'react';
 import { BoxArrowRight, ChevronDown, PersonCircle } from "react-bootstrap-icons";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Heading from "../../../components/heading/Heading";
 import { Dropdown } from "../../../components/dropdown/Dropdown";
 import { Popover } from "../../../components/popup/Popup";
 import { useAppDispatch } from "../../../hooks/redux-hooks";
+import { logOut } from "../../../redux/auth/reducer";
 import { changeLayoutMode } from "../../../redux/theme-layout/actionCreator";
 import { flagTypes, langState } from "../../../types/localization-types";
 import Search from "./Search";
@@ -17,6 +18,7 @@ import styles from "./layout.module.scss";
 const TopController = React.memo(({toggleCollapsed}: { toggleCollapsed: () => void }) => {
     const {i18n} = useTranslation();
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [langFlagState, setLangFlagState] = useState<langState>({flag: 'en', lang: 'English'});
     const {flag} = langFlagState;
@@ -54,7 +56,9 @@ const TopController = React.memo(({toggleCollapsed}: { toggleCollapsed: () => vo
 
     const signOutHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
-        // dispatch(logOut(() => navigate('/')));
+        localStorage.removeItem("authToken");
+        dispatch(logOut());
+        window.location.href = '/login'
     };
 
     const userContent = (

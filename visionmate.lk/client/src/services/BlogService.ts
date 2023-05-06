@@ -4,8 +4,7 @@ import { AppResponse, AxiosAppResponse } from '../types/service-types/response';
 import { ApiUtils } from "../utils/api-utils";
 
 export class BlogService {
-
-    private static authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ0ZTAwOGE3YTZhNDQwM2EyYzU2ZDAzIiwiaWF0IjoxNjgzMzA3NDEwLCJleHAiOjE2ODMzOTM4MTB9.4Jw9pY7Pfi-aY0MwsNZf1Zl-7kNaArD3k7a_Gvsfv68';
+    private static authToken = JSON.parse(localStorage.getItem('authToken') || '');
 
     private static config = {
         headers: {

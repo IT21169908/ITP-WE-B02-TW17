@@ -1,10 +1,9 @@
 import React, {lazy, memo} from 'react';
-import {Route, Routes, Navigate} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 
 
 import NotFound from "../views/errors/NotFound";
 import AuthLayout from "../views/auth-views/layout/AuthLayout";
-import FrontViewLayout from "../views/front-views/layout/FrontViewLayout";
 
 const Login = lazy(() => import('../views/auth-views/Login'));
 const Register = lazy(() => import('../views/auth-views/Register'));

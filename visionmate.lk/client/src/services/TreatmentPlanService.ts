@@ -5,7 +5,7 @@ import { ApiUtils } from "../utils/api-utils";
 
 export class TreatmentPlanService {
 
-    private static authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ0ZTRjOTgxNmUzZTg4YTgwNDc5Y2E0IiwiaWF0IjoxNjgzMjU5ODI3LCJleHAiOjE2ODMzNDYyMjd9.ZB38tEh26XiHlPs674ColHsFSkZHp7LM6p3VVCtA5_E';
+    private static authToken = JSON.parse(localStorage.getItem('authToken') || '');
 
     private static config = {
         headers: {

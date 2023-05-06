@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import * as PatientDao from "../dao/Patient.dao";
+import * as UserDao from "../dao/User.dao";
 import { SignedUpAs } from "../enums/auth";
 import { DPatient } from "../models/Patient.model";
 import { AuthUserData } from "../types/util-types";
@@ -18,6 +19,6 @@ export async function register(req: Request, res: Response, next: NextFunction) 
     };
     PatientDao.createProfile(data, !!req.body.remember).then(async (data: AuthUserData) => {
         AppLogger.info(`User Registered as ${getRoleTitle(role)} ID: ${id}`);
-        res.sendSuccess(data.token, `User Registered as ${getRoleTitle(role)}!`);
+        res.sendSuccess(data, `User Registered as ${getRoleTitle(role)}!`);
     }).catch(next);
 }
