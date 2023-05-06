@@ -1,12 +1,11 @@
-import React, {lazy, useState, Suspense, useEffect} from 'react';
-import {Row, Col, Spin, Skeleton, Input} from 'antd';
+import React, {useState, useEffect} from 'react';
+import {Row, Col, Spin, Input} from 'antd';
 import {HouseDoor, Search} from "react-bootstrap-icons";
 import Spectacle from "../../../../models/Spectacle";
-import {SpectacleService} from "../../../../services/SpectacleService";
+import {OrderService as SpectacleService} from "../../../../services/OrderService";
 import ProductCard from "./ProductCard";
 import {NotFoundWrapper} from "./style";
 import Heading from "../../../../components/heading/Heading";
-import {Cards} from "../../../../components/cards/frame/CardFrame";
 import {Main, TopToolBox} from "../../../../components/styled-components/styled-containers";
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
 

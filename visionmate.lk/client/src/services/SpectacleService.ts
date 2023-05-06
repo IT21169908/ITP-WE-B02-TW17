@@ -23,16 +23,6 @@ export class SpectacleService {
         }
     }
 
-     static async getAllSpectaclesForPatient(): Promise<AppResponse<Spectacle[]>> {
-        const ep = ApiUtils.patientUrl('spectacles');
-        const response = await axios.get<Partial<Spectacle>, AxiosAppResponse<Spectacle[]>>(ep, this.config);
-        if (response.data.success) {
-            return response.data;
-        } else {
-            throw Error("Request failed with status: " + response.status + " message: " + response.data.error);
-        }
-    }
-
     static async getSpectacleById(id: string | undefined): Promise<AppResponse<any>> {
         const ep = ApiUtils.adminUrl(`spectacles/${id}`);
         const response = await axios.get<Partial<Spectacle>, AxiosAppResponse<Spectacle>>(ep, this.config);

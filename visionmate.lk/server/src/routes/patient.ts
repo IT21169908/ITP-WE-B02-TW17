@@ -9,4 +9,5 @@ export function PatientRoutesInit(app: Express) {
     /* AUTH ROUTES ===================================== */
     // app.get('/api/auth/patient-sample', PatientEp.sample());
     app.get('/api/patient/spectacles', SpectacleEp.getAll);
+    app.get('/api/patient/spectacles/:_id', SpectacleEp.fetchSpectacleValidationRules(), SpectacleEp.show);
 }

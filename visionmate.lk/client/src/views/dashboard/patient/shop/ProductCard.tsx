@@ -1,6 +1,6 @@
 import React from 'react';
 import {Rate} from 'antd';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {ReactSVG} from 'react-svg';
 import {ProductCard as ProductCardStyle} from './style';
@@ -11,7 +11,7 @@ import {Button} from "../../../../components/buttons/Button";
 import {Box2Heart} from "react-bootstrap-icons";
 
 function ProductCard({product}: { product: Spectacle }) {
-
+    const navigate = useNavigate();
     const popular = product.price > 100; // TODO: remove
     return (
         <ProductCardStyle style={{marginBottom: 30}}>
@@ -28,7 +28,7 @@ function ProductCard({product}: { product: Spectacle }) {
                         <Box2Heart/>}
                 </Link>
                 <Heading className="product-single-title" as="h5">
-                    <Link to={`/patient/checkout/${product._id}`}>{product.name}</Link>
+                    <Link to={`/patient/shop/checkout/${product._id}`}>{product.name}</Link>
                 </Heading>
                 <div className="product-single-rating">
                     <Rate allowHalf defaultValue={3} disabled/> 4.9
@@ -42,7 +42,7 @@ function ProductCard({product}: { product: Spectacle }) {
                         <UilShoppingBag/>
                         Add To Cart
                     </Button>*/}
-                    <Button size="small" type="primary">
+                    <Button size="small" type="link" onClick={() => navigate(`/patient/shop/checkout/${product._id}`)}>
                         Buy Now
                     </Button>
                 </div>
