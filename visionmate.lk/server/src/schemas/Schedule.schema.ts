@@ -29,15 +29,16 @@ export const ScheduleSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         required: true,
     },
-    scheduleDate: [
-        {
-            type: Schema.Types.Date,
-            default: [],
-        }
-    ],
+    scheduleDate: {
+        type: Schema.Types.Date,
+    },
     remark: {
         type: Schema.Types.String,
         required: false,
+    },
+    status: {
+        type: Schema.Types.String,
+        required: true
     }
 }, schemaOptions);
 

@@ -10,6 +10,9 @@ const ManageBlogs = lazy(() => import("../../views/dashboard/admin/blogs/Manage"
 const CreateBlog = lazy(() => import("../../views/dashboard/admin/blogs/Create"));
 const EditBlog = lazy(() => import("../../views/dashboard/admin/blogs/Create"));
 const ManageOrders = lazy(() => import("../../views/dashboard/admin/orders/Manage"));
+const ManageSchedules = lazy(() => import("../../views/dashboard/admin/operation-schedules/Manage"));
+const CreateSchedule = lazy(() => import("../../views/dashboard/admin/operation-schedules/Create"));
+const EditSchedule = lazy(() => import("../../views/dashboard/admin/operation-schedules/Create"));
 const ManageTransactions = lazy(() => import("../../views/dashboard/admin/transactions/Manage"));
 const CreateTransaction = lazy(() => import("../../views/dashboard/admin/transactions/Create"));
 const EditTransaction = lazy(() => import("../../views/dashboard/admin/transactions/Create"));
@@ -29,6 +32,10 @@ function AdminRoutes() {
                 <Route index path="/blogs/:blog/edit" element={<EditBlog enableEdit/>}/>
 
                 <Route index path="/orders" element={<ManageOrders/>}/>
+
+                <Route index path="/operations/schedules" element={<ManageSchedules/>}/>
+                <Route index path="/operations/schedules/create" element={<CreateSchedule enableEdit={false}/>}/>
+                <Route index path="/operations/schedules/:scheduleId/edit" element={<EditSchedule enableEdit/>}/>
 
                 <Route index path="/transactions" element={<ManageTransactions/>}/>
                 <Route index path="/transactions/create" element={<CreateTransaction enableEdit={false}/>}/>

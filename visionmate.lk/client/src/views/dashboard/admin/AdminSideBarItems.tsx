@@ -1,7 +1,16 @@
 import {MenuProps} from "antd";
 import {NavLink} from "react-router-dom";
 import React from "react";
-import {Cash, Eyeglasses, FileEarmarkPlus, FilePost, HouseCheckFill, Kanban, Truck} from "react-bootstrap-icons";
+import {
+    Cash,
+    Eyeglasses,
+    FileEarmarkPlus,
+    FilePost,
+    HouseCheckFill,
+    Kanban,
+    Scissors,
+    Truck
+} from "react-bootstrap-icons";
 
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -82,6 +91,21 @@ const AdminSideBarItems = ({translate, path, toggleCollapsed, topMenu}: {
                     </NavLink>,
                     'transactions.create',
                     !topMenu && <FileEarmarkPlus/>,
+                ),
+            ]
+        ),
+        getItem(translate("Operations"), 'operations', !topMenu && <Scissors/>, [
+                getItem(
+                    <NavLink onClick={toggleCollapsed} to={`${path}/operations/schedules`}>
+                        {translate('Schedules Manage')}
+                    </NavLink>,
+                    'operations.manage',
+                ),
+                getItem(
+                    <NavLink onClick={toggleCollapsed} to={`${path}/operations/schedules/create`}>
+                        {translate('New schedule')}
+                    </NavLink>,
+                    'schedules.create',
                 ),
             ]
         ),
