@@ -8,6 +8,7 @@ const ManageAppointments = lazy(() => import("../../views/dashboard/patient/appo
 const Notifications = lazy(() => import("../../views/dashboard/patient/notifications/Notifications"));
 const Shop = lazy(() => import("../../views/dashboard/patient/shop/Shop"));
 const Checkout = lazy(() => import("../../views/dashboard/patient/shop/Checkout"));
+const Orders = lazy(() => import("../../views/dashboard/patient/orders/Manage"));
 
 function PatientRoutes() {
     return (
@@ -19,6 +20,7 @@ function PatientRoutes() {
                 <Route index path="/appointments/:appointment/edit" element={<CreateAppointment enableEdit={true}/>}/>
                 <Route index path="/notifications" element={<Notifications/>}/>
                 <Route index path="/shop" element={<Shop/>}/>
+                <Route index path="/orders" element={<Orders/>}/>
                 <Route index path="/shop/checkout/:product_id" element={<Checkout/>}/>
             </Routes>
         </DashboardLayout>

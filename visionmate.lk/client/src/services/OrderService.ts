@@ -2,6 +2,7 @@ import axios from 'axios';
 import Spectacle from "../models/Spectacle";
 import {AppResponse, AxiosAppResponse} from '../types/service-types/response';
 import {ApiUtils} from "../utils/api-utils";
+import Order from "../models/Order";
 
 interface placeOrderType {
     spectacleId: string,
@@ -27,6 +28,26 @@ export class OrderService {
         const ep = ApiUtils.patientUrl('orders/place');
 
         const response = await axios.post<Partial<Spectacle>, AxiosAppResponse<any>>(ep, data, this.config);
+        if (response.data.success) {
+            return response.data;
+        } else {
+            throw Error("Request failed with status: " + response.status + " message: " + response.data.error);
+        }
+    }
+
+    static async getAllOrders(): Promise<AppResponse<Order[]>> {
+        const ep = ApiUtils.patientUrl('orders');
+        const response = await axios.get<Partial<Order>, AxiosAppResponse<Order[]>>(ep, this.config);
+        if (response.data.success) {
+            return response.data;
+        } else {
+            throw Error("Request failed with status: " + response.status + " message: " + response.data.error);
+        }
+    }
+
+    static async deleteOrder(_id: string) {
+        const endpoint = ApiUtils.patientUrl(`orders/${_id}`);
+        const response = await axios.delete(endpoint, this.config);
         if (response.data.success) {
             return response.data;
         } else {

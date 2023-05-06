@@ -14,5 +14,6 @@ export function OrderRoutesInit(app: Express) {
 
     app.put('/api/admin/orders/:_id', OrderEp.updateOrderValidationRules(), OrderEp.update);
     app.delete('/api/admin/orders/:_id', OrderEp.fetchOrderValidationRules(), OrderEp.destroy);
+    app.delete('/api/patient/orders/:_id', OrderEp.fetchOrderValidationRules(), OrderEp.destroy);
 
 }

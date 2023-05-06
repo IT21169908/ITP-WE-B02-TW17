@@ -8,6 +8,7 @@ import {DOrder} from "../models/Order.model";
 import {IUser} from "../models/User.model";
 import {AppLogger} from "../utils/logging";
 import {ApplicationError} from "../utils/application-error";
+import {Role} from "../enums/auth";
 
 
 // ================ VALIDATIONS ================
@@ -113,8 +114,15 @@ export function destroy(req: Request, res: Response, next: NextFunction) {
     if (validationsChecker(req, res)) {
         const order_id = req.params._id as unknown as Types.ObjectId;
         const user = req.user as IUser;
-        Order.cancelOrder(order_id, user).then(order => {
-            res.sendSuccess(order, "Order updated successfully!");
-        }).catch(next);
+        if (user.role === Role.ADMIN) {
+            Order.cancelOrder(order_id, user).then(order => {
+                res.sendSuccess(order, "Order updated successfully!");
+            }).catch(next);
+        } else {
+            Order.cancelOrderByUser(order_id, user).then(order => {
+                res.sendSuccess(order, "Order updated successfully!");
+            }).catch(next);
+
+        }
     }
 }

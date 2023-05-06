@@ -8,7 +8,7 @@ import {
     Kanban,
     FileEarmarkPlus,
     BellFill,
-    CartCheckFill
+    CartCheckFill, Truck
 } from "react-bootstrap-icons";
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -73,6 +73,11 @@ const PatientSideBarItems = ({translate, path, toggleCollapsed, topMenu}: {
                 {translate("Shop")}
             </NavLink>
             , 'shop', !topMenu && <CartCheckFill/>,),
+        getItem(
+            <NavLink onClick={toggleCollapsed} to={`${path}/orders`}>
+                {translate("My Orders")}
+            </NavLink>
+            , 'my_orders', !topMenu && <Truck/>,),
         {type: 'divider'},
     ]
 };
