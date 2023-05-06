@@ -1,7 +1,7 @@
 import {MenuProps} from "antd";
 import {NavLink} from "react-router-dom";
 import React from "react";
-import { Cash, Eyeglasses, FileEarmarkPlus, FilePost, HouseCheckFill, Kanban } from "react-bootstrap-icons";
+import {Cash, Eyeglasses, FileEarmarkPlus, FilePost, HouseCheckFill, Kanban, Truck} from "react-bootstrap-icons";
 
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -17,7 +17,12 @@ function getItem(label: React.ReactNode, key?: React.Key | null, icon?: React.Re
 }
 
 
-const AdminSideBarItems = ({translate, path, toggleCollapsed, topMenu}: { translate: (text: string) => string, path: string, toggleCollapsed: () => void, topMenu: boolean }): MenuProps['items'] => {
+const AdminSideBarItems = ({translate, path, toggleCollapsed, topMenu}: {
+    translate: (text: string) => string,
+    path: string,
+    toggleCollapsed: () => void,
+    topMenu: boolean
+}): MenuProps['items'] => {
 
 
     return [
@@ -52,14 +57,14 @@ const AdminSideBarItems = ({translate, path, toggleCollapsed, topMenu}: { transl
                         {translate('Manage')}
                     </NavLink>,
                     'blogs.manage',
-                    !topMenu && <Kanban />,
+                    !topMenu && <Kanban/>,
                 ),
                 getItem(
                     <NavLink onClick={toggleCollapsed} to={`${path}/blogs/create`}>
                         {translate('Create')}
                     </NavLink>,
                     'blogs.create',
-                    !topMenu && <FileEarmarkPlus />,
+                    !topMenu && <FileEarmarkPlus/>,
                 ),
             ]
         ),
@@ -69,17 +74,22 @@ const AdminSideBarItems = ({translate, path, toggleCollapsed, topMenu}: { transl
                         {translate('Manage')}
                     </NavLink>,
                     'transactions.manage',
-                    !topMenu && <Kanban />,
+                    !topMenu && <Kanban/>,
                 ),
                 getItem(
                     <NavLink onClick={toggleCollapsed} to={`${path}/transactions/create`}>
                         {translate('Create')}
                     </NavLink>,
                     'transactions.create',
-                    !topMenu && <FileEarmarkPlus />,
+                    !topMenu && <FileEarmarkPlus/>,
                 ),
             ]
         ),
+        getItem(
+            <NavLink onClick={toggleCollapsed} to={`${path}/orders`}>
+                {translate("All Orders")}
+            </NavLink>
+            , 'my_orders', !topMenu && <Truck/>,),
         {type: 'divider'},
     ]
 };

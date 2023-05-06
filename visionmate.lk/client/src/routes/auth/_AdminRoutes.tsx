@@ -9,6 +9,7 @@ const ManageSpectacles = lazy(() => import("../../views/dashboard/admin/spectacl
 const ManageBlogs = lazy(() => import("../../views/dashboard/admin/blogs/Manage"));
 const CreateBlog = lazy(() => import("../../views/dashboard/admin/blogs/Create"));
 const EditBlog = lazy(() => import("../../views/dashboard/admin/blogs/Create"));
+const ManageOrders = lazy(() => import("../../views/dashboard/admin/orders/Manage"));
 const ManageTransactions = lazy(() => import("../../views/dashboard/admin/transactions/Manage"));
 const CreateTransaction = lazy(() => import("../../views/dashboard/admin/transactions/Create"));
 const EditTransaction = lazy(() => import("../../views/dashboard/admin/transactions/Create"));
@@ -26,6 +27,8 @@ function AdminRoutes() {
                 <Route index path="/blogs" element={<ManageBlogs/>}/>
                 <Route index path="/blogs/create" element={<CreateBlog enableEdit={false}/>}/>
                 <Route index path="/blogs/:blog/edit" element={<EditBlog enableEdit/>}/>
+
+                <Route index path="/orders" element={<ManageOrders/>}/>
 
                 <Route index path="/transactions" element={<ManageTransactions/>}/>
                 <Route index path="/transactions/create" element={<CreateTransaction enableEdit={false}/>}/>

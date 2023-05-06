@@ -35,8 +35,29 @@ export class OrderService {
         }
     }
 
-    static async getAllOrders(): Promise<AppResponse<Order[]>> {
+    static async updateOrderStatus(_id: string, status: string): Promise<AppResponse<any>> {
+        const ep = ApiUtils.adminUrl('orders/' + _id);
+
+        const response = await axios.put<Partial<Spectacle>, AxiosAppResponse<any>>(ep, {status}, this.config);
+        if (response.data.success) {
+            return response.data;
+        } else {
+            throw Error("Request failed with status: " + response.status + " message: " + response.data.error);
+        }
+    }
+
+    static async getAllOrdersByUser(): Promise<AppResponse<Order[]>> {
         const ep = ApiUtils.patientUrl('orders');
+        const response = await axios.get<Partial<Order>, AxiosAppResponse<Order[]>>(ep, this.config);
+        if (response.data.success) {
+            return response.data;
+        } else {
+            throw Error("Request failed with status: " + response.status + " message: " + response.data.error);
+        }
+    }
+
+    static async getAllOrders(): Promise<AppResponse<Order[]>> {
+        const ep = ApiUtils.adminUrl('orders');
         const response = await axios.get<Partial<Order>, AxiosAppResponse<Order[]>>(ep, this.config);
         if (response.data.success) {
             return response.data;

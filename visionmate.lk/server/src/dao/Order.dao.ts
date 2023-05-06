@@ -12,6 +12,9 @@ export async function getAllOrders(user?: IUser): Promise<IOrder[]> {
     const orders = await Order.find().populate({
         path: "spectacleId",
         model: "spectacles",
+    }).populate({
+        path: "userId",
+        model: "users",
     });
     if (orders) {
         AppLogger.info(`Got All Orders - Count: ${orders.length} by ${getRoleTitle(user?.role)} (ID: ${user?._id})`);
@@ -27,6 +30,9 @@ export async function findByUser(user?: IUser): Promise<IOrder[]> {
     const orders = await Order.find({'userId': user?._id}).populate({
         path: "spectacleId",
         model: "spectacles",
+    }).populate({
+        path: "userId",
+        model: "users",
     });
     if (orders) {
         AppLogger.info(`Got All Orders - Count: ${orders.length} by ${getRoleTitle(user?.role)} (ID: ${user?._id})`);

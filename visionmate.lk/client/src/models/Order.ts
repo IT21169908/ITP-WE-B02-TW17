@@ -1,8 +1,9 @@
 import Spectacle from "./Spectacle";
+import User from "./User";
 
 interface IOrder {
     _id: string;
-    userId: string;
+    userId: User;
     spectacleId?: Spectacle;
     address: string;
     phone: string;
