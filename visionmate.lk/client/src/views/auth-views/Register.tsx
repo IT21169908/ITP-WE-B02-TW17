@@ -1,24 +1,15 @@
 import { Select } from "antd/lib";
-import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
+import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 import { Row, Col, Form, Input, Button } from 'antd';
 import { Facebook, Twitter, Github } from 'react-bootstrap-icons';
-import { AuthService } from "../../services/AuthService";
+import { useAppDispatch } from "../../hooks/redux-hooks";
+import { signUp } from "../../redux/auth/actionCreator";
 import { AuthFormWrap } from "./styled-elements";
 
-interface RegisterFormValues {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    phone: string;
-    role: number;
-}
-
 function SignUp() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [form] = Form.useForm();
     const [isChecked, setIsChecked] = useState(false);
@@ -27,44 +18,11 @@ function SignUp() {
         setIsChecked(e.target.checked);
     };
 
-    const handleSubmit = (userData: RegisterFormValues) => {
-        AuthService.signUpWithEmail(userData).then(res => {
-            // dispatch(setToken(res.data));
-            if (res.success) {
-                console.log(`res.success => ${res.message}`);
-                // setRequestState(RequestState.SUCCESS);
-                // history.push(RouteNames.ROOT);
-                alert(res);
-            } else {
-                console.log(`res.error => ${res.error}`);
-                // MySwal.fire({
-                //   title: <p>{res.error}</p>,
-                //   icon: 'error'
-                // });
-                alert(res.error);
-            }
-        }).catch(error => {
-            console.log(`AuthService.signUpWithEmail catch err => ${error.message}`);
-            alert(error.message);
-        });
-        form.resetFields();
-    };
-    // const handleSubmit2 = (e: any) => {
-    //     // e.preventDefault();
-    //     // setRequestState(RequestState.LOADING);
-    //     const userData = {
-    //         name: "maneesh",
-    //         email: "doctor1115522@gmail.com",
-    //         password: "12345678",
-    //         confirmPassword: "12345678",
-    //         role: Role.SURGEON,
-    //         phone: "0766171525"
-    //     }
-    //     console.log(`userData => ${JSON.stringify(userData)}`);
+    // const handleSubmit = (userData: RegisterFormValues) => {
     //     AuthService.signUpWithEmail(userData).then(res => {
     //         // dispatch(setToken(res.data));
     //         if (res.success) {
-    //             console.log(`res.error => ${res.message}`);
+    //             console.log(`res.success => ${res.message}`);
     //             // setRequestState(RequestState.SUCCESS);
     //             // history.push(RouteNames.ROOT);
     //             alert(res);
@@ -74,11 +32,27 @@ function SignUp() {
     //             //   title: <p>{res.error}</p>,
     //             //   icon: 'error'
     //             // });
+    //             alert(res.error);
     //         }
     //     }).catch(error => {
     //         console.log(`AuthService.signUpWithEmail catch err => ${error.message}`);
+    //         alert(error.message);
     //     });
+    //     form.resetFields();
     // };
+
+    const handleSubmit = useCallback(
+        (value: { name: string, email: string, password: string, confirmPassword: string, phone: string, role: number }) => {
+            const controller = new AbortController();
+            const {signal} = controller;
+            dispatch(signUp({...value, signal}));
+            return () => {
+                controller.abort();
+            };
+        },
+        [dispatch],
+    );
+
 
     return (
         <Row justify="center">
@@ -88,7 +62,7 @@ function SignUp() {
                         <h2 className="ninjadash-authentication-top__title">Sign Up VisionMate</h2>
                     </div>
                     <div className="ninjadash-authentication-content">
-                        <Form name="register" onFinish={handleSubmit} layout="vertical">
+                        <Form name="register" form={form}  onFinish={handleSubmit} layout="vertical">
                             <Form.Item label="Name" name="name" rules={[{required: true, message: 'Please input your Full name!'}]}>
                                 <Input placeholder="Full name" />
                             </Form.Item>

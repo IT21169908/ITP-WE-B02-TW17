@@ -4,15 +4,23 @@ import { UserLoginData } from "../types/service-types/auth";
 import { AppResponse, AxiosAppResponse } from "../types/service-types/response";
 import { ApiUtils } from "../utils/api-utils";
 
-const token = localStorage.getItem('token');
-
-const authAxios = axios.create({
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-});
+// const token = localStorage.getItem('token');
+//
+// const authAxios = axios.create({
+//     headers: {
+//         Authorization: `Bearer ${token}`
+//     }
+// });
 
 export class AuthService {
+
+    private static authToken = JSON.parse(localStorage.getItem('authToken') || '');
+
+    private static config = {
+        headers: {
+            'Authorization': 'Bearer ' + this.authToken
+        }
+    }
 
     public static async getOwnUser(): Promise<AppResponse<IUser>> {
         axios.interceptors.request.use(req => {
@@ -69,12 +77,12 @@ export class AuthService {
 
     public static logout(): void {
         //TODO read token from cookie and remove this implementation
-        localStorage.removeItem("token");
+        localStorage.removeItem("authToken");
     }
 
     public static getToken(): string | null {
         //TODO read token from cookie and remove this implementation
-        return localStorage.getItem("token");
+        return localStorage.getItem("authToken");
     }
 
 }

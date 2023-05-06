@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import IUser from "../../models/User";
-import {signIn, verifyUser} from "./actionCreator";
+import { signIn, signUp, verifyUser } from "./actionCreator";
 import {Role} from "../../enums/Role";
 
 const initialState: {
@@ -57,6 +57,40 @@ const authSlice = createSlice({
 
             })
             .addCase(signIn.rejected, (state, action) => {
+                console.log("extraReducer.getUser.rejected")
+                return {...state, ...initialState, isLoading: false};
+            });
+        builder
+            .addCase(signUp.pending, (state, action) => {
+                console.log("extraReducer.getUser.pending")
+                return {...state, ...initialState, isLoading: false};
+            })
+            .addCase(signUp.fulfilled, (state, action: PayloadAction<IUser>) => {
+                console.log("extraReducer.getUser.fulfilled")
+                state.isLoading = false;
+                state.isLoggedIn = true;
+                state.user = action.payload
+
+                // TODO: Find another way to handle redirect
+                switch (action.payload?.role) {
+                    case Role.ADMIN:
+                        window.location.href = '/admin'
+                        break;
+                    case Role.PATIENT:
+                        window.location.href = '/patient'
+                        break;
+                    case Role.SURGEON:
+                        window.location.href = '/surgeon'
+                        break;
+                    case Role.DOCTOR:
+                        window.location.href = '/doctor'
+                        break;
+                    default:
+                        break;
+                }
+
+            })
+            .addCase(signUp.rejected, (state, action) => {
                 console.log("extraReducer.getUser.rejected")
                 return {...state, ...initialState, isLoading: false};
             });

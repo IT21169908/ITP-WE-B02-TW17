@@ -5,7 +5,7 @@ import { ApiUtils } from "../utils/api-utils";
 
 export class TransactionService {
 
-    private static authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ1NTQ1MjBiNmNjZmQzMWEyMjVjM2I2IiwiaWF0IjoxNjgzMzEzODExLCJleHAiOjE2ODM0MDAyMTF9.VRnabQrFTVLXQR7WwCmFhcjaefuxdDV0u-A5kbU4G7E';
+    private static authToken = JSON.parse(localStorage.getItem('authToken') || '');
 
     private static config = {
         headers: {
