@@ -9,6 +9,8 @@ interface ISpectacle {
     color: string,
     size: string,
     price: number,
+
+    [key: string]: string | number
 }
 
 

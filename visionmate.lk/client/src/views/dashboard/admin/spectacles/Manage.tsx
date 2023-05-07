@@ -1,15 +1,18 @@
 import React, {ReactNode, useEffect, useState} from 'react';
-import {Button, Col, message, Popconfirm, Row, Table} from 'antd';
+import {Button, Col, Input, message, Popconfirm, Row, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
-import {HouseDoor, Pencil, Plus, Trash2} from "react-bootstrap-icons";
-import {BorderLessHeading, Main} from "../../../../components/styled-components/styled-containers";
+import {Download, HouseDoor, Pencil, Plus, Search, Trash2} from "react-bootstrap-icons";
+import {BorderLessHeading, Main, TopToolBox} from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
 import {Link} from "react-router-dom";
 import Spectacle from "../../../../models/Spectacle";
 import {SpectacleService} from "../../../../services/SpectacleService";
 import {NotFoundWrapper} from "../../patient/shop/style";
 import Heading from "../../../../components/heading/Heading";
+import JsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+import {getCurrentDateTime} from "../../../../utils/date-time";
 
 interface DataType {
     key: React.Key;
@@ -59,6 +62,7 @@ const BreadcrumbItem = [
 const ManageSpectacles: React.FC = () => {
 
     const [spectacles, setSpectacles] = useState<Spectacle[]>([]);
+    const [filteredSpectacles, setFilteredSpectacles] = useState<Spectacle[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
 
     const formatDataSource = (spectacles: Spectacle[]): DataType[] => {
@@ -119,6 +123,7 @@ const ManageSpectacles: React.FC = () => {
                 const res = await SpectacleService.getAllSpectacles();
                 if (isMounted) {
                     setSpectacles(res.data);
+                    setFilteredSpectacles(res.data);
                 }
             } catch (error: any) {
                 console.error(error.response.data);
@@ -135,8 +140,8 @@ const ManageSpectacles: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        setTableDataSource(formatDataSource(spectacles));
-    }, [spectacles])
+        setTableDataSource(formatDataSource(filteredSpectacles));
+    }, [filteredSpectacles, formatDataSource])
 
 
     const deleteSpectacle = async (_id: string) => {
@@ -154,18 +159,66 @@ const ManageSpectacles: React.FC = () => {
         }
     }
 
+    const generatePDF = (): void => {
+        const doc = new JsPDF();
+
+        // Add a title to the document
+        doc.text("Spectacle Report", 14, 20);
+
+        // Create a table
+        const tableData = spectacles.map((s) => [
+            s.name,
+            s.frameStyle,
+            s.frameMaterial,
+            s.lensType,
+            s.lensMaterial,
+            s.lensCoating,
+            s.color,
+            s.size,
+            s.price.toString(),
+        ]);
+        autoTable(doc, {
+            head: [['Name', 'Frame Style', 'Frame Material', 'Lens Type', 'Lens Material', 'Lens Coating', 'Color', 'Size', 'Price']],
+            body: tableData,
+        })
+
+        // Save the document
+        doc.save(`spectacle-report-${getCurrentDateTime()}.pdf`);
+    };
     console.log("spectacle --> ", spectacles);
 
+
+    const handleSearch = (e: any) => {
+        console.log(e.target.value)
+        const data = spectacles.filter((item) => {
+            return Object.keys(item).some((key) =>
+                item[key].toString().toLowerCase().includes(e.target.value.toLowerCase())
+            )
+        });
+        setFilteredSpectacles(data);
+    };
     return (<>
             <PageHeader className="ninjadash-page-header-main" title="Manage Spectacles" routes={BreadcrumbItem}/>
             <Main>
                 <Row gutter={15}>
                     <Col xs={24}>
+                        <TopToolBox>
+                            <Row gutter={0}>
+                                <Col xxl={7} lg={12} xs={24}>
+                                    <Input suffix={<Search/>} onChange={handleSearch} placeholder="Search this table"/>
+                                </Col>
+                            </Row>
+                        </TopToolBox>
                         <BorderLessHeading>
                             <Cards isbutton={
-                                <Link className="btn btn-primary h-auto" type="link" to="/admin/spectacles/create">
-                                    <Plus/> Add New
-                                </Link>
+                                <>
+                                    <Button className="btn btn-warning h-auto me-2" onClick={generatePDF}>
+                                        <Download className="me-2"/> Export PDF
+                                    </Button>
+                                    <Link className="btn btn-primary h-auto" type="link" to="/admin/spectacles/create">
+                                        <Plus/> Add New
+                                    </Link>
+                                </>
                             }>
                                 {
                                     tableDataSource.length === 0 ? (
