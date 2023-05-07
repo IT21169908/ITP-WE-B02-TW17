@@ -98,7 +98,7 @@ export function destroy(req: Request, res: Response, next: NextFunction) {
         const spectacle_id = req.params._id as unknown as Types.ObjectId;
         const user = req.user as IUser;
         Spectacle.destroy(spectacle_id, user).then(spectacle => {
-            res.sendSuccess(spectacle, "Spectacle updated successfully!");
+            res.sendSuccess(spectacle, "Spectacle deleted successfully!");
         }).catch(next);
     }
 }

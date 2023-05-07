@@ -210,27 +210,25 @@ const ManageOrders: React.FC = () => {
         message.error('Operation cancelled!');
     };
     const deleteOrder = async (_id: string) => {
-        const confirmation = window.confirm("Are You sure you want to delete this order")
-        if (confirmation) {
-            try {
-                const res = await OrderService.deleteOrder(_id);
-                if (res.success) {
-                    AntdNotification.success({
-                        message: 'Order Deleted successfully!',
-                        description: `${getCurrentDateTime()}`,
-                        duration: 20
-                    });
-                    navigate('/patient/orders')
-                }
-            } catch (error: any) {
-                AntdNotification.error({
-                    message: 'Order Delete failed!',
-                    description: `${error.response.data.message} -- ${getCurrentDateTime()}`,
+        try {
+            const res = await OrderService.deleteOrderByAdmin(_id);
+            if (res.success) {
+                AntdNotification.success({
+                    message: 'Order Deleted successfully!',
+                    description: `${getCurrentDateTime()}`,
                     duration: 20
                 });
-                //alert(error.response.data.error || error.response.data.message)
-                console.log(error.response.data.error)
+                const updatedSpectacles = orders.filter(order => order._id !== _id);
+                setOrders(updatedSpectacles);
             }
+        } catch (error: any) {
+            AntdNotification.error({
+                message: 'Order Delete failed!',
+                description: `${error.response.data.message} -- ${getCurrentDateTime()}`,
+                duration: 20
+            });
+            //alert(error.response.data.error || error.response.data.message)
+            console.log(error.response.data.error)
         }
     }
 

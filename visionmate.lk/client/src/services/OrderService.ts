@@ -76,6 +76,16 @@ export class OrderService {
         }
     }
 
+    static async deleteOrderByAdmin(_id: string) {
+        const endpoint = ApiUtils.adminUrl(`orders/${_id}`);
+        const response = await axios.delete(endpoint, this.config);
+        if (response.data.success) {
+            return response.data;
+        } else {
+            throw Error("Request failed with status: " + response.status + " message: " + response.data.error);
+        }
+    }
+
     static async getAllSpectaclesForPatient(): Promise<AppResponse<Spectacle[]>> {
         const ep = ApiUtils.patientUrl('spectacles');
         const response = await axios.get<Partial<Spectacle>, AxiosAppResponse<Spectacle[]>>(ep, this.config);

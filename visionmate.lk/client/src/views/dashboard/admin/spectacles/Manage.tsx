@@ -1,5 +1,5 @@
 import React, {ReactNode, useEffect, useState} from 'react';
-import {Button, Col, Row, Table} from 'antd';
+import {Button, Col, message, Popconfirm, Row, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
 import {HouseDoor, Pencil, Plus, Trash2} from "react-bootstrap-icons";
@@ -8,6 +8,8 @@ import {Cards} from "../../../../components/cards/frame/CardFrame";
 import {Link} from "react-router-dom";
 import Spectacle from "../../../../models/Spectacle";
 import {SpectacleService} from "../../../../services/SpectacleService";
+import {NotFoundWrapper} from "../../patient/shop/style";
+import Heading from "../../../../components/heading/Heading";
 
 interface DataType {
     key: React.Key;
@@ -94,9 +96,17 @@ const ManageSpectacles: React.FC = () => {
                         >
                             <Pencil/>
                         </Link>
-                        <Link className="btn btn-sm btn-danger text-white" onClick={() => deleteSpectacle(_id)} to="#">
-                            <Trash2/>
-                        </Link>
+                        <Popconfirm
+                            title="Are You sure you want to delete this spectacle?"
+                            onConfirm={() => deleteSpectacle(_id)}
+                            onCancel={() => message.error('Delete canceled!')}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Link className="btn btn-sm btn-danger text-white" to="#">
+                                <Trash2/>
+                            </Link>
+                        </Popconfirm>
                     </div>
                 ),
             };
@@ -104,8 +114,6 @@ const ManageSpectacles: React.FC = () => {
     };
 
     useEffect(() => {
-        let isMounted = true;
-
         async function loadSpectacles() {
             try {
                 const res = await SpectacleService.getAllSpectacles();
@@ -116,6 +124,8 @@ const ManageSpectacles: React.FC = () => {
                 console.error(error.response.data);
             }
         }
+
+        let isMounted = true;
 
         loadSpectacles();
         return () => {
@@ -130,24 +140,18 @@ const ManageSpectacles: React.FC = () => {
 
 
     const deleteSpectacle = async (_id: string) => {
-        const confirmation = window.confirm("Are You sure you want to delete this spectacle")
-        if (confirmation) {
-            try {
-                const res = await SpectacleService.deleteSpectacle(_id);
-                if (res.success) {
-                    alert(res.message)
-                    window.location.reload()
-                }
-            } catch (error: any) {
-                alert(error.response.data.error || error.response.data.message)
-                console.log(error.response.data.error)
+        try {
+            const res = await SpectacleService.deleteSpectacle(_id);
+            if (res.success) {
+                message.success(`${res.message}`);
+                // TODO: REFACTOR this. Do not use filter, when large no of records exist
+                const updatedSpectacles = spectacles.filter(spectacle => spectacle._id !== _id);
+                setSpectacles(updatedSpectacles);
             }
+        } catch (error: any) {
+            message.error(`${error.response.data.error || error.response.data.message}`)
+            console.log(error.response.data.error)
         }
-    }
-
-
-    if (tableDataSource.length === 0) {
-        return <div>Loading...</div>;
     }
 
     console.log("spectacle --> ", spectacles);
@@ -163,7 +167,17 @@ const ManageSpectacles: React.FC = () => {
                                     <Plus/> Add New
                                 </Link>
                             }>
-                                <Table columns={dataTableColumn} dataSource={tableDataSource}/>
+                                {
+                                    tableDataSource.length === 0 ? (
+                                        <Col md={24}>
+                                            <NotFoundWrapper>
+                                                <Heading as="h1">No Orders Found</Heading>
+                                            </NotFoundWrapper>
+                                        </Col>
+                                    ) : (
+                                        <><Table columns={dataTableColumn} dataSource={tableDataSource}/></>
+                                    )
+                                }
                             </Cards>
                         </BorderLessHeading>
                     </Col>
