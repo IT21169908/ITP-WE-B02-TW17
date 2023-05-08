@@ -16,14 +16,12 @@ const GuestRoutes: React.FC<GuestRoutesProps> = memo(({isLoggedIn}) => {
 
     return (
         <Routes>
-            <Route index element={<NotFound/>}/>
             <Route path="login" element={<AuthLayout><Login/></AuthLayout>}/>
             <Route path="register" element={<AuthLayout><Register/></AuthLayout>}/>
             {/*<Route path="forgot-password" element={<AuthLayout><ForgotPass/></AuthLayout>}/>*/}
 
             {/*<Route path='/' element={<FrontViewLayout><Home/></FrontViewLayout>}/>*/}
             {/*<Route path='/about' element={<FrontViewLayout><About/></FrontViewLayout>}/>*/}
-            <Route path="*" element={<NotFound/>}/>
         </Routes>
     );
 });
