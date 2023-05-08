@@ -12,6 +12,8 @@ interface IAppointment {
     appointmentDate: string;
     duration: string;
     invoiceId: string;
+
+    [key: string]: string | number
 }
 
 
