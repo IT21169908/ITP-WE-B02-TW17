@@ -4,13 +4,15 @@ interface IAppointmentTransaction {
     appointmentId: string;
     type: string;
     amount: number;
-    currency?: string;
-    paymentMethod?: string;
-    notes?: string;
-    transactionType?: string;
-    transactionDate?: string;
-    transactionStatus?: string;
-    accountId?: string;
+    currency: string;
+    paymentMethod: string;
+    notes: string;
+    transactionType: string;
+    transactionDate: string;
+    transactionStatus: string;
+    accountId: string;
+
+    [key: string]: string | number
 }
 
 

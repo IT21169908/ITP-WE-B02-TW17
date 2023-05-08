@@ -1,13 +1,16 @@
+import JsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import React, { useEffect, useState } from 'react';
-import { Col, message, Popconfirm, Row, Skeleton, Table } from 'antd';
+import { Button, Col, Input, message, Popconfirm, Row, Skeleton, Table } from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
-import { HouseDoor, PencilFill, Plus, Trash } from "react-bootstrap-icons";
-import {BorderLessHeading, Main} from "../../../../components/styled-components/styled-containers";
+import { Download, HouseDoor, PencilFill, Plus, Search, Trash } from "react-bootstrap-icons";
+import { BorderLessHeading, Main, TopToolBox } from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
 import { Link, useNavigate } from "react-router-dom";
 import IAppointmentTransaction from "../../../../models/AppointmentTransaction";
 import { TransactionService } from "../../../../services/TransactionService";
+import { getCurrentDateTime } from "../../../../utils/date-time";
 
 interface DataType {
     key:  string;
@@ -52,49 +55,9 @@ const ManageTransactions: React.FC = () => {
 
     const navigate = useNavigate();
     const [transaction, setTransaction] = useState<IAppointmentTransaction[]>([]);
+    const [filteredTransactions, setFilteredTransactions] = useState<IAppointmentTransaction[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
 
-    useEffect(() => {
-        let isMounted = true;
-
-        async function loadTransactions() {
-            try {
-                const res = await TransactionService.getAllTransactions();
-                if (isMounted) {
-                    setTransaction(res.data);
-                }
-            } catch (error: any) {
-                console.error(error.response.data);
-            }
-        }
-
-        loadTransactions();
-        return () => {
-            // TODO unset tableDataSource[]
-            isMounted = false;
-        };
-    }, []);
-
-    useEffect(() => {
-        setTableDataSource(formatDataSource(transaction));
-    }, [transaction]);
-
-    const confirmDelete = async (id: string): Promise<void> => {
-        try {
-            const res = await TransactionService.deleteTransaction(id);
-            if (res.success) {
-                message.success(`${res.message}`);
-                window.location.reload(); // TODO - remove page reload
-            }
-        } catch (error: any) {
-            message.error(`${ error.response.data.error || error.response.data.message }`);
-            console.log(error.response.data.error);
-        }
-    };
-
-    const cancelDelete = () => {
-        message.error('Delete canceled!');
-    };
 
     const formatDataSource = (transactions: IAppointmentTransaction[]): DataType[] => {
         return transactions.map((transaction) => {
@@ -149,6 +112,92 @@ const ManageTransactions: React.FC = () => {
         });
     };
 
+    useEffect(() => {
+        let isMounted = true;
+
+        async function loadTransactions() {
+            try {
+                const res = await TransactionService.getAllTransactions();
+                if (isMounted) {
+                    setTransaction(res.data);
+                    setFilteredTransactions(res.data);
+                }
+            } catch (error: any) {
+                console.error(error.response.data);
+            }
+        }
+
+        loadTransactions();
+        return () => {
+            // TODO unset tableDataSource[]
+            isMounted = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        setTableDataSource(formatDataSource(filteredTransactions));
+    }, [filteredTransactions, formatDataSource]);
+
+    const confirmDelete = async (id: string): Promise<void> => {
+        try {
+            const res = await TransactionService.deleteTransaction(id);
+            if (res.success) {
+                message.success(`${res.message}`);
+                window.location.reload(); // TODO - remove page reload
+            }
+        } catch (error: any) {
+            message.error(`${ error.response.data.error || error.response.data.message }`);
+            console.log(error.response.data.error);
+        }
+    };
+
+    const cancelDelete = () => {
+        message.error('Delete canceled!');
+    };
+
+    const generatePDF = (): void => {
+        const doc = new JsPDF('landscape');
+
+        // Add a title to the document
+        doc.text("Transactions Report", 14, 20);
+
+        // Create a table
+        const tableData = transaction.map((s) => [
+            s.appointmentId,
+            s.type,
+            s.amount,
+            s.currency ?? null,
+            s.paymentMethod ?? null,
+            s.notes ?? null,
+            s.transactionType ?? null,
+            s.transactionDate ?? null,
+            s.transactionStatus ?? null,
+            s.accountId ?? null,
+        ]);
+        autoTable(doc, {
+            head: [['Appointment Id', 'Type', 'Amount', 'Currency', 'Payment Method', 'Notes',
+                'Transaction Type', 'Transaction Date', 'Transaction Status', 'Account Id']],
+            body: tableData,
+        });
+
+        // Save the document
+        doc.save(`transactions-report-${getCurrentDateTime()}.pdf`);
+    };
+
+    const handleSearch = (e: any) => {
+        console.log(e.target.value);
+        const data = transaction.filter((item) => {
+            return Object.keys(item).some((key) => {
+                    if (item[key]) {
+                        return item[key].toString().toLowerCase().includes(e.target.value.toLowerCase());
+                    }
+                    return null;
+                }
+            );
+        });
+        setFilteredTransactions(data);
+    };
+
     if (tableDataSource.length === 0) {
         return (
             <Row gutter={25} className="justify-content-center">
@@ -167,11 +216,23 @@ const ManageTransactions: React.FC = () => {
             <Main>
                 <Row gutter={15}>
                     <Col xs={24}>
+                        <TopToolBox>
+                            <Row gutter={0}>
+                                <Col xxl={7} lg={12} xs={24}>
+                                    <Input suffix={<Search/>} onChange={handleSearch} placeholder="Search Appointments..."/>
+                                </Col>
+                            </Row>
+                        </TopToolBox>
                         <BorderLessHeading>
                             <Cards isbutton={
-                                <Link className="btn btn-primary h-auto" type="link" to="/admin/transactions/create">
-                                   <Plus/> Add New
-                                </Link>
+                                <>
+                                    <Button className="btn btn-warning h-auto me-2" onClick={generatePDF}>
+                                        <Download className="me-2" /> Generate PDF
+                                    </Button>
+                                    <Link className="btn btn-primary h-auto" type="link" to="/admin/transactions/create">
+                                        <Plus/> Add New
+                                    </Link>
+                                </>
                             }>
                                 <Table columns={dataTableColumn} dataSource={tableDataSource}/>
                             </Cards>
