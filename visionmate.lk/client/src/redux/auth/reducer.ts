@@ -34,7 +34,7 @@ const authSlice = createSlice({
             .addCase(signIn.fulfilled, (state, action: PayloadAction<IUser>) => {
                 console.log("extraReducer.getUser.fulfilled")
                 state.isLoading = false;
-                state.isLoggedIn = true;
+                state.isLoggedIn = !!action.payload?._id;
                 state.user = action.payload
 
                 // TODO: Find another way to handle redirect
@@ -102,7 +102,7 @@ const authSlice = createSlice({
             .addCase(verifyUser.fulfilled, (state, action: PayloadAction<IUser>) => {
                 console.log("extraReducer.getUser.fulfilled")
                 state.isLoading = false;
-                state.isLoggedIn = true;
+                state.isLoggedIn = !!action.payload?._id;
                 state.user = action.payload
             })
             .addCase(verifyUser.rejected, (state, action) => {

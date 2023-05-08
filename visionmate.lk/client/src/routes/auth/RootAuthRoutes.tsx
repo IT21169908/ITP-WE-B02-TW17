@@ -1,5 +1,5 @@
-import React, {lazy, Suspense} from 'react';
-import {Navigate, Route, Routes} from "react-router-dom";
+import React, {lazy, Suspense, useEffect} from 'react';
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import {Role} from "../../enums/Role";
 import AdminRoutes from "./_AdminRoutes";
 import PreLoader from "../../components/preloader/PreLoader";
@@ -17,14 +17,19 @@ interface GuestRoutesProps {
 
 function RootAuthRoutes({isLoggedIn, authUser}: GuestRoutesProps) {
 
+    const navigate = useNavigate()
+
     let authRoute: JSX.Element;
     //let userRole = parseInt(Role.DOCTOR.toString()); //TODO
 
-    if (!isLoggedIn || !authUser) {
-        return <Navigate to="/login"/>;
-    }
+    useEffect(() => {
+        if (!isLoggedIn || !authUser) {
+            navigate('/login')
+        }
+    }, [authUser, isLoggedIn, navigate])
 
-    switch (authUser.role) {
+
+    switch (authUser?.role) {
         case Role.ADMIN:
             authRoute = <Route index path="/admin/*" element={<AdminRoutes/>}/>;
             break;
@@ -38,7 +43,7 @@ function RootAuthRoutes({isLoggedIn, authUser}: GuestRoutesProps) {
             authRoute = <Route index path="/doctor/*" element={<DoctorRoutes/>}/>;
             break;
         default:
-            authRoute = <Route path="/" element={<Navigate to="/404"/>}/>;
+            authRoute = <Route element={<Navigate to="/404"/>}/>;
             break;
     }
 
@@ -46,7 +51,6 @@ function RootAuthRoutes({isLoggedIn, authUser}: GuestRoutesProps) {
         <Suspense fallback={<PreLoader/>}>
             <Routes>
                 {authRoute}
-                <Route index path="*" element={<NotFound/>}/>;
             </Routes>
         </Suspense>
     );

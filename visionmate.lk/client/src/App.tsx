@@ -1,7 +1,7 @@
 import {ConfigProvider} from 'antd';
-import React, {useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import {ThemeProvider} from 'styled-components';
 import config from './config/config';
 import {RootState, store} from "./redux/store";
@@ -10,9 +10,10 @@ import GuestRoutes from "./routes/GuestRoutes";
 import 'antd/dist/reset.css';
 import './styles/index.scss';
 import {useAppDispatch, useAppSelector} from "./hooks/redux-hooks";
-import {fetchUser} from "./redux/users/actions";
 import PreLoader from "./components/preloader/PreLoader";
 import {authorization} from "./redux/auth/actions";
+import LandingPage from "./views/front-views/LandingPage";
+import NotFound from "./views/errors/NotFound";
 
 const {themeColor} = config;
 
@@ -53,17 +54,26 @@ const ProviderConfig = () => {
                 {!isLoaded ? (
                     <PreLoader/>
                 ) : (
-                    <Router basename={process.env.PUBLIC_URL}>
-                        {!isLoggedIn ? (
-                            <GuestRoutes isLoggedIn/>
-                        ) : (
-                            <RootAuthRoutes isLoggedIn authUser={authUser}/>
-                        )}
-                    </Router>
-                )}
+                    <>
+                        <Router basename={process.env.PUBLIC_URL}>
+                            <Routes>
+                                <Route index path="/" element={<LandingPage/>}/>
+                                <GuestRoutes isLoggedIn/>
+                                {/*{!isLoggedIn ? (
+                                    <GuestRoutes isLoggedIn/>
+                                ) : (
+                                    <RootAuthRoutes isLoggedIn authUser={authUser}/>
+                                )}*/}
+                                <Route path="*" errorElement={<NotFound/>}/>;
+                            </Routes>
+                        </Router>
+                    </>
+                )
+                }
             </ThemeProvider>
         </ConfigProvider>
-    );
+    )
+        ;
 }
 
 const App = () => (
