@@ -6,8 +6,10 @@ interface IBlog {
     description: string;
     tags: string;
     reference:string;
-    status?: string;
-    publishedDate?: string;
+    status: string;
+    publishedDate: string;
+
+    [key: string]: string | number
 }
 
 export default IBlog
