@@ -56,24 +56,23 @@ const ProviderConfig = () => {
                 ) : (
                     <>
                         <Router basename={process.env.PUBLIC_URL}>
-                            <Routes>
-                                <Route index path="/" element={<LandingPage/>}/>
-                                <GuestRoutes isLoggedIn/>
-                                {/*{!isLoggedIn ? (
+                            {/*<Routes>*/}
+                                {/*<Route index path="/" element={<LandingPage/>}/>*/}
+                                {/*<GuestRoutes isLoggedIn/>*/}
+                                {!isLoggedIn ? (
                                     <GuestRoutes isLoggedIn/>
                                 ) : (
                                     <RootAuthRoutes isLoggedIn authUser={authUser}/>
-                                )}*/}
-                                <Route path="*" errorElement={<NotFound/>}/>;
-                            </Routes>
+                                )}
+                                {/*<Route path="*" errorElement={<NotFound/>}/>;*/}
+                            {/*</Routes>*/}
                         </Router>
                     </>
                 )
                 }
             </ThemeProvider>
         </ConfigProvider>
-    )
-        ;
+    );
 }
 
 const App = () => (
