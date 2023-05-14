@@ -18,12 +18,15 @@ const EditSchedule = lazy(() => import("../../views/dashboard/admin/operation-sc
 const ManageTransactions = lazy(() => import("../../views/dashboard/admin/transactions/Manage"));
 const CreateTransaction = lazy(() => import("../../views/dashboard/admin/transactions/Create"));
 const EditTransaction = lazy(() => import("../../views/dashboard/admin/transactions/Create"));
+const Dashboard = lazy(() => import("../../views/dashboard/Dashboard"));
 
 function AdminRoutes() {
     // TODO: decide whether to apply DashboardLayout. best approach
     return (
         <DashboardLayout>
             <Routes>
+                <Route index path="/*" element={<Dashboard/>}/>
+                <Route path="/users" element={<ManageUsers/>}/>
                 <Route path="/users" element={<ManageUsers/>}/>
                 <Route path="/users/:user_id/edit" element={<UpdateUser enableEdit/>}/>
 
