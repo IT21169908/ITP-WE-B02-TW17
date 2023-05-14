@@ -26,24 +26,22 @@ function RootAuthRoutes({isLoggedIn, authUser}: GuestRoutesProps) {
     useEffect(() => {
         if (!isLoggedIn || !authUser) {
             navigate('/login')
-        } else if (location.pathname.includes("login")|| location.pathname.includes("register")) {
-            if (isLoggedIn && authUser) {
-                switch (authUser.role) {
-                    case Role.ADMIN:
-                        navigate('/admin');
-                        break;
-                    case Role.PATIENT:
-                        navigate('/patient');
-                        break;
-                    case Role.SURGEON:
-                        navigate('/surgeon');
-                        break;
-                    case Role.DOCTOR:
-                        navigate('/doctor');
-                        break;
-                    default:
-                        break;
-                }
+        } else if ((location.pathname.includes("login")|| location.pathname.includes("register")) || (isLoggedIn && authUser)) {
+            switch (authUser.role) {
+                case Role.ADMIN:
+                    navigate('/admin');
+                    break;
+                case Role.PATIENT:
+                    navigate('/patient');
+                    break;
+                case Role.SURGEON:
+                    navigate('/surgeon');
+                    break;
+                case Role.DOCTOR:
+                    navigate('/doctor');
+                    break;
+                default:
+                    break;
             }
         }
     }, [authUser, isLoggedIn, location.pathname, navigate]);
