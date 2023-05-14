@@ -103,12 +103,12 @@ const ManageAppointments: React.FC = () => {
                     <div className="table-actions">
                         <Link
                             className="btn btn-sm btn-outline-warning fw-bolder me-1 mt-1"
-                            to={`/doctor/treatment-plans/${_id}/edit`}
+                            to={`/patient/appointments/${_id}/edit`}
                         >
                             <PencilFill/>
                         </Link>
                         <Popconfirm
-                            title="Are you sure delete this plan?"
+                            title="Are you sure delete this appointment?"
                             onConfirm={() => confirmDelete(_id)}
                             onCancel={cancelDelete}
                             okText="Yes"
