@@ -36,18 +36,18 @@ const LandingPage = () => {
                             <div className="right">
                                 <ul>
                                     <li>
-                                        <i className="flaticon-phone-call"/>
+                                        <i className="flaticon-phone-call" />
                                         <h4>Phone</h4>
-                                        <a href="tel:082996576">082-996-576</a>
+                                        <a href="tel:082996576">078-4416209</a>
                                     </li>
                                     <li>
-                                        <i className="flaticon-placeholder"/>
+                                        <i className="flaticon-placeholder" />
                                         <h4>Location</h4>
-                                        <a href="#">950 st, Belin Road</a>
+                                        <a href="#">100,Kandy rd,Malabe</a>
                                     </li>
                                     <li>
-                                        <i className="flaticon-clock"/>
-                                        <h4>Saturday - Tuesday</h4>
+                                        <i className="flaticon-clock" />
+                                        <h4>Monday - Saturday</h4>
                                         <span>09:00 AM - 9:00 PM</span>
                                     </li>
                                 </ul>
@@ -59,7 +59,7 @@ const LandingPage = () => {
             <div className="navbar-area sticky-top">
                 <div className="mobile-nav">
                     <a href="index.html" className="logo">
-                        <img src="assets/images/logo.png" className="mobile-logo1" alt="Logo"/>
+                        <img src="assets/images/logo.png" className="mobile-logo1" alt="Logo" />
                         <img
                             src="assets/images/logo-two.png"
                             className="mobile-logo2"
@@ -76,68 +76,15 @@ const LandingPage = () => {
                             >
                                 <ul className="navbar-nav">
                                     <li className="nav-item">
-                                        <a href="#" className="nav-link dropdown-toggle active">
-                                            Home <i className="bx bx-chevron-down"/>
+                                        <a href="#" className="nav-link">
+                                            Home 
                                         </a>
-                                        <ul className="dropdown-menu">
-                                            <li className="nav-item">
-                                                <a href="index.html" className="nav-link">
-                                                    Home Demo One
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="index-2.html" className="nav-link">
-                                                    Home Demo Two
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="index-3.html" className="nav-link active">
-                                                    Home Demo Three
-                                                </a>
-                                            </li>
-                                        </ul>
                                     </li>
                                     <li className="nav-item">
                                         <a href="#" className="nav-link dropdown-toggle">
-                                            Pages <i className="bx bx-chevron-down"/>
+                                            Pages 
                                         </a>
-                                        <ul className="dropdown-menu">
-                                            <li className="nav-item">
-                                                <a href="account.html" className="nav-link">
-                                                    Account
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="appointment.html" className="nav-link">
-                                                    Appointment
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="pricing.html" className="nav-link">
-                                                    Pricing
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="faq.html" className="nav-link">
-                                                    FAQ
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="404.html" className="nav-link">
-                                                    404 Error Page
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="privacy-policy.html" className="nav-link">
-                                                    Privacy Policy
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="terms-conditions.html" className="nav-link">
-                                                    Terms &amp; Conditions
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        
                                     </li>
                                     <li className="nav-item">
                                         <a href="about.html" className="nav-link">
@@ -146,152 +93,55 @@ const LandingPage = () => {
                                     </li>
                                     <li className="nav-item">
                                         <a href="#" className="nav-link dropdown-toggle">
-                                            Doctors <i className="bx bx-chevron-down"/>
+                                            Doctors 
                                         </a>
-                                        <ul className="dropdown-menu">
-                                            <li className="nav-item">
-                                                <a href="doctors.html" className="nav-link">
-                                                    Doctors
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="doctor-details.html" className="nav-link">
-                                                    Doctor Details
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        
                                     </li>
                                     <li className="nav-item">
                                         <a href="#" className="nav-link dropdown-toggle">
-                                            Services <i className="bx bx-chevron-down"/>
+                                            Services 
                                         </a>
-                                        <ul className="dropdown-menu">
-                                            <li className="nav-item">
-                                                <a href="services.html" className="nav-link">
-                                                    Services
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="service-left-sidebar.html" className="nav-link">
-                                                    Service Left Sidebar
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="service-right-sidebar.html" className="nav-link">
-                                                    Service Right Sidebar
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="service-details.html" className="nav-link">
-                                                    Service Details
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        
                                     </li>
+                                    
                                     <li className="nav-item">
                                         <a href="#" className="nav-link dropdown-toggle">
-                                            Shop <i className="bx bx-chevron-down"/>
+                                            Blog 
                                         </a>
-                                        <ul className="dropdown-menu">
-                                            <li className="nav-item">
-                                                <a href="shop.html" className="nav-link">
-                                                    Shop
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="cart.html" className="nav-link">
-                                                    Cart
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="checkout.html" className="nav-link">
-                                                    Checkout
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="wishlist.html" className="nav-link">
-                                                    Wishlist
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="shop-details.html" className="nav-link">
-                                                    Shop Details
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        
                                     </li>
-                                    <li className="nav-item">
-                                        <a href="#" className="nav-link dropdown-toggle">
-                                            Blog <i className="bx bx-chevron-down"/>
-                                        </a>
-                                        <ul className="dropdown-menu">
-                                            <li className="nav-item">
-                                                <a href="blog.html" className="nav-link">
-                                                    Blog
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="blog-left-sidebar.html" className="nav-link">
-                                                    Blog Left Sidebar
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="blog-right-sidebar.html" className="nav-link">
-                                                    Blog Right Sidebar
-                                                </a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a href="blog-details.html" className="nav-link">
-                                                    Blog Details
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a href="contact.html" className="nav-link">
-                                            Contact
-                                        </a>
-                                    </li>
+
                                 </ul>
                                 <div className="side-nav">
-                                    <div className="cart">
-                                        <a href="cart.html">
-                                            <i className="bx bxs-cart"/>
-                                            <span>2</span>
-                                        </a>
-                                    </div>
-                                    <div className="languages">
-                                        <select>
-                                            <option>English</option>
-                                            <option>العربيّة</option>
-                                            <option>Deutsch</option>
-                                            <option>Português</option>
-                                        </select>
-                                    </div>
+                                    
                                     <div className="social">
                                         <ul>
                                             <li>
                                                 <a href="#" target="_blank">
-                                                    <i className="bx bxl-facebook"/>
+                                                    <i className="bx bxl-facebook" />
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#" target="_blank">
-                                                    <i className="bx bxl-twitter"/>
+                                                    <i className="bx bxl-twitter" />
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#" target="_blank">
-                                                    <i className="bx bxl-linkedin"/>
+                                                    <i className="bx bxl-linkedin" />
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#" target="_blank">
-                                                    <i className="bx bxl-google-plus"/>
+                                                    <i className="bx bxl-google-plus" />
                                                 </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a href="/login" className="nav-link btn btn-primary p-2" style={{ marginLeft: "16vh" }}>Login</a>
                                             </li>
                                         </ul>
                                     </div>
+
                                 </div>
                             </div>
                         </nav>
@@ -300,9 +150,9 @@ const LandingPage = () => {
             </div>
             <div className="banner-area three">
                 <div className="banner-shape">
-                    <img src="assets/images/banner/shape1.png" alt="Shape"/>
-                    <img src="assets/images/banner/shape2.png" alt="Shape"/>
-                    <img src="assets/images/banner/main5.png" alt="Shape"/>
+                    <img src="assets/images/banner/shape1.png" alt="Shape" />
+                    <img src="assets/images/banner/shape2.png" alt="Shape" />
+                    <img src="assets/images/banner/main5.png" alt="Shape" />
                 </div>
                 <div className="banner-item">
                     <div className="d-table">
@@ -316,13 +166,13 @@ const LandingPage = () => {
                                         eiusmod tempor incididunt ut labore et dolore magna aliqua
                                     </p>
                                     <a className="common-btn" href="appointment.html">
-                                        <span className="one"/>
-                                        <span className="two"/>
+                                        <span className="one" />
+                                        <span className="two" />
                                         Get An Appointment
                                     </a>
                                     <a className="common-btn banner-btn" href="about.html">
-                                        <span className="one"/>
-                                        <span className="two"/>
+                                        <span className="one" />
+                                        <span className="two" />
                                         More About Us
                                     </a>
                                 </div>
@@ -336,7 +186,7 @@ const LandingPage = () => {
                     <div className="row align-items-end">
                         <div className="col-lg-6">
                             <div className="about-img-two">
-                                <img src="assets/images/about/main3.jpg" alt="About"/>
+                                <img src="assets/images/about/main3.jpg" alt="About" />
                             </div>
                         </div>
                         <div className="col-lg-6">
@@ -378,15 +228,15 @@ const LandingPage = () => {
                                             href="http://www.youtube.com/watch?v=tkhd-JTMwEM&ab"
                                             className="popup-youtube"
                                         >
-                                            <i className="bx bx-play"/>
+                                            <i className="bx bx-play" />
                                         </a>
                                         <span>Watch Video</span>
                                     </li>
                                     <li>
                                         <a className="common-btn" href="appointment.html">
                                             Get An Appointment
-                                            <span className="one"/>
-                                            <span className="two"/>
+                                            <span className="one" />
+                                            <span className="two" />
                                         </a>
                                     </li>
                                 </ul>
@@ -397,8 +247,8 @@ const LandingPage = () => {
             </div>
             <section className="features-area two pt-100 pb-70">
                 <div className="features-shape">
-                    <img src="assets/images/features-shape1.png" alt="Shape"/>
-                    <img src="assets/images/features-shape2.png" alt="Shape"/>
+                    <img src="assets/images/features-shape1.png" alt="Shape" />
+                    <img src="assets/images/features-shape2.png" alt="Shape" />
                 </div>
                 <div className="container">
                     <div className="section-title">
@@ -412,7 +262,7 @@ const LandingPage = () => {
                         <div className="col-sm-6 col-lg-3">
                             <div className="features-item">
                                 <span>01</span>
-                                <i className="flaticon-doctor"/>
+                                <i className="flaticon-doctor" />
                                 <h3>
                                     <a href="service-details.html">Qualified Doctors</a>
                                 </h3>
@@ -428,7 +278,7 @@ const LandingPage = () => {
                         <div className="col-sm-6 col-lg-3">
                             <div className="features-item">
                                 <span>02</span>
-                                <i className="flaticon-view"/>
+                                <i className="flaticon-view" />
                                 <h3>
                                     <a href="service-details.html">Eye Examination</a>
                                 </h3>
@@ -444,7 +294,7 @@ const LandingPage = () => {
                         <div className="col-sm-6 col-lg-3">
                             <div className="features-item">
                                 <span>03</span>
-                                <i className="flaticon-eye-1"/>
+                                <i className="flaticon-eye-1" />
                                 <h3>
                                     <a href="service-details.html">Contact Lenses</a>
                                 </h3>
@@ -460,7 +310,7 @@ const LandingPage = () => {
                         <div className="col-sm-6 col-lg-3">
                             <div className="features-item">
                                 <span>04</span>
-                                <i className="flaticon-laser"/>
+                                <i className="flaticon-laser" />
                                 <h3>
                                     <a href="service-details.html">Laser Eye Correction</a>
                                 </h3>
@@ -489,28 +339,28 @@ const LandingPage = () => {
                         <div className="col-sm-6 col-lg-4">
                             <div className="doctors-item">
                                 <div className="top">
-                                    <img src="assets/images/doctors/main1.png" alt="Doctor"/>
+                                    <img src="assets/images/doctors/main1.png" alt="Doctor" />
                                     <ul className="social">
                                         <li>
                                             <a href="#" target="_blank">
-                                                <i className="bx bxl-facebook"/>
+                                                <i className="bx bxl-facebook" />
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" target="_blank">
-                                                <i className="bx bxl-twitter"/>
+                                                <i className="bx bxl-twitter" />
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" target="_blank">
-                                                <i className="bx bxl-linkedin"/>
+                                                <i className="bx bxl-linkedin" />
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="bottom">
                                     <div className="left">
-                                        <i className="bx bxs-share-alt button"/>
+                                        <i className="bx bxs-share-alt button" />
                                     </div>
                                     <div className="right">
                                         <h3>
@@ -524,28 +374,28 @@ const LandingPage = () => {
                         <div className="col-sm-6 col-lg-4">
                             <div className="doctors-item">
                                 <div className="top">
-                                    <img src="assets/images/doctors/main2.png" alt="Doctor"/>
+                                    <img src="assets/images/doctors/main2.png" alt="Doctor" />
                                     <ul className="social-two">
                                         <li>
                                             <a href="#" target="_blank">
-                                                <i className="bx bxl-facebook"/>
+                                                <i className="bx bxl-facebook" />
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" target="_blank">
-                                                <i className="bx bxl-twitter"/>
+                                                <i className="bx bxl-twitter" />
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" target="_blank">
-                                                <i className="bx bxl-linkedin"/>
+                                                <i className="bx bxl-linkedin" />
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="bottom">
                                     <div className="left">
-                                        <i className="bx bxs-share-alt button-two"/>
+                                        <i className="bx bxs-share-alt button-two" />
                                     </div>
                                     <div className="right">
                                         <h3>
@@ -559,28 +409,28 @@ const LandingPage = () => {
                         <div className="col-sm-6 col-lg-4">
                             <div className="doctors-item">
                                 <div className="top">
-                                    <img src="assets/images/doctors/main3.png" alt="Doctor"/>
+                                    <img src="assets/images/doctors/main3.png" alt="Doctor" />
                                     <ul className="social-three">
                                         <li>
                                             <a href="#" target="_blank">
-                                                <i className="bx bxl-facebook"/>
+                                                <i className="bx bxl-facebook" />
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" target="_blank">
-                                                <i className="bx bxl-twitter"/>
+                                                <i className="bx bxl-twitter" />
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" target="_blank">
-                                                <i className="bx bxl-linkedin"/>
+                                                <i className="bx bxl-linkedin" />
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="bottom">
                                     <div className="left">
-                                        <i className="bx bxs-share-alt button-three"/>
+                                        <i className="bx bxs-share-alt button-three" />
                                     </div>
                                     <div className="right">
                                         <h3>
@@ -614,15 +464,15 @@ const LandingPage = () => {
                             <div className="services-item">
                                 <div className="top">
                                     <a href="service-details.html">
-                                        <img src="assets/images/services/main1.jpg" alt="Services"/>
+                                        <img src="assets/images/services/main1.jpg" alt="Services" />
                                     </a>
                                 </div>
                                 <div className="bottom">
-                                    <span/>
-                                    <span/>
-                                    <span/>
-                                    <span/>
-                                    <i className="flaticon-lasik icon"/>
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <i className="flaticon-lasik icon" />
                                     <h3>
                                         <a href="service-details.html">Retina Repair</a>
                                     </h3>
@@ -632,7 +482,7 @@ const LandingPage = () => {
                                     </p>
                                     <a className="services-btn" href="service-details.html">
                                         More Details
-                                        <i className="bx bx-plus"/>
+                                        <i className="bx bx-plus" />
                                     </a>
                                 </div>
                             </div>
@@ -641,15 +491,15 @@ const LandingPage = () => {
                             <div className="services-item">
                                 <div className="top">
                                     <a href="service-details.html">
-                                        <img src="assets/images/services/main2.jpg" alt="Services"/>
+                                        <img src="assets/images/services/main2.jpg" alt="Services" />
                                     </a>
                                 </div>
                                 <div className="bottom">
-                                    <span/>
-                                    <span/>
-                                    <span/>
-                                    <span/>
-                                    <i className="flaticon-witness icon"/>
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <i className="flaticon-witness icon" />
                                     <h3>
                                         <a href="service-details.html">Glaucoma &amp; Cornea</a>
                                     </h3>
@@ -659,7 +509,7 @@ const LandingPage = () => {
                                     </p>
                                     <a className="services-btn" href="service-details.html">
                                         More Details
-                                        <i className="bx bx-plus"/>
+                                        <i className="bx bx-plus" />
                                     </a>
                                 </div>
                             </div>
@@ -668,15 +518,15 @@ const LandingPage = () => {
                             <div className="services-item">
                                 <div className="top">
                                     <a href="service-details.html">
-                                        <img src="assets/images/services/main3.jpg" alt="Services"/>
+                                        <img src="assets/images/services/main3.jpg" alt="Services" />
                                     </a>
                                 </div>
                                 <div className="bottom">
-                                    <span/>
-                                    <span/>
-                                    <span/>
-                                    <span/>
-                                    <i className="flaticon-eye-1 icon"/>
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <i className="flaticon-eye-1 icon" />
                                     <h3>
                                         <a href="service-details.html">Dry Eye Surgery</a>
                                     </h3>
@@ -686,7 +536,7 @@ const LandingPage = () => {
                                     </p>
                                     <a className="services-btn" href="service-details.html">
                                         More Details
-                                        <i className="bx bx-plus"/>
+                                        <i className="bx bx-plus" />
                                     </a>
                                 </div>
                             </div>
@@ -699,11 +549,11 @@ const LandingPage = () => {
                     <div className="row">
                         <div className="col-sm-6 col-lg-3">
                             <div className="counter-item">
-                                <i className="flaticon-doctor"/>
+                                <i className="flaticon-doctor" />
                                 <h3>
-              <span className="odometer" data-count={1280}>
-                00
-              </span>
+                                    <span className="odometer" data-count={1280}>
+                                        00
+                                    </span>
                                     <span className="target">+</span>
                                 </h3>
                                 <p>Specialized Doctors</p>
@@ -711,11 +561,11 @@ const LandingPage = () => {
                         </div>
                         <div className="col-sm-6 col-lg-3">
                             <div className="counter-item">
-                                <i className="flaticon-trophy"/>
+                                <i className="flaticon-trophy" />
                                 <h3>
-              <span className="odometer" data-count={1480}>
-                00
-              </span>
+                                    <span className="odometer" data-count={1480}>
+                                        00
+                                    </span>
                                     <span className="target">+</span>
                                 </h3>
                                 <p>Winning Awards</p>
@@ -723,11 +573,11 @@ const LandingPage = () => {
                         </div>
                         <div className="col-sm-6 col-lg-3">
                             <div className="counter-item">
-                                <i className="flaticon-satisfied"/>
+                                <i className="flaticon-satisfied" />
                                 <h3>
-              <span className="odometer" data-count={2080}>
-                00
-              </span>
+                                    <span className="odometer" data-count={2080}>
+                                        00
+                                    </span>
                                     <span className="target">+</span>
                                 </h3>
                                 <p>Satisfied Patients</p>
@@ -735,11 +585,11 @@ const LandingPage = () => {
                         </div>
                         <div className="col-sm-6 col-lg-3">
                             <div className="counter-item">
-                                <i className="flaticon-heartbeat"/>
+                                <i className="flaticon-heartbeat" />
                                 <h3>
-              <span className="odometer" data-count={1102}>
-                00
-              </span>
+                                    <span className="odometer" data-count={1102}>
+                                        00
+                                    </span>
                                     <span className="target">+</span>
                                 </h3>
                                 <p>Health Sections</p>
@@ -751,7 +601,7 @@ const LandingPage = () => {
             <div className="faq-area ptb-100">
                 <div className="container">
                     <div className="faq-img">
-                        <img src="assets/images/faq-main.png" alt="FAQ"/>
+                        <img src="assets/images/faq-main.png" alt="FAQ" />
                     </div>
                     <div className="faq-item">
                         <div className="section-title">
@@ -867,7 +717,7 @@ const LandingPage = () => {
                         <div className="col-sm-6 col-lg-4">
                             <div className="pricing-item">
                                 <span className="title">Premium</span>
-                                <i className="flaticon-premium"/>
+                                <i className="flaticon-premium" />
                                 <h3>$55.00</h3>
                                 <ul>
                                     <li>Free Equipment Use</li>
@@ -877,15 +727,15 @@ const LandingPage = () => {
                                 </ul>
                                 <a className="common-btn" href="appointment.html">
                                     Get An Appointment
-                                    <span className="one"/>
-                                    <span className="two"/>
+                                    <span className="one" />
+                                    <span className="two" />
                                 </a>
                             </div>
                         </div>
                         <div className="col-sm-6 col-lg-4">
                             <div className="pricing-item">
                                 <span className="title">Professional</span>
-                                <i className="flaticon-professional"/>
+                                <i className="flaticon-professional" />
                                 <h3>$95.00</h3>
                                 <ul>
                                     <li>Free Equipment Use</li>
@@ -895,15 +745,15 @@ const LandingPage = () => {
                                 </ul>
                                 <a className="common-btn" href="appointment.html">
                                     Get An Appointment
-                                    <span className="one"/>
-                                    <span className="two"/>
+                                    <span className="one" />
+                                    <span className="two" />
                                 </a>
                             </div>
                         </div>
                         <div className="col-sm-6 col-lg-4">
                             <div className="pricing-item">
                                 <span className="title">Enterprise</span>
-                                <i className="flaticon-professional"/>
+                                <i className="flaticon-professional" />
                                 <h3>$105.00</h3>
                                 <ul>
                                     <li>Free Equipment Use</li>
@@ -913,8 +763,8 @@ const LandingPage = () => {
                                 </ul>
                                 <a className="common-btn" href="appointment.html">
                                     Get An Appointment
-                                    <span className="one"/>
-                                    <span className="two"/>
+                                    <span className="one" />
+                                    <span className="two" />
                                 </a>
                             </div>
                         </div>
@@ -935,7 +785,7 @@ const LandingPage = () => {
                             <div className="blog-item">
                                 <div className="top">
                                     <a href="blog-details.html">
-                                        <img src="assets/images/blog/main1.jpg" alt="Blog"/>
+                                        <img src="assets/images/blog/main1.jpg" alt="Blog" />
                                     </a>
                                 </div>
                                 <div className="bottom">
@@ -963,7 +813,7 @@ const LandingPage = () => {
                             <div className="blog-item">
                                 <div className="top">
                                     <a href="blog-details.html">
-                                        <img src="assets/images/blog/main2.jpg" alt="Blog"/>
+                                        <img src="assets/images/blog/main2.jpg" alt="Blog" />
                                     </a>
                                 </div>
                                 <div className="bottom">
@@ -991,7 +841,7 @@ const LandingPage = () => {
                             <div className="blog-item">
                                 <div className="top">
                                     <a href="blog-details.html">
-                                        <img src="assets/images/blog/main3.jpg" alt="Blog"/>
+                                        <img src="assets/images/blog/main3.jpg" alt="Blog" />
                                     </a>
                                 </div>
                                 <div className="bottom">
@@ -1033,9 +883,9 @@ const LandingPage = () => {
                                         <li>
                                             <span>Email</span>
                                             <a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#eb838e878784ab849b858293c5888486">
-                                            <span className="__cf_email__">
-                                              admin@visionmate.lk
-                                            </span>
+                                                <span className="__cf_email__">
+                                                    admin@visionmate.lk
+                                                </span>
                                             </a>
                                         </li>
                                         <li>
@@ -1171,7 +1021,7 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
-           {/* <div className="go-top">
+            {/* <div className="go-top">
                 <i className="bx bxs-up-arrow-alt"/>
                 <i className="bx bxs-up-arrow-alt"/>
             </div>*/}

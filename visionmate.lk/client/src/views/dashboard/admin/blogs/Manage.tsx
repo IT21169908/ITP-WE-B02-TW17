@@ -70,7 +70,7 @@ const ManageBlogs: React.FC = () => {
                 key: _id,
                 title,
                 titleDescription,
-                description,
+                description: description.length > 15 ? `${description.slice(0, 15)}...` : description,
                 tags,
                 reference,
                 status,

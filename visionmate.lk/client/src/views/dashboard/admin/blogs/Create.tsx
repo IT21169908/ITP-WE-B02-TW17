@@ -57,8 +57,9 @@ function CreateBlog({enableEdit}: { enableEdit: boolean }) {
                             duration: 20
                         });
                         setBlog(res.data);
+                        navigate('/admin/blogs');
                     }
-                } catch (error: any) {
+                } catch (error: any){
                     AntdNotification.error({
                         message: 'Blog creating failed!',
                         description: `${error.response.data} -- ${getCurrentDateTime()}`,
@@ -145,10 +146,11 @@ function CreateBlog({enableEdit}: { enableEdit: boolean }) {
                             </Form.Item>
                             <Form.Item className="mb-2" name="titleDescription" label="Title Description" rules={[{required: true, message: 'Please input title' +
                                     ' description!'}]}>
-                                <TextArea rows={4} />
+                               <Input />
                             </Form.Item>
                             <Form.Item className="mb-2" name="description" label="Description" rules={[{required: true, message: 'Please input description!'}]}>
-                                <Input />
+                                
+                                <TextArea rows={4} />
                             </Form.Item>
                             <Form.Item className="mb-2" name="tags" label="Tags" rules={[{required: true, message: 'Please input tags!'}]}>
                                 <Input />
