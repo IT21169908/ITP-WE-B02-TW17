@@ -5,12 +5,14 @@ import { Button, Col, Input, message, Popconfirm, Row, Skeleton, Table } from 'a
 import type { ColumnsType } from 'antd/es/table';
 import { PageHeader } from "../../../../components/breadcrumbs/DashboardBreadcrumb";
 import { Download, HouseDoor, PencilFill, Plus, Search, Trash } from "react-bootstrap-icons";
+import Heading from "../../../../components/heading/Heading";
 import { BorderLessHeading, Main, TopToolBox } from "../../../../components/styled-components/styled-containers";
 import { Cards } from "../../../../components/cards/frame/CardFrame";
 import { Link, useNavigate } from "react-router-dom";
 import ITreatmentPlan from "../../../../models/TreatmentPlan";
 import { TreatmentPlanService } from "../../../../services/TreatmentPlanService";
 import { getCurrentDateTime } from "../../../../utils/date-time";
+import { NotFoundWrapper } from "../../patient/shop/style";
 
 interface DataType {
     key: string;
@@ -63,6 +65,7 @@ const ManageTreatmentPlans: React.FC = () => {
     const [treatmentPlans, setTreatmentPlans] = useState<ITreatmentPlan[]>([]);
     const [filteredTreatmentPlans, setFilteredTreatmentPlans] = useState<ITreatmentPlan[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
+    const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
     const formatDataSource = (treatmentPlans: ITreatmentPlan[]): DataType[] => {
         return treatmentPlans.map((treatmentPlanx) => {
@@ -132,6 +135,7 @@ const ManageTreatmentPlans: React.FC = () => {
                 if (isMounted) {
                     setTreatmentPlans(res.data);
                     setFilteredTreatmentPlans(res.data);
+                    setIsLoadingData(false);
                 }
             } catch (error: any) {
                 console.error(error.response.data);
@@ -212,7 +216,7 @@ const ManageTreatmentPlans: React.FC = () => {
         setFilteredTreatmentPlans(data);
     };
 
-    if (tableDataSource.length === 0) {
+    if (isLoadingData) {
         return (
             <Row gutter={25} className="justify-content-center">
                 <Col md={6} lg={12} xs={24}>
@@ -233,7 +237,7 @@ const ManageTreatmentPlans: React.FC = () => {
                         <TopToolBox>
                             <Row gutter={0}>
                                 <Col xxl={7} lg={12} xs={24}>
-                                    <Input suffix={<Search/>} onChange={handleSearch} placeholder="Search Appointments..."/>
+                                    <Input suffix={<Search/>} onChange={handleSearch} placeholder="Search Treatment Plans..."/>
                                 </Col>
                             </Row>
                         </TopToolBox>
@@ -248,7 +252,17 @@ const ManageTreatmentPlans: React.FC = () => {
                                     </Link>
                                 </>
                             }>
-                                <Table columns={dataTableColumn} dataSource={tableDataSource}/>
+                                {
+                                    tableDataSource.length === 0 ? (
+                                        <Col md={24}>
+                                            <NotFoundWrapper>
+                                                <Heading as="h1">No Treatments Plans Found</Heading>
+                                            </NotFoundWrapper>
+                                        </Col>
+                                    ) : (
+                                        <><Table columns={dataTableColumn} dataSource={tableDataSource}/></>
+                                    )
+                                }
                             </Cards>
                         </BorderLessHeading>
                     </Col>

@@ -1,5 +1,5 @@
 import React, {ReactNode, useEffect, useState} from 'react';
-import {Button, Col, Input, message, Popconfirm, Row, Table} from 'antd';
+import { Button, Col, Input, message, Popconfirm, Row, Skeleton, Table } from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
 import {Download, HouseDoor, Pencil, Plus, Search, Trash2} from "react-bootstrap-icons";
@@ -64,6 +64,7 @@ const ManageSpectacles: React.FC = () => {
     const [spectacles, setSpectacles] = useState<Spectacle[]>([]);
     const [filteredSpectacles, setFilteredSpectacles] = useState<Spectacle[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
+    const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
     const formatDataSource = (spectacles: Spectacle[]): DataType[] => {
         return spectacles.map((spectacle) => {
@@ -124,6 +125,7 @@ const ManageSpectacles: React.FC = () => {
                 if (isMounted) {
                     setSpectacles(res.data);
                     setFilteredSpectacles(res.data);
+                    setIsLoadingData(false);
                 }
             } catch (error: any) {
                 console.error(error.response.data);
@@ -197,6 +199,19 @@ const ManageSpectacles: React.FC = () => {
         });
         setFilteredSpectacles(data);
     };
+
+    if (isLoadingData) {
+        return (
+            <Row gutter={25} className="justify-content-center">
+                <Col md={6} lg={12} xs={24}>
+                    <Cards title="Loading..." caption="Loading Skeleton">
+                        <Skeleton active paragraph={{rows: 16}} />
+                    </Cards>
+                </Col>
+            </Row>
+        );
+    }
+
     return (<>
             <PageHeader className="ninjadash-page-header-main" title="Manage Spectacles" routes={BreadcrumbItem}/>
             <Main>
@@ -224,7 +239,7 @@ const ManageSpectacles: React.FC = () => {
                                     tableDataSource.length === 0 ? (
                                         <Col md={24}>
                                             <NotFoundWrapper>
-                                                <Heading as="h1">No Orders Found</Heading>
+                                                <Heading as="h1">No Spectacles Found</Heading>
                                             </NotFoundWrapper>
                                         </Col>
                                     ) : (

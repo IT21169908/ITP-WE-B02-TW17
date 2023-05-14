@@ -3,11 +3,13 @@ import {Col, message, Popconfirm, Row, Skeleton, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
 import {HouseDoor, PencilFill, Plus, Trash} from "react-bootstrap-icons";
+import Heading from "../../../../components/heading/Heading";
 import {BorderLessHeading, Main} from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
 import {Link, useNavigate} from "react-router-dom";
 import {ScheduleService} from "../../../../services/ScheduleService";
 import Schedule from "../../../../models/Schedule";
+import { NotFoundWrapper } from "../../patient/shop/style";
 
 interface DataType {
     key: string;
@@ -47,6 +49,7 @@ const ManageSchedules: React.FC = () => {
     const navigate = useNavigate();
     const [schedules, setSchedules] = useState<Schedule[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
+    const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
     useEffect(() => {
         let isMounted = true;
@@ -56,6 +59,7 @@ const ManageSchedules: React.FC = () => {
                 const res = await ScheduleService.getAllSchedules();
                 if (isMounted) {
                     setSchedules(res.data);
+                    setIsLoadingData(false);
                 }
             } catch (error: any) {
                 console.error(error.response.data);
@@ -136,12 +140,12 @@ const ManageSchedules: React.FC = () => {
         });
     };
 
-    if (tableDataSource.length === 0) {
+    if (isLoadingData) {
         return (
             <Row gutter={25} className="justify-content-center">
                 <Col md={6} lg={12} xs={24}>
                     <Cards title="Loading..." caption="Loading Skeleton">
-                        <Skeleton active paragraph={{rows: 16}}/>
+                        <Skeleton active paragraph={{rows: 16}} />
                     </Cards>
                 </Col>
             </Row>
@@ -160,7 +164,17 @@ const ManageSchedules: React.FC = () => {
                                     <Plus/> Add New
                                 </Link>
                             }>
-                                <Table columns={dataTableColumn} dataSource={tableDataSource}/>
+                                {
+                                    tableDataSource.length === 0 ? (
+                                        <Col md={24}>
+                                            <NotFoundWrapper>
+                                                <Heading as="h1">No Schedules Found</Heading>
+                                            </NotFoundWrapper>
+                                        </Col>
+                                    ) : (
+                                        <><Table columns={dataTableColumn} dataSource={tableDataSource}/></>
+                                    )
+                                }
                             </Cards>
                         </BorderLessHeading>
                     </Col>

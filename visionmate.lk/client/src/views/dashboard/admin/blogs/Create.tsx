@@ -32,10 +32,10 @@ function CreateBlog({enableEdit}: { enableEdit: boolean }) {
             } catch (error: any) {
                 AntdNotification.error({
                     message: 'Blogs loading failed!',
-                    description: `${error.response.data} -- ${getCurrentDateTime()}`,
+                    description: `${error.response.data.error || error.response.data.message} -- ${getCurrentDateTime()}`,
                     duration: 20
                 });
-                console.error(error.response.data);
+                console.error(error.response.data.error || error.response.data.message);
             }
         }
 
@@ -61,7 +61,7 @@ function CreateBlog({enableEdit}: { enableEdit: boolean }) {
                 } catch (error: any) {
                     AntdNotification.error({
                         message: 'Blog creating failed!',
-                        description: `${error.response.data} -- ${getCurrentDateTime()}`,
+                        description: `${error.response.data.error || error.response.data.message} -- ${getCurrentDateTime()}`,
                         duration: 20
                     });
                 }
@@ -87,7 +87,7 @@ function CreateBlog({enableEdit}: { enableEdit: boolean }) {
             } catch (error: any) {
                 AntdNotification.error({
                     message: 'Blog creating failed!',
-                    description: `${error.response.data} -- ${getCurrentDateTime()}`,
+                    description: `${error.response.data.error || error.response.data.message} -- ${getCurrentDateTime()}`,
                     duration: 20
                 });
             }

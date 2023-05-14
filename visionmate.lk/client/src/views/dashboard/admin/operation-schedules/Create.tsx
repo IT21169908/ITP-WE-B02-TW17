@@ -31,10 +31,10 @@ function CreateSchedule({enableEdit}: { enableEdit: boolean }) {
             } catch (error: any) {
                 AntdNotification.error({
                     message: 'Schedules loading failed!',
-                    description: `${error.response.data} -- ${getCurrentDateTime()}`,
+                    description: `${error.response.data.error || error.response.data.message} -- ${getCurrentDateTime()}`,
                     duration: 20
                 });
-                console.error(error.response.data);
+                console.error(error.response.data.error || error.response.data.message);
             }
         }
 
@@ -60,7 +60,7 @@ function CreateSchedule({enableEdit}: { enableEdit: boolean }) {
                 } catch (error: any) {
                     AntdNotification.error({
                         message: 'Schedule creating failed!',
-                        description: `${error.response.data} -- ${getCurrentDateTime()}`,
+                        description: `${error.response.data.error || error.response.data.message} -- ${getCurrentDateTime()}`,
                         duration: 20
                     });
                 }
@@ -86,7 +86,7 @@ function CreateSchedule({enableEdit}: { enableEdit: boolean }) {
             } catch (error: any) {
                 AntdNotification.error({
                     message: 'Schedule creating failed!',
-                    description: `${error.response.data} -- ${getCurrentDateTime()}`,
+                    description: `${error.response.data.error || error.response.data.message} -- ${getCurrentDateTime()}`,
                     duration: 20
                 });
             }
