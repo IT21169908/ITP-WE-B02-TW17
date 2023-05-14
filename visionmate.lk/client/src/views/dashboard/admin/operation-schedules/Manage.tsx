@@ -76,9 +76,6 @@ const ManageSchedules: React.FC = () => {
         };
     }, []);
 
-    useEffect(() => {
-        setTableDataSource(formatDataSource(filteredschedules));
-    }, [schedules]);
 
     const confirmDelete = async (id: string): Promise<void> => {
         try {
@@ -97,63 +94,56 @@ const ManageSchedules: React.FC = () => {
         message.error('Delete canceled!');
     };
 
-    const formatDataSource = (schedules: Schedule[]): DataType[] => {
-        return schedules.map((item) => {
-            const {
-                _id,
-                schedule,
-                surgeonId,
-                patientId,
-                scheduleDate,
-                remark,
-                status,
-            } = item;
 
-            return {
-                key: _id,
-                _id,
-                schedule,
-                surgeonId,
-                patientId,
-                scheduleDate,
-                remark,
-                status,
-                action: (
-                    <div className="table-actions">
-                        <Link
-                            className="btn btn-sm btn-outline-warning fw-bolder me-1 mt-1"
-                            to={`/admin/operations/schedules/${_id}/edit`}
-                        >
-                            <PencilFill/>
-                        </Link>
-                        <Popconfirm
-                            title="Are you sure delete this transaction?"
-                            onConfirm={() => confirmDelete(_id)}
-                            onCancel={cancelDelete}
-                            okText="Yes"
-                            cancelText="No"
-                        >
-                            <Link className="btn btn-sm btn-outline-danger fw-bolder mt-1" to="#">
-                                <Trash/>
+    useEffect(() => {
+        const formatDataSource = (schedules: Schedule[]): DataType[] => {
+            return schedules.map((item) => {
+                const {
+                    _id,
+                    schedule,
+                    surgeonId,
+                    patientId,
+                    scheduleDate,
+                    remark,
+                    status,
+                } = item;
+
+                return {
+                    key: _id,
+                    _id,
+                    schedule,
+                    surgeonId,
+                    patientId,
+                    scheduleDate,
+                    remark,
+                    status,
+                    action: (
+                        <div className="table-actions">
+                            <Link
+                                className="btn btn-sm btn-outline-warning fw-bolder me-1 mt-1"
+                                to={`/admin/operations/schedules/${_id}/edit`}
+                            >
+                                <PencilFill/>
                             </Link>
-                        </Popconfirm>
-                    </div>
-                ),
-            };
-        });
-    };
+                            <Popconfirm
+                                title="Are you sure delete this transaction?"
+                                onConfirm={() => confirmDelete(_id)}
+                                onCancel={cancelDelete}
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <Link className="btn btn-sm btn-outline-danger fw-bolder mt-1" to="#">
+                                    <Trash/>
+                                </Link>
+                            </Popconfirm>
+                        </div>
+                    ),
+                };
+            });
+        };
+        setTableDataSource(formatDataSource(filteredschedules));
+    }, [filteredschedules]);
 
-    if (tableDataSource.length === 0) {
-        return (
-            <Row gutter={25} className="justify-content-center">
-                <Col md={6} lg={12} xs={24}>
-                    <Cards title="Loading..." caption="Loading Skeleton">
-                        <Skeleton active paragraph={{rows: 16}}/>
-                    </Cards>
-                </Col>
-            </Row>
-        );
-    }
 
     const generatePDF = (): void => {
         const doc = new JsPDF("landscape");
@@ -219,7 +209,7 @@ const ManageSchedules: React.FC = () => {
                                     tableDataSource.length === 0 ? (
                                         <Col md={24}>
                                             <NotFoundWrapper>
-                                                <Heading as="h1">No Orders Found</Heading>
+                                                <Heading as="h1">No Schedules Found</Heading>
                                             </NotFoundWrapper>
                                         </Col>
                                     ) : (
