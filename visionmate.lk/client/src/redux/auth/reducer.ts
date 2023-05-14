@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import IUser from "../../models/User";
-import { signIn, signUp, verifyUser } from "./actionCreator";
+import {signIn, signUp, verifyUser} from "./actionCreator";
 import {Role} from "../../enums/Role";
 
 const initialState: {
@@ -58,6 +58,8 @@ const authSlice = createSlice({
             })
             .addCase(signIn.rejected, (state, action) => {
                 console.log("extraReducer.getUser.rejected")
+                console.log(action)
+                // localStorage.removeItem("authToken")
                 return {...state, ...initialState, isLoading: false};
             });
         builder
@@ -92,6 +94,8 @@ const authSlice = createSlice({
             })
             .addCase(signUp.rejected, (state, action) => {
                 console.log("extraReducer.getUser.rejected")
+                console.log(action)
+                // localStorage.removeItem("authToken")
                 return {...state, ...initialState, isLoading: false};
             });
         builder
@@ -101,12 +105,15 @@ const authSlice = createSlice({
             })
             .addCase(verifyUser.fulfilled, (state, action: PayloadAction<IUser>) => {
                 console.log("extraReducer.getUser.fulfilled")
+                console.log(action)
                 state.isLoading = false;
                 state.isLoggedIn = !!action.payload?._id;
                 state.user = action.payload
             })
             .addCase(verifyUser.rejected, (state, action) => {
                 console.log("extraReducer.getUser.rejected")
+                console.log(action)
+                // localStorage.removeItem("authToken")
                 return {...state, ...initialState, isLoading: false};
             });
     }

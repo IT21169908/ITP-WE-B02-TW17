@@ -3,7 +3,7 @@ import React from 'react';
 const LandingPage = () => {
     return (
         <div>
-            <div className="loader">
+            {/* <div className="loader">
                 <div className="d-table">
                     <div className="d-table-cell">
                         <div className="spinner">
@@ -12,7 +12,7 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*/}
             <div className="header-area">
                 <div className="container">
                     <div className="row align-items-center justify-content-center">
@@ -1171,10 +1171,10 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
-            <div className="go-top">
+           {/* <div className="go-top">
                 <i className="bx bxs-up-arrow-alt"/>
                 <i className="bx bxs-up-arrow-alt"/>
-            </div>
+            </div>*/}
         </div>
 
     );
