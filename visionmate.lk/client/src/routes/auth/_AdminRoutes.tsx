@@ -22,24 +22,24 @@ function AdminRoutes() {
     return (
         <DashboardLayout>
             <Routes>
-                <Route index path="/*" element={<NotFound/>}/>
-                <Route index path="/spectacles" element={<ManageSpectacles/>}/>
-                <Route index path="/spectacles/create" element={<CreateSpectacle enableEdit={false}/>}/>
-                <Route index path="/spectacles/:spectacle/edit" element={<EditSpectacle enableEdit/>}/>
+                <Route path="/spectacles" element={<ManageSpectacles/>}/>
+                <Route path="/spectacles/create" element={<CreateSpectacle enableEdit={false}/>}/>
+                <Route path="/spectacles/:spectacle/edit" element={<EditSpectacle enableEdit/>}/>
 
-                <Route index path="/blogs" element={<ManageBlogs/>}/>
-                <Route index path="/blogs/create" element={<CreateBlog enableEdit={false}/>}/>
-                <Route index path="/blogs/:blog/edit" element={<EditBlog enableEdit/>}/>
+                <Route path="/blogs" element={<ManageBlogs/>}/>
+                <Route path="/blogs/create" element={<CreateBlog enableEdit={false}/>}/>
+                <Route path="/blogs/:blog/edit" element={<EditBlog enableEdit/>}/>
 
-                <Route index path="/orders" element={<ManageOrders/>}/>
+                <Route path="/orders" element={<ManageOrders/>}/>
 
-                <Route index path="/operations/schedules" element={<ManageSchedules/>}/>
-                <Route index path="/operations/schedules/create" element={<CreateSchedule enableEdit={false}/>}/>
-                <Route index path="/operations/schedules/:scheduleId/edit" element={<EditSchedule enableEdit/>}/>
+                <Route path="/operations/schedules" element={<ManageSchedules/>}/>
+                <Route path="/operations/schedules/create" element={<CreateSchedule enableEdit={false}/>}/>
+                <Route path="/operations/schedules/:scheduleId/edit" element={<EditSchedule enableEdit/>}/>
 
-                <Route index path="/transactions" element={<ManageTransactions/>}/>
-                <Route index path="/transactions/create" element={<CreateTransaction enableEdit={false}/>}/>
-                <Route index path="/transactions/:transaction/edit" element={<EditTransaction enableEdit/>}/>
+                <Route path="/transactions" element={<ManageTransactions/>}/>
+                <Route path="/transactions/create" element={<CreateTransaction enableEdit={false}/>}/>
+                <Route path="/transactions/:transaction/edit" element={<EditTransaction enableEdit/>}/>
+                <Route path="/*" element={<NotFound/>}/>
             </Routes>
         </DashboardLayout>
     );
