@@ -224,7 +224,10 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
                                 </Select>
                             </Form.Item>
                             <Form.Item className="mb-2" name="price" label="Price"
-                                       rules={[{required: true, message: 'Please input Price!'}]}>
+                                       rules={[
+                                           {required: true, message: 'Please input Price!'},
+                                           { pattern: /^(\d+(\.\d{1,2})?)?$/, message: 'Please input a valid Price!' }
+                                       ]}>
                                 <Input/>
                             </Form.Item>
                             <Form.Item className="ninjadash-form-action">
