@@ -1,6 +1,6 @@
 import React, {lazy, Suspense, useEffect} from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import {Role} from "../../enums/Role";
+import { Role, RoleName } from "../../enums/Role";
 import AdminRoutes from "./_AdminRoutes";
 import PreLoader from "../../components/preloader/PreLoader";
 import DoctorRoutes from "./_DoctorRoutes";
@@ -27,21 +27,23 @@ function RootAuthRoutes({isLoggedIn, authUser}: GuestRoutesProps) {
         if (!isLoggedIn || !authUser) {
             navigate('/login')
         } else if ((location.pathname.includes("login")|| location.pathname.includes("register")) || (isLoggedIn && authUser)) {
-            switch (authUser.role) {
-                case Role.ADMIN:
-                    navigate('/admin');
-                    break;
-                case Role.PATIENT:
-                    navigate('/patient');
-                    break;
-                case Role.SURGEON:
-                    navigate('/surgeon');
-                    break;
-                case Role.DOCTOR:
-                    navigate('/doctor');
-                    break;
-                default:
-                    break;
+            if ( !location.pathname.includes(RoleName[authUser.role].toLowerCase())) {
+                switch (authUser.role) {
+                    case Role.ADMIN:
+                        navigate('/admin');
+                        break;
+                    case Role.PATIENT:
+                        navigate('/patient');
+                        break;
+                    case Role.SURGEON:
+                        navigate('/surgeon');
+                        break;
+                    case Role.DOCTOR:
+                        navigate('/doctor');
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }, [authUser, isLoggedIn, location.pathname, navigate]);
