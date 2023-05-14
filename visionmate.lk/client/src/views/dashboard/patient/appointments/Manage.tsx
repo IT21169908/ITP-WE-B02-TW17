@@ -5,12 +5,14 @@ import { Button, Col, Input, message, Popconfirm, Row, Skeleton, Table } from 'a
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
 import { Download, HouseDoor, PencilFill, Plus, Search, Trash } from "react-bootstrap-icons";
+import Heading from "../../../../components/heading/Heading";
 import { BorderLessHeading, Main, TopToolBox } from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
 import { Link, useNavigate } from "react-router-dom";
 import IAppointment from "../../../../models/Appointment";
 import { AppointmentService } from "../../../../services/AppointmentService";
 import { getCurrentDateTime } from "../../../../utils/date-time";
+import { NotFoundWrapper } from "../shop/style";
 
 interface DataType {
     key: string;
@@ -65,6 +67,7 @@ const ManageAppointments: React.FC = () => {
     const [appointments, setAppointments] = useState<IAppointment[]>([]);
     const [filteredAppointments, setFilteredAppointments] = useState<IAppointment[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
+    const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
     const formatDataSource = (appointments: IAppointment[]): DataType[] => {
         return appointments.map((appointment) => {
@@ -130,6 +133,7 @@ const ManageAppointments: React.FC = () => {
                 if (isMounted) {
                     setAppointments(res.data);
                     setFilteredAppointments(res.data);
+                    setIsLoadingData(false);
                 }
             } catch (error: any) {
                 console.error(error.response.data);
@@ -203,7 +207,7 @@ const ManageAppointments: React.FC = () => {
         setFilteredAppointments(data);
     };
 
-    if (tableDataSource.length === 0) {
+    if (isLoadingData) {
         return (
             <Row gutter={25} className="justify-content-center">
                 <Col md={6} lg={12} xs={24}>
@@ -239,7 +243,17 @@ const ManageAppointments: React.FC = () => {
                                     </Link>
                                 </>
                             }>
-                                <Table columns={dataTableColumn} dataSource={tableDataSource}/>
+                                {
+                                    tableDataSource.length === 0 ? (
+                                        <Col md={24}>
+                                            <NotFoundWrapper>
+                                                <Heading as="h1">No Appointments Found</Heading>
+                                            </NotFoundWrapper>
+                                        </Col>
+                                    ) : (
+                                        <><Table columns={dataTableColumn} dataSource={tableDataSource}/></>
+                                    )
+                                }
                             </Cards>
                         </BorderLessHeading>
                     </Col>
