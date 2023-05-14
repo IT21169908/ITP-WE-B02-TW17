@@ -5,7 +5,9 @@ interface Schedule {
     patientId: string;
     scheduleDate: string;
     remark: string;
-    status?: string;
+    status: string;
+
+    [key: string]: string | number
 }
 
 export default Schedule

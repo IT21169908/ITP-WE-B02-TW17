@@ -1,13 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {Col, message, Popconfirm, Row, Skeleton, Table} from 'antd';
+import {Button, Col, Input, message, Popconfirm, Row, Skeleton, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
-import {HouseDoor, PencilFill, Plus, Trash} from "react-bootstrap-icons";
-import {BorderLessHeading, Main} from "../../../../components/styled-components/styled-containers";
+import {Download, HouseDoor, PencilFill, Plus, Search, Trash} from "react-bootstrap-icons";
+import {BorderLessHeading, Main, TopToolBox} from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
 import {Link, useNavigate} from "react-router-dom";
 import {ScheduleService} from "../../../../services/ScheduleService";
 import Schedule from "../../../../models/Schedule";
+import {NotFoundWrapper} from "../../patient/shop/style";
+import Heading from "../../../../components/heading/Heading";
+import JsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import {getCurrentDateTime} from "../../../../utils/date-time";
 
 interface DataType {
     key: string;
@@ -46,6 +51,7 @@ const ManageSchedules: React.FC = () => {
 
     const navigate = useNavigate();
     const [schedules, setSchedules] = useState<Schedule[]>([]);
+    const [filteredschedules, setFilteredschedules] = useState<Schedule[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
 
     useEffect(() => {
@@ -56,6 +62,7 @@ const ManageSchedules: React.FC = () => {
                 const res = await ScheduleService.getAllSchedules();
                 if (isMounted) {
                     setSchedules(res.data);
+                    setFilteredschedules(res.data);
                 }
             } catch (error: any) {
                 console.error(error.response.data);
@@ -70,7 +77,7 @@ const ManageSchedules: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        setTableDataSource(formatDataSource(schedules));
+        setTableDataSource(formatDataSource(filteredschedules));
     }, [schedules]);
 
     const confirmDelete = async (id: string): Promise<void> => {
@@ -90,8 +97,8 @@ const ManageSchedules: React.FC = () => {
         message.error('Delete canceled!');
     };
 
-    const formatDataSource = (transactions: Schedule[]): DataType[] => {
-        return transactions.map((transaction) => {
+    const formatDataSource = (schedules: Schedule[]): DataType[] => {
+        return schedules.map((item) => {
             const {
                 _id,
                 schedule,
@@ -100,7 +107,7 @@ const ManageSchedules: React.FC = () => {
                 scheduleDate,
                 remark,
                 status,
-            } = transaction;
+            } = item;
 
             return {
                 key: _id,
@@ -148,19 +155,79 @@ const ManageSchedules: React.FC = () => {
         );
     }
 
+    const generatePDF = (): void => {
+        const doc = new JsPDF("landscape");
+
+        // Add a title to the document
+        doc.text("Spectacle Report", 14, 20);
+
+        // Create a table
+        const tableData = schedules.map((s) => [
+            s._id,
+            s.schedule,
+            s.surgeonId,
+            s.patientId,
+            s.scheduleDate,
+            s.remark,
+            s.status,
+        ]);
+        autoTable(doc, {
+            head: [['Id', 'schedule', 'surgeonId', 'patientId', 'schedule Date', 'remark', 'status']],
+            body: tableData,
+        })
+
+        // Save the document
+        doc.save(`schedule-report-${getCurrentDateTime()}.pdf`);
+    };
+
+
+    const handleSearch = (e: any) => {
+        console.log(e.target.value)
+        const data = schedules.filter((item) => {
+            return Object.keys(item).some((key) =>
+                item[key].toString().toLowerCase().includes(e.target.value.toLowerCase())
+            )
+        });
+        setFilteredschedules(data);
+    };
     return (
         <>
             <PageHeader className="ninjadash-page-header-main" title="Manage Schedules" routes={BreadcrumbItem}/>
             <Main>
                 <Row gutter={15}>
                     <Col xs={24}>
+                        <TopToolBox>
+                            <Row gutter={0}>
+                                <Col xxl={7} lg={12} xs={24}>
+                                    <Input suffix={<Search/>} onChange={handleSearch} placeholder="Search this table"/>
+                                </Col>
+                            </Row>
+                        </TopToolBox>
                         <BorderLessHeading>
                             <Cards isbutton={
-                                <Link className="btn btn-primary h-auto" type="link" to="/admin/operations/schedules/create">
-                                    <Plus/> Add New
-                                </Link>
+                                <>
+                                    <Button className="btn btn-warning h-auto me-2" onClick={generatePDF}>
+                                        <Download className="me-2"/> Export PDF
+                                    </Button>
+                                    <Link className="btn btn-primary h-auto" type="link"
+                                          to="/admin/operations/schedules/create">
+                                        <Plus/> Add New
+                                    </Link>
+                                </>
                             }>
-                                <Table columns={dataTableColumn} dataSource={tableDataSource}/>
+                                {
+                                    tableDataSource.length === 0 ? (
+                                        <Col md={24}>
+                                            <NotFoundWrapper>
+                                                <Heading as="h1">No Orders Found</Heading>
+                                            </NotFoundWrapper>
+                                        </Col>
+                                    ) : (
+                                        <>
+                                            <Table columns={dataTableColumn} dataSource={tableDataSource}/>
+                                        </>
+                                    )
+                                }
                             </Cards>
                         </BorderLessHeading>
                     </Col>
