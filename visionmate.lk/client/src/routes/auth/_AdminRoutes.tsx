@@ -1,10 +1,12 @@
 import React, {lazy} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import DashboardLayout from "../../views/dashboard/layout/DashboardLayout";
+import UpdateUser from "../../views/dashboard/admin/users/UpdateUser";
 
 const NotFound = lazy(() => import('../../views/errors/NotFound'));
 const CreateSpectacle = lazy(() => import("../../views/dashboard/admin/spectacles/Create"));
 const EditSpectacle = lazy(() => import("../../views/dashboard/admin/spectacles/Create"));
+const ManageUsers = lazy(() => import("../../views/dashboard/admin/users/Manage"));
 const ManageSpectacles = lazy(() => import("../../views/dashboard/admin/spectacles/Manage"));
 const ManageBlogs = lazy(() => import("../../views/dashboard/admin/blogs/Manage"));
 const CreateBlog = lazy(() => import("../../views/dashboard/admin/blogs/Create"));
@@ -22,6 +24,9 @@ function AdminRoutes() {
     return (
         <DashboardLayout>
             <Routes>
+                <Route path="/users" element={<ManageUsers/>}/>
+                <Route path="/users/:user_id/edit" element={<UpdateUser enableEdit/>}/>
+
                 <Route path="/spectacles" element={<ManageSpectacles/>}/>
                 <Route path="/spectacles/create" element={<CreateSpectacle enableEdit={false}/>}/>
                 <Route path="/spectacles/:spectacle/edit" element={<EditSpectacle enableEdit/>}/>

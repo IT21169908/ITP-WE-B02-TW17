@@ -4,11 +4,13 @@ import IUser from "../../models/User";
 import {getUser} from "./actionCreator";
 
 const initialState: IUser = {
+    _id: "",
+    lastLoggedIn: '',
     name: '',
     email: '',
     phone: '',
     role: 0,
-    signedUpAs: '',
+    signedUpAs: ''
 };
 
 const userSlice = createSlice({

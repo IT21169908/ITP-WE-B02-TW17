@@ -5,3 +5,11 @@ export enum Role {
     SURGEON = 3,
     DOCTOR = 4,
 }
+
+export enum RoleName {
+    "USER",
+    "ADMIN",
+    "PATIENT",
+    "SURGEON",
+    "DOCTOR",
+}
