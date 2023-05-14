@@ -60,7 +60,9 @@ const ProviderConfig = () => {
                             {/*<Routes>*/}
                             {/*<Route index path="/" element={<LandingPage/>}/>*/}
                             {/*<GuestRoutes isLoggedIn/>*/}
-                            {isLoggedIn && (<RootAuthRoutes isLoggedIn authUser={authUser}/>)}
+                            {isLoggedIn && (
+                                <RootAuthRoutes isLoggedIn authUser={authUser}/>
+                            )}
                             <PublicRoutes isLoggedIn/>
                             {/*<Route path="*" errorElement={<NotFound/>}/>;*/}
                             {/*</Routes>*/}
