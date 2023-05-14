@@ -105,6 +105,7 @@ const ManageOrders: React.FC = () => {
                     return order;
                 });
                 setOrders(updatedOrders);
+                setFilteredOrders(updatedOrders);
             } catch (error: any) {
                 AntdNotification.error({
                     message: 'Something went wrong!',

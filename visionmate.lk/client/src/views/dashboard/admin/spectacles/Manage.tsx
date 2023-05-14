@@ -143,7 +143,7 @@ const ManageSpectacles: React.FC = () => {
 
     useEffect(() => {
         setTableDataSource(formatDataSource(filteredSpectacles));
-    }, [filteredSpectacles, formatDataSource])
+    }, [filteredSpectacles])
 
 
     const deleteSpectacle = async (_id: string) => {
@@ -154,6 +154,7 @@ const ManageSpectacles: React.FC = () => {
                 // TODO: REFACTOR this. Do not use filter, when large no of records exist
                 const updatedSpectacles = spectacles.filter(spectacle => spectacle._id !== _id);
                 setSpectacles(updatedSpectacles);
+                setFilteredSpectacles(updatedSpectacles);
             }
         } catch (error: any) {
             message.error(`${error.response.data.error || error.response.data.message}`)

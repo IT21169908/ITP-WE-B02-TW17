@@ -149,7 +149,7 @@ const ManageAppointments: React.FC = () => {
 
     useEffect(() => {
         setTableDataSource(formatDataSource(filteredAppointments));
-    }, [filteredAppointments, formatDataSource]);
+    }, [filteredAppointments]);
 
     const confirmDelete = async (id: string): Promise<void> => {
         try {
