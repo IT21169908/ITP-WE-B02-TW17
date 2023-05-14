@@ -21,8 +21,8 @@ const PublicRoutes = ({isLoggedIn}: GuestRoutesProps) => {
         <Suspense fallback={<PreLoader/>}>
             <Routes>
                 {authRoute}
+                <Route path="*" element={<NotFound/>}/>
                 <Route index path="/" element={<LandingPage/>}/>
-                <Route path="*" errorElement={<NotFound/>}/>
             </Routes>
         </Suspense>
     );
