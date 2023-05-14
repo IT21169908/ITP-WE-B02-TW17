@@ -11,7 +11,18 @@ Please go under edit and edit this file as needed for your project
 ### Member 7 - IT21156038_Nawanjala N.K.N
 ### Member 8 - IT21156410_Fonseka M.M.N.H
 
-#### Brief Description of Project - 
+#### Brief Description of Project - INTRODUCTION 
+The Eye Care management system is a well-managed system which is designed to provide 
+extensive eye care services and products which are related to eye care to our patients. Our aim
+and focus are to improve eye vision and eye health of the nation with innovative technology,
+experienced professionals in the field, quality and sustainable eyewear products and our 
+qualified and experienced staff are committed in providing great care to our valued customers
+or patients. This company comprises of numerous services including channeling facilities of 
+surgeons/orthoptists, managing patient records medical assistance and production and 
+distribution of world class are you there with high quality and with best range. In our system we 
+value the time and health of the patient by providing timely and accurate diagnosis treatment 
+plans assistance and education. we always look forward in serving the customers and patients
+with our team effectively by empowering them about their eye health.
 #### Technologies used - 
 
 Note - The student's github account should be given in brackets e.g. (asiriRepos), this ideally should be your student id 
