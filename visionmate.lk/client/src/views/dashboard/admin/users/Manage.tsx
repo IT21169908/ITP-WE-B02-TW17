@@ -127,7 +127,7 @@ const ManageUsers: React.FC = () => {
 
     useEffect(() => {
         setTableDataSource(formatDataSource(filteredUsers));
-    }, [filteredUsers, formatDataSource])
+    }, [filteredUsers])
 
 
     const deleteUser = async (_id: string) => {
