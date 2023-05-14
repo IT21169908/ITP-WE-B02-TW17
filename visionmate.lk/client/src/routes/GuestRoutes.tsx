@@ -22,6 +22,7 @@ const GuestRoutes: React.FC<GuestRoutesProps> = memo(({isLoggedIn}) => {
 
             {/*<Route path='/' element={<FrontViewLayout><Home/></FrontViewLayout>}/>*/}
             {/*<Route path='/about' element={<FrontViewLayout><About/></FrontViewLayout>}/>*/}
+            <Route path="*" errorElement element={<NotFound/>}/>
         </Routes>
     );
 });
