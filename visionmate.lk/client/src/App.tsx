@@ -14,6 +14,7 @@ import PreLoader from "./components/preloader/PreLoader";
 import {authorization} from "./redux/auth/actions";
 import LandingPage from "./views/front-views/LandingPage";
 import NotFound from "./views/errors/NotFound";
+import PublicRoutes from "./routes/PublicRoutes";
 
 const {themeColor} = config;
 
@@ -57,14 +58,11 @@ const ProviderConfig = () => {
                     <>
                         <Router basename={process.env.PUBLIC_URL}>
                             {/*<Routes>*/}
-                                {/*<Route index path="/" element={<LandingPage/>}/>*/}
-                                {/*<GuestRoutes isLoggedIn/>*/}
-                                {!isLoggedIn ? (
-                                    <GuestRoutes isLoggedIn/>
-                                ) : (
-                                    <RootAuthRoutes isLoggedIn authUser={authUser}/>
-                                )}
-                                {/*<Route path="*" errorElement={<NotFound/>}/>;*/}
+                            {/*<Route index path="/" element={<LandingPage/>}/>*/}
+                            {/*<GuestRoutes isLoggedIn/>*/}
+                            {isLoggedIn && (<RootAuthRoutes isLoggedIn authUser={authUser}/>)}
+                            <PublicRoutes isLoggedIn/>
+                            {/*<Route path="*" errorElement={<NotFound/>}/>;*/}
                             {/*</Routes>*/}
                         </Router>
                     </>

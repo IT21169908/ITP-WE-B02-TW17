@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import IUser from "../../models/User";
-import { signIn, signUp, verifyUser } from "./actionCreator";
+import {signIn, signUp, verifyUser} from "./actionCreator";
 import {Role} from "../../enums/Role";
 
 const initialState: {
@@ -58,6 +58,7 @@ const authSlice = createSlice({
             })
             .addCase(signIn.rejected, (state, action) => {
                 console.log("extraReducer.getUser.rejected")
+                localStorage.removeItem("authToken")
                 return {...state, ...initialState, isLoading: false};
             });
         builder
@@ -92,6 +93,7 @@ const authSlice = createSlice({
             })
             .addCase(signUp.rejected, (state, action) => {
                 console.log("extraReducer.getUser.rejected")
+                localStorage.removeItem("authToken")
                 return {...state, ...initialState, isLoading: false};
             });
         builder
@@ -107,6 +109,7 @@ const authSlice = createSlice({
             })
             .addCase(verifyUser.rejected, (state, action) => {
                 console.log("extraReducer.getUser.rejected")
+                localStorage.removeItem("authToken")
                 return {...state, ...initialState, isLoading: false};
             });
     }
