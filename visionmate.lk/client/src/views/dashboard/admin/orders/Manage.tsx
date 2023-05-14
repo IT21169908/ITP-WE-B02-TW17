@@ -1,9 +1,9 @@
 import React, {ReactNode, useEffect, useState} from 'react';
-import {Button, Col, message, Popconfirm, Row, Table, Modal, Select, Space, Form} from 'antd';
+import {Button, Col, message, Popconfirm, Row, Table, Modal, Select, Space, Form, Input} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
-import {HouseDoor, Pencil, PencilFill, Plus, Trash, Trash2} from "react-bootstrap-icons";
-import {BorderLessHeading, Main} from "../../../../components/styled-components/styled-containers";
+import {Download, HouseDoor, Pencil, PencilFill, Plus, Search, Trash, Trash2} from "react-bootstrap-icons";
+import {BorderLessHeading, Main, TopToolBox} from "../../../../components/styled-components/styled-containers";
 
 import {Cards} from "../../../../components/cards/frame/CardFrame";
 import {Link, useNavigate} from "react-router-dom";
@@ -14,6 +14,8 @@ import {getCurrentDateTime} from "../../../../utils/date-time";
 
 import Heading from "../../../../components/heading/Heading";
 import {NotFoundWrapper} from "../../patient/shop/style";
+import JsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 interface DataType {
     key: React.Key;
@@ -64,6 +66,7 @@ const BreadcrumbItem = [
 const ManageOrders: React.FC = () => {
     const navigate = useNavigate()
     const [orders, setOrders] = useState<Order[]>([]);
+    const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
 
     const [editModalVisible, setEditModalVisible] = useState(false)
@@ -121,6 +124,29 @@ const ManageOrders: React.FC = () => {
         setModalData(null);
         setNewOrderStatus(null);
     };
+
+
+    useEffect(() => {
+        let isMounted = true;
+
+        async function loadOrders() {
+            try {
+                const res = await OrderService.getAllOrders();
+                if (isMounted) {
+                    setOrders(res.data);
+                    setFilteredOrders(res.data);
+                }
+            } catch (error: any) {
+                console.error(error.response.data);
+            }
+        }
+
+        loadOrders();
+        return () => {
+            // TODO unset tableDataSource[]
+            isMounted = false;
+        };
+    }, []);
 
     const formatDataSource = (orders: Order[]): DataType[] => {
         return orders.map((order) => {
@@ -182,33 +208,12 @@ const ManageOrders: React.FC = () => {
     };
 
     useEffect(() => {
-        let isMounted = true;
-
-        async function loadOrders() {
-            try {
-                const res = await OrderService.getAllOrders();
-                if (isMounted) {
-                    setOrders(res.data);
-                }
-            } catch (error: any) {
-                console.error(error.response.data);
-            }
-        }
-
-        loadOrders();
-        return () => {
-            // TODO unset tableDataSource[]
-            isMounted = false;
-        };
-    }, []);
-
-    useEffect(() => {
-        setTableDataSource(formatDataSource(orders));
-    }, [orders])
-
+        setTableDataSource(formatDataSource(filteredOrders));
+    }, [filteredOrders])
     const cancelDelete = () => {
         message.error('Operation cancelled!');
     };
+
     const deleteOrder = async (_id: string) => {
         try {
             const res = await OrderService.deleteOrderByAdmin(_id);
@@ -218,8 +223,8 @@ const ManageOrders: React.FC = () => {
                     description: `${getCurrentDateTime()}`,
                     duration: 20
                 });
-                const updatedSpectacles = orders.filter(order => order._id !== _id);
-                setOrders(updatedSpectacles);
+                const updatedOrders = orders.filter(order => order._id !== _id);
+                setOrders(updatedOrders);
             }
         } catch (error: any) {
             AntdNotification.error({
@@ -232,16 +237,65 @@ const ManageOrders: React.FC = () => {
         }
     }
 
-    console.log("spectacle --> ", orders);
+    console.log("orders --> ", orders);
 
-    // @ts-ignore
+    const generatePDF = (): void => {
+        const doc = new JsPDF("landscape");
+
+        // Add a title to the document
+        doc.text("Order Report", 14, 20);
+
+        // Create a table
+        const tableData = orders.map((s) => [
+            s._id,
+            s.userId?.name,
+            s.spectacleId?.name || "",
+            s.address,
+            s.phone,
+            s.email,
+            s.paymentMethod,
+            s.totalAmount.toString(),
+            s.shippingFee.toString(),
+            s.note || "",
+            s.status,
+        ]);
+        autoTable(doc, {
+            head: [["Id", "User", "Product Name", "Address", "Phone", "Email", "Payment Method", "Total Amount", "Shipping Fee", "Note", "Status"]],
+            body: tableData,
+        })
+
+        // Save the document
+        doc.save(`order-report-${getCurrentDateTime()}.pdf`);
+    };
+    const handleSearch = (e: any) => {
+        console.log(e.target.value)
+        const data = orders.filter((item) => {
+            return Object.keys(item).some((key) =>
+                item[key]!.toString().toLowerCase().includes(e.target.value.toLowerCase())
+            )
+        });
+        setFilteredOrders(data);
+    };
     return (<>
             <PageHeader className="ninjadash-page-header-main" title="Manage My Orders" routes={BreadcrumbItem}/>
             <Main>
                 <Row gutter={15}>
                     <Col xs={24}>
+                        <TopToolBox>
+                            <Row gutter={0}>
+                                <Col xxl={7} lg={12} xs={24}>
+                                    <Input suffix={<Search/>} onChange={handleSearch} placeholder="Search this table"/>
+                                </Col>
+                            </Row>
+                        </TopToolBox>
                         <BorderLessHeading>
-                            <Cards>
+                            <Cards isbutton={
+                                <>
+                                    <Button className="btn btn-warning h-auto me-2" onClick={generatePDF}>
+                                        <Download className="me-2"/> Export PDF
+                                    </Button>
+                                </>
+                            }>
                                 {
                                     tableDataSource.length === 0 ? (
                                         <Col md={24}>
