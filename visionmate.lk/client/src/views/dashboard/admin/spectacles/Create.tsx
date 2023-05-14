@@ -32,7 +32,7 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
                     setSpectacle(res.data);
                 }
             } catch (error: any) {
-                console.error(error.response.data);
+                console.error(error.response.data.error || error.response.data.message);
                 message.error("Loading failed!")
             }
         }
@@ -72,10 +72,10 @@ function SpectacleCreate({enableEdit}: { enableEdit: boolean }) {
                     navigate('/admin/spectacles')
                 }
             } catch (error: any) {
-                console.error(error.response.data);
+                console.error(error.response.data.error || error.response.data.message);
                 AntdNotification.error({
                     message: 'Spectacles loading failed!',
-                    description: `${error.response.data} -- ${getCurrentDateTime()}`,
+                    description: `${error.response.data.error || error.response.data.message} -- ${getCurrentDateTime()}`,
                     duration: 20
                 });
             }

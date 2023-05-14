@@ -33,10 +33,10 @@ function CreateTreatmentPlan({enableEdit}: { enableEdit: boolean }) {
             } catch (error: any) {
                 AntdNotification.error({
                     message: 'TreatmentPlan loading failed!',
-                    description: `${error.response.data} -- ${getCurrentDateTime()}`,
+                    description: `${error.response.data.error || error.response.data.message} -- ${getCurrentDateTime()}`,
                     duration: 20
                 });
-                console.error(error.response.data);
+                console.error(error.response.data.error || error.response.data.message);
             }
         }
 
@@ -69,7 +69,7 @@ function CreateTreatmentPlan({enableEdit}: { enableEdit: boolean }) {
                 } catch (error: any) {
                     AntdNotification.error({
                         message: 'TreatmentPlan creating failed!',
-                        description: `${error.response.data} -- ${getCurrentDateTime()}`,
+                        description: `${error.response.data.error || error.response.data.message} -- ${getCurrentDateTime()}`,
                         duration: 20
                     });
                 }
@@ -95,7 +95,7 @@ function CreateTreatmentPlan({enableEdit}: { enableEdit: boolean }) {
             } catch (error: any) {
                 AntdNotification.error({
                     message: 'TreatmentPlan creating failed!',
-                    description: `${error.response.data} -- ${getCurrentDateTime()}`,
+                    description: `${error.response.data.error || error.response.data.message} -- ${getCurrentDateTime()}`,
                     duration: 20
                 });
             }

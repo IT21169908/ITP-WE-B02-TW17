@@ -1,6 +1,6 @@
 import React, {lazy, Suspense, useEffect} from 'react';
-import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
-import {Role} from "../../enums/Role";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Role, RoleName } from "../../enums/Role";
 import AdminRoutes from "./_AdminRoutes";
 import PreLoader from "../../components/preloader/PreLoader";
 import DoctorRoutes from "./_DoctorRoutes";
@@ -17,7 +17,8 @@ interface GuestRoutesProps {
 
 function RootAuthRoutes({isLoggedIn, authUser}: GuestRoutesProps) {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const location = useLocation();
 
     let authRoute: JSX.Element;
     //let userRole = parseInt(Role.DOCTOR.toString()); //TODO
@@ -25,8 +26,27 @@ function RootAuthRoutes({isLoggedIn, authUser}: GuestRoutesProps) {
     useEffect(() => {
         if (!isLoggedIn || !authUser) {
             navigate('/login')
+        } else if ((location.pathname.includes("login")|| location.pathname.includes("register")) || (isLoggedIn && authUser)) {
+            if ( !location.pathname.includes(RoleName[authUser.role].toLowerCase())) {
+                switch (authUser.role) {
+                    case Role.ADMIN:
+                        navigate('/admin');
+                        break;
+                    case Role.PATIENT:
+                        navigate('/patient');
+                        break;
+                    case Role.SURGEON:
+                        navigate('/surgeon');
+                        break;
+                    case Role.DOCTOR:
+                        navigate('/doctor');
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
-    }, [authUser, isLoggedIn, navigate])
+    }, [authUser, isLoggedIn, location.pathname, navigate]);
 
 
     switch (authUser?.role) {
@@ -51,6 +71,7 @@ function RootAuthRoutes({isLoggedIn, authUser}: GuestRoutesProps) {
         <Suspense fallback={<PreLoader/>}>
             <Routes>
                 {authRoute}
+                <Route path="*" errorElement element={<NotFound/>}/>
             </Routes>
         </Suspense>
     );

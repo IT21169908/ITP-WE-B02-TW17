@@ -5,12 +5,14 @@ import { Button, Col, Input, message, Popconfirm, Row, Skeleton, Table } from 'a
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
 import { Download, HouseDoor, PencilFill, Plus, Search, Trash } from "react-bootstrap-icons";
+import Heading from "../../../../components/heading/Heading";
 import { BorderLessHeading, Main, TopToolBox } from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
 import { Link, useNavigate } from "react-router-dom";
 import IAppointmentTransaction from "../../../../models/AppointmentTransaction";
 import { TransactionService } from "../../../../services/TransactionService";
 import { getCurrentDateTime } from "../../../../utils/date-time";
+import { NotFoundWrapper } from "../../patient/shop/style";
 
 interface DataType {
     key:  string;
@@ -57,7 +59,7 @@ const ManageTransactions: React.FC = () => {
     const [transaction, setTransaction] = useState<IAppointmentTransaction[]>([]);
     const [filteredTransactions, setFilteredTransactions] = useState<IAppointmentTransaction[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
-
+    const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
     const formatDataSource = (transactions: IAppointmentTransaction[]): DataType[] => {
         return transactions.map((transaction) => {
@@ -121,6 +123,7 @@ const ManageTransactions: React.FC = () => {
                 if (isMounted) {
                     setTransaction(res.data);
                     setFilteredTransactions(res.data);
+                    setIsLoadingData(false);
                 }
             } catch (error: any) {
                 console.error(error.response.data);
@@ -198,7 +201,7 @@ const ManageTransactions: React.FC = () => {
         setFilteredTransactions(data);
     };
 
-    if (tableDataSource.length === 0) {
+    if (isLoadingData) {
         return (
             <Row gutter={25} className="justify-content-center">
                 <Col md={6} lg={12} xs={24}>
@@ -219,7 +222,7 @@ const ManageTransactions: React.FC = () => {
                         <TopToolBox>
                             <Row gutter={0}>
                                 <Col xxl={7} lg={12} xs={24}>
-                                    <Input suffix={<Search/>} onChange={handleSearch} placeholder="Search Appointments..."/>
+                                    <Input suffix={<Search/>} onChange={handleSearch} placeholder="Search Transactions..."/>
                                 </Col>
                             </Row>
                         </TopToolBox>
@@ -234,7 +237,17 @@ const ManageTransactions: React.FC = () => {
                                     </Link>
                                 </>
                             }>
-                                <Table columns={dataTableColumn} dataSource={tableDataSource}/>
+                                {
+                                    tableDataSource.length === 0 ? (
+                                        <Col md={24}>
+                                            <NotFoundWrapper>
+                                                <Heading as="h1">No Transactions Found</Heading>
+                                            </NotFoundWrapper>
+                                        </Col>
+                                    ) : (
+                                        <><Table columns={dataTableColumn} dataSource={tableDataSource}/></>
+                                    )
+                                }
                             </Cards>
                         </BorderLessHeading>
                     </Col>

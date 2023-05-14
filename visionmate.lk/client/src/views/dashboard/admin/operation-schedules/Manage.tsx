@@ -2,17 +2,18 @@ import React, {useEffect, useState} from 'react';
 import {Button, Col, Input, message, Popconfirm, Row, Skeleton, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
+import Heading from "../../../../components/heading/Heading";
 import {Download, HouseDoor, PencilFill, Plus, Search, Trash} from "react-bootstrap-icons";
 import {BorderLessHeading, Main, TopToolBox} from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
 import {Link, useNavigate} from "react-router-dom";
 import {ScheduleService} from "../../../../services/ScheduleService";
 import Schedule from "../../../../models/Schedule";
-import {NotFoundWrapper} from "../../patient/shop/style";
-import Heading from "../../../../components/heading/Heading";
+import { NotFoundWrapper } from "../../patient/shop/style";
 import JsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import {getCurrentDateTime} from "../../../../utils/date-time";
+
 
 interface DataType {
     key: string;
@@ -53,6 +54,7 @@ const ManageSchedules: React.FC = () => {
     const [schedules, setSchedules] = useState<Schedule[]>([]);
     const [filteredschedules, setFilteredschedules] = useState<Schedule[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
+    const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
     useEffect(() => {
         let isMounted = true;
@@ -62,6 +64,7 @@ const ManageSchedules: React.FC = () => {
                 const res = await ScheduleService.getAllSchedules();
                 if (isMounted) {
                     setSchedules(res.data);
+                    setIsLoadingData(false);
                     setFilteredschedules(res.data);
                 }
             } catch (error: any) {
@@ -170,6 +173,17 @@ const ManageSchedules: React.FC = () => {
         doc.save(`schedule-report-${getCurrentDateTime()}.pdf`);
     };
 
+    if (isLoadingData) {
+        return (
+            <Row gutter={25} className="justify-content-center">
+                <Col md={6} lg={12} xs={24}>
+                    <Cards title="Loading..." caption="Loading Skeleton">
+                        <Skeleton active paragraph={{rows: 16}} />
+                    </Cards>
+                </Col>
+            </Row>
+        );
+    }
 
     const handleSearch = (e: any) => {
         console.log(e.target.value)
@@ -213,9 +227,7 @@ const ManageSchedules: React.FC = () => {
                                             </NotFoundWrapper>
                                         </Col>
                                     ) : (
-                                        <>
-                                            <Table columns={dataTableColumn} dataSource={tableDataSource}/>
-                                        </>
+                                        <><Table columns={dataTableColumn} dataSource={tableDataSource}/></>
                                     )
                                 }
                             </Cards>

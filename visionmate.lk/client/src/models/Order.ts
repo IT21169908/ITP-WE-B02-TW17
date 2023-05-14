@@ -13,6 +13,8 @@ interface IOrder {
     shippingFee: number;
     note?: string;
     status: "pending" | "processing" | "shipped" | "delivered";
+
+    [key: string]: string | number | User | Spectacle | undefined;
 }
 
 

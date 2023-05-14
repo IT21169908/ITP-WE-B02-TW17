@@ -7,7 +7,7 @@ import {
     FileEarmarkPlus,
     FilePost,
     HouseCheckFill,
-    Kanban,
+    Kanban, Person,
     Scissors,
     Truck
 } from "react-bootstrap-icons";
@@ -42,6 +42,14 @@ const AdminSideBarItems = ({translate, path, toggleCollapsed, topMenu}: {
             </NavLink>,
             'dashboard',
             !topMenu && <HouseCheckFill/>,
+        ),
+        getItem(
+            <NavLink onClick={toggleCollapsed} to={`${path}/users`}>
+                {translate("Users")}
+                <span className="badge badge-primary menuItem">2</span>
+            </NavLink>,
+            'users',
+            !topMenu && <Person/>,
         ),
         getItem(translate("Spectacles"), 'spectacles', !topMenu && <Eyeglasses/>, [
                 getItem(

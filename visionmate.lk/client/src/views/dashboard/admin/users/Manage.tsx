@@ -1,45 +1,39 @@
 import React, {ReactNode, useEffect, useState} from 'react';
-import { Button, Col, Input, message, Popconfirm, Row, Skeleton, Table } from 'antd';
+import {Button, Col, Input, message, Popconfirm, Row, Table} from 'antd';
 import type {ColumnsType} from 'antd/es/table';
 import {PageHeader} from "../../../../components/breadcrumbs/DashboardBreadcrumb";
 import {Download, HouseDoor, Pencil, Plus, Search, Trash2} from "react-bootstrap-icons";
 import {BorderLessHeading, Main, TopToolBox} from "../../../../components/styled-components/styled-containers";
 import {Cards} from "../../../../components/cards/frame/CardFrame";
 import {Link} from "react-router-dom";
-import Spectacle from "../../../../models/Spectacle";
-import {SpectacleService} from "../../../../services/SpectacleService";
 import {NotFoundWrapper} from "../../patient/shop/style";
 import Heading from "../../../../components/heading/Heading";
 import JsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import {getCurrentDateTime} from "../../../../utils/date-time";
+import User from "../../../../models/User";
+import {RoleName} from "../../../../enums/Role";
+import {UserService} from "../../../../services/UserService";
 
 interface DataType {
     key: React.Key;
     _id?: string;
-    name: ReactNode;
-    frameStyle: string;
-    frameMaterial: string;
-    lensType: string;
-    lensMaterial: string;
-    lensCoating: string;
-    color: string;
-    size: string;
-    price: number;
+    name: string;
+    email: string;
+    phone?: string;
+    role: string;
+    lastLoggedIn?: string;
     action: ReactNode;
 }
 
 const dataTableColumn: ColumnsType<DataType> = [
     //{title: 'Id', dataIndex: '_id', key: '_id'},
-    {title: 'Name', dataIndex: 'name', key: 'name'},
-    {title: 'Frame Style', dataIndex: 'frameStyle', key: 'frameStyle'},
-    {title: 'Frame Material', dataIndex: 'frameMaterial', key: 'frameMaterial'},
-    {title: 'Lens Type', dataIndex: 'lensType', key: 'lensType'},
-    {title: 'Lens Material', dataIndex: 'lensMaterial', key: 'lensMaterial'},
-    {title: 'Lens Coating', dataIndex: 'lensCoating', key: 'lensCoating'},
-    {title: 'Color', dataIndex: 'color', key: 'color'},
-    {title: 'Size', dataIndex: 'size', key: 'size'},
-    {title: 'Price', dataIndex: 'price', key: 'price'},
+    {title: '_id', dataIndex: '_id', key: '_id'},
+    {title: 'name', dataIndex: 'name', key: 'name'},
+    {title: 'email', dataIndex: 'email', key: 'email'},
+    {title: 'phone', dataIndex: 'phone', key: 'phone'},
+    {title: 'role', dataIndex: 'role', key: 'role'},
+    {title: 'lastLoggedIn', dataIndex: 'lastLoggedIn', key: 'lastLoggedIn'},
     {
         title: 'Action',
         dataIndex: 'action',
@@ -55,55 +49,46 @@ const BreadcrumbItem = [
         href: '/admin',
     },
     {
-        title: 'Manage Spectacles',
+        title: 'Manage Users',
     },
 ];
 
-const ManageSpectacles: React.FC = () => {
+const ManageUsers: React.FC = () => {
 
-    const [spectacles, setSpectacles] = useState<Spectacle[]>([]);
-    const [filteredSpectacles, setFilteredSpectacles] = useState<Spectacle[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
+    const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
     const [tableDataSource, setTableDataSource] = useState<DataType[]>([]);
-    const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
-    const formatDataSource = (spectacles: Spectacle[]): DataType[] => {
-        return spectacles.map((spectacle) => {
+    const formatDataSource = (users: User[]): DataType[] => {
+        return users.map((user) => {
             const {
                 _id,
                 name,
-                frameStyle,
-                frameMaterial,
-                lensType,
-                lensMaterial,
-                lensCoating,
-                color,
-                size,
-                price,
-            } = spectacle;
+                email,
+                phone,
+                role,
+                lastLoggedIn
+            } = user;
 
             return {
                 key: _id,
-                //_id: `#${_id}`,
-                name: <span className="ninjadash-username">{name}</span>,
-                frameStyle,
-                frameMaterial,
-                lensType,
-                lensMaterial,
-                lensCoating,
-                color,
-                size,
-                price,
+                _id,
+                name,
+                email,
+                phone,
+                role: RoleName[role],
+                lastLoggedIn,
                 action: (
                     <div className="table-actions">
                         <Link
                             className="btn btn-sm btn-warning text-white me-1"
-                            to={`/admin/spectacles/${_id}/edit`}
+                            to={`/admin/users/${_id}/edit`}
                         >
                             <Pencil/>
                         </Link>
                         <Popconfirm
-                            title="Are You sure you want to delete this spectacle?"
-                            onConfirm={() => deleteSpectacle(_id)}
+                            title="Are You sure you want to delete this user?"
+                            onConfirm={() => deleteUser(_id)}
                             onCancel={() => message.error('Delete canceled!')}
                             okText="Yes"
                             cancelText="No"
@@ -119,13 +104,12 @@ const ManageSpectacles: React.FC = () => {
     };
 
     useEffect(() => {
-        async function loadSpectacles() {
+        async function loadUsers() {
             try {
-                const res = await SpectacleService.getAllSpectacles();
+                const res = await UserService.getAllUsers();
                 if (isMounted) {
-                    setSpectacles(res.data);
-                    setFilteredSpectacles(res.data);
-                    setIsLoadingData(false);
+                    setUsers(res.data);
+                    setFilteredUsers(res.data);
                 }
             } catch (error: any) {
                 console.error(error.response.data);
@@ -134,7 +118,7 @@ const ManageSpectacles: React.FC = () => {
 
         let isMounted = true;
 
-        loadSpectacles();
+        loadUsers();
         return () => {
             // TODO unset tableDataSource[]
             isMounted = false;
@@ -142,18 +126,19 @@ const ManageSpectacles: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        setTableDataSource(formatDataSource(filteredSpectacles));
-    }, [filteredSpectacles, formatDataSource])
+        setTableDataSource(formatDataSource(filteredUsers));
+    }, [filteredUsers])
 
 
-    const deleteSpectacle = async (_id: string) => {
+    const deleteUser = async (_id: string) => {
         try {
-            const res = await SpectacleService.deleteSpectacle(_id);
+            const res = await UserService.deleteUser(_id);
             if (res.success) {
                 message.success(`${res.message}`);
                 // TODO: REFACTOR this. Do not use filter, when large no of records exist
-                const updatedSpectacles = spectacles.filter(spectacle => spectacle._id !== _id);
-                setSpectacles(updatedSpectacles);
+                const updatedUsers = users.filter(user => user._id !== _id);
+                setUsers(updatedUsers);
+                setTableDataSource(formatDataSource(updatedUsers));
             }
         } catch (error: any) {
             message.error(`${error.response.data.error || error.response.data.message}`)
@@ -165,55 +150,40 @@ const ManageSpectacles: React.FC = () => {
         const doc = new JsPDF();
 
         // Add a title to the document
-        doc.text("Spectacle Report", 14, 20);
+        doc.text("User Report", 14, 20);
 
         // Create a table
-        const tableData = spectacles.map((s) => [
-            s.name,
-            s.frameStyle,
-            s.frameMaterial,
-            s.lensType,
-            s.lensMaterial,
-            s.lensCoating,
-            s.color,
-            s.size,
-            s.price.toString(),
+        const tableData = users.map((user) => [
+            user._id,
+            user.name,
+            user.email,
+            user.phone,
+            RoleName[user.role],
+            user.lastLoggedIn,
         ]);
         autoTable(doc, {
-            head: [['Name', 'Frame Style', 'Frame Material', 'Lens Type', 'Lens Material', 'Lens Coating', 'Color', 'Size', 'Price']],
+            head: [['_id', 'name', 'email', 'phone', 'RoleName', 'lastLoggedIn']],
             body: tableData,
         })
 
         // Save the document
-        doc.save(`spectacle-report-${getCurrentDateTime()}.pdf`);
+        doc.save(`users-report-${getCurrentDateTime()}.pdf`);
     };
-    console.log("spectacle --> ", spectacles);
-
 
     const handleSearch = (e: any) => {
         console.log(e.target.value)
-        const data = spectacles.filter((item) => {
-            return Object.keys(item).some((key) =>
-                item[key].toString().toLowerCase().includes(e.target.value.toLowerCase())
-            )
+        const data = users.filter((item) => {
+            return Object.keys(item).some((key) => {
+                if (item[key] !== undefined) {
+                    return item[key]!.toString().toLowerCase().includes(e.target.value.toLowerCase())
+                }
+                return false;
+            })
         });
-        setFilteredSpectacles(data);
+        setFilteredUsers(data);
     };
-
-    if (isLoadingData) {
-        return (
-            <Row gutter={25} className="justify-content-center">
-                <Col md={6} lg={12} xs={24}>
-                    <Cards title="Loading..." caption="Loading Skeleton">
-                        <Skeleton active paragraph={{rows: 16}} />
-                    </Cards>
-                </Col>
-            </Row>
-        );
-    }
-
     return (<>
-            <PageHeader className="ninjadash-page-header-main" title="Manage Spectacles" routes={BreadcrumbItem}/>
+            <PageHeader className="ninjadash-page-header-main" title="Manage Users" routes={BreadcrumbItem}/>
             <Main>
                 <Row gutter={15}>
                     <Col xs={24}>
@@ -230,7 +200,7 @@ const ManageSpectacles: React.FC = () => {
                                     <Button className="btn btn-warning h-auto me-2" onClick={generatePDF}>
                                         <Download className="me-2"/> Export PDF
                                     </Button>
-                                    <Link className="btn btn-primary h-auto" type="link" to="/admin/spectacles/create">
+                                    <Link className="btn btn-primary h-auto" type="link" to="/admin/users/create">
                                         <Plus/> Add New
                                     </Link>
                                 </>
@@ -239,7 +209,7 @@ const ManageSpectacles: React.FC = () => {
                                     tableDataSource.length === 0 ? (
                                         <Col md={24}>
                                             <NotFoundWrapper>
-                                                <Heading as="h1">No Spectacles Found</Heading>
+                                                <Heading as="h1">No Users Found</Heading>
                                             </NotFoundWrapper>
                                         </Col>
                                     ) : (
@@ -255,4 +225,4 @@ const ManageSpectacles: React.FC = () => {
     )
 };
 
-export default ManageSpectacles;
+export default ManageUsers;
